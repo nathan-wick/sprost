@@ -2,7 +2,34 @@
 Easy App is a tool that makes it easy for anyone to create an application.
 
 # Documentation
-## Views
+
+## Database Structure (NoSQL)
+- users [{
+  - id,
+  - name,
+  - email,
+  - image,
+  - apps [{
+    - id,
+    - name,
+    - colors [{
+      - primary,
+      - secondary,
+      - background,
+    - }],
+    - views [{
+      - id,
+      - name,
+      - components [{
+        - id,
+        - type,
+        - type specific variables...
+      - }],
+    - }],
+  - }],
+- }],
+
+## Editor Views
 - Index
   - First view the user sees before being authenticated
   - Sells the tool
@@ -19,18 +46,11 @@ Easy App is a tool that makes it easy for anyone to create an application.
 - App
   - A published version of a user's application(s)
 
-## Database Structure (NoSQL)
-users [{<br />
-&nbsp;&nbsp;&nbsp;&nbsp;id,<br />
-&nbsp;&nbsp;&nbsp;&nbsp;email,<br />
-&nbsp;&nbsp;&nbsp;&nbsp;image,<br />
-&nbsp;&nbsp;&nbsp;&nbsp;apps [{<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id,<br />
-&nbsp;&nbsp;&nbsp;&nbsp;}],<br />
-}],<br />
-
-apps [{<br />
-&nbsp;&nbsp;&nbsp;&nbsp;id,<br />
-&nbsp;&nbsp;&nbsp;&nbsp;userId,<br />
-&nbsp;&nbsp;&nbsp;&nbsp;name,<br />
-}],
+## User App Components
+- Navbar
+- Footer
+- Heading
+- Header
+- Paragraph
+- Button
+- Image
