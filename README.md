@@ -1,5 +1,5 @@
 # Introduction
-Easy App is a tool that makes it easy for anyone to create an application.
+Sprost is a tool that makes it easy for anyone to create an application.
 
 # Documentation
 
