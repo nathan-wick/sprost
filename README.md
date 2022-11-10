@@ -30,7 +30,7 @@ Sprost is a tool that makes it easy for anyone to create an application.
 - }],
 
 ## Editor Views
-- Index
+- Landing
   - First view the user sees before being authenticated
   - Sells the tool
   - A link to Sign In
