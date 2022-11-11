@@ -17,7 +17,7 @@ Sprost is a tool that makes it easy for anyone to create an application.
 - Open your browser
 - Paste the following URL: https://github.com/nathan-wick/sprost/projects
 - Click: Sprost
-- Assign yourself to the issue from the Sprint column you'll work on
+- Assign yourself to the issue you'll work on from the Sprint column
   - Notice there's a description of the issue, you will need this later
 - Pickup the issue you will work on and drag it from the Sprint column into the In Progress column
 - Open Github Desktop
@@ -34,8 +34,8 @@ Sprost is a tool that makes it easy for anyone to create an application.
 - Click: New pull request
 - Under the Base dropdown menu, select the Dev branch
 - Under the Compare dropdown menu, select the branch you've been working on
-- Double check that the changes shown look correct
-  - If the changes shown do not look correct, please correct the changes before submitting the pull request
+- Double check the changes shown look correct
+  - If the changes shown do not look correct, please correct the changes and repeat the previous instructions before creating a pull request
 - Click: Create pull request
 - Enter a title and description for the changes you've made
 - Within the description, mention the issue the pull request closes
