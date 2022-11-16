@@ -1,10 +1,11 @@
 import { Auth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useContext, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AuthContext } from "../../../contexts/Auth";
+import { AuthContext } from "../../Auth";
 import GoogleIcon from "../../../assets/images/icons/google.svg";
 import AppleIcon from "../../../assets/images/icons/apple.svg";
 import MicrosoftIcon from "../../../assets/images/icons/microsoft.svg";
+import { PersonCircle } from "react-bootstrap-icons";
 
 const SignIn = () => {
     const [ modal, setModal ] = useState<boolean>(false);
@@ -39,6 +40,8 @@ const SignIn = () => {
             size="lg"
             disabled={modal}
             onClick={showModal}>
+                <PersonCircle
+                    className="mx-2" />
                 Sign In
         </Button>
 
