@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
-import FirebaseContextProvider from './contexts/Firebase';
-import AuthContextProvider from './contexts/Auth';
+import Firebase from './components/Firebase';
+import Auth from './components/Auth';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <div className="App">
-      <FirebaseContextProvider>
-        <AuthContextProvider />
-      </FirebaseContextProvider>
+      <Firebase>
+        <Auth />
+      </Firebase>
     </div>
   </React.StrictMode>
 );

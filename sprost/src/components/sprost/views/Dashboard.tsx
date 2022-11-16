@@ -1,8 +1,6 @@
-import SignOut from "../SignOut";
-
 const Dashboard = () => {
     return <>
-        <SignOut />
+        <h1>Dashboard</h1>
     </>
 }
 

@@ -1,8 +1,8 @@
 import { Auth, getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { createContext, useContext, useState } from "react";
-import Dashboard from "../components/sprost/views/Dashboard";
-import Landing from "../components/sprost/views/Landing";
+import Landing from "./sprost/views/Landing";
 import { FirebaseContext } from "./Firebase";
+import Navigation from "./sprost/Navigation";
 
 export const AuthContext = createContext<Auth | undefined>(undefined);
 
@@ -18,7 +18,7 @@ const AuthContextProvider = () => {
     return <AuthContext.Provider value={auth}>
         {
             user ?
-                <Dashboard /> :
+                <Navigation /> :
                 <Landing />
         }
     </AuthContext.Provider>
