@@ -1,7 +1,7 @@
 import { Auth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useContext, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { AuthContext } from "../../Auth";
+import { AuthenticationContext } from "../../Authentication";
 import GoogleIcon from "../../../assets/images/icons/google.svg";
 import AppleIcon from "../../../assets/images/icons/apple.svg";
 import MicrosoftIcon from "../../../assets/images/icons/microsoft.svg";
@@ -10,7 +10,7 @@ import { PersonCircle } from "react-bootstrap-icons";
 const SignIn = () => {
     const [ modal, setModal ] = useState<boolean>(false);
     const [ signingIn, setSigningIn ] = useState<boolean>(false);
-    const auth = useContext(AuthContext);
+    const authentication = useContext(AuthenticationContext);
     const showModal = () => setModal(true);
     const hideModal = () => setModal(false);
 
@@ -20,7 +20,7 @@ const SignIn = () => {
         switch(provider) {
             case 'Google': {
                 const googleProvider = new GoogleAuthProvider();
-                signInWithPopup(auth as Auth, googleProvider);
+                signInWithPopup(authentication as Auth, googleProvider);
                 break;
             }
             case 'Apple': {
