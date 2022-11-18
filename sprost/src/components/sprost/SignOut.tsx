@@ -16,9 +16,9 @@ const SignIn = () => {
                 signOut(authentication as Auth);
                 setSigningOut(false);
             }}>
-                <BoxArrowRight
-                    className="mx-2" />
-                Sign Out
+            <BoxArrowRight
+                className="mx-2" />
+            Sign Out
     </Button>
 }
 

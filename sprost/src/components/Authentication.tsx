@@ -8,6 +8,8 @@ const AuthenticationContextProvider = (props: any) => {
     const firebaseApp = useContext(FirebaseContext);
     const authentication = getAuth(firebaseApp);
 
+    // TODO: Fix Sign Out
+
     return <AuthenticationContext.Provider value={authentication}>
         {props.children}
     </AuthenticationContext.Provider>
