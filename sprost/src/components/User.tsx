@@ -1,5 +1,5 @@
 import { Auth, onAuthStateChanged, User as AuthenticatedUser } from "firebase/auth";
-import { doc, Firestore, getDoc, setDoc } from "firebase/firestore";
+import { doc, Firestore, onSnapshot, setDoc } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
 import { User } from "../types/User";
 import { AuthenticationContext } from "./Authentication";
@@ -13,47 +13,38 @@ const UserContextProvider = (props: any) => {
     const authentication = useContext(AuthenticationContext);
     const database = useContext(DatabaseContext);
     const [ authenticatedUser, setAuthenticatedUser ] = useState<AuthenticatedUser | null>(null);
-    const [ user, setUser ] = useState<User>();
+    const [ user, setUser ] = useState<User | undefined>(undefined);
 
-    onAuthStateChanged(authentication as Auth, (newUser) => {
-        setAuthenticatedUser(newUser);
+    onAuthStateChanged(authentication as Auth, (newAuthenticatedUser) => {
+        newAuthenticatedUser ?
+            setAuthenticatedUser(newAuthenticatedUser) :
+            setUser(undefined);
     });
-
-    // TODO: Update User only when they're new
-
-    const UpdateUser = async (userToUpdate: AuthenticatedUser) => {
-        const initialUserData: Partial<User> = {
-            id: userToUpdate.uid,
-            name: userToUpdate.displayName,
-            email: userToUpdate.email,
-            portrait: userToUpdate.photoURL,
-        };
-        const userReference = doc(database as Firestore, "users", userToUpdate.uid);
-        await setDoc(userReference, initialUserData, { merge: true });
-        console.log(`Updated User`, initialUserData);
-    }
-
-    // TODO: Get User only when there's a database change
-
-    const GetUser = async (userToGet: AuthenticatedUser) => {
-        const userReference = doc(database as Firestore, "users", userToGet.uid);
-        const userSnapshot = await getDoc(userReference);
-        if (userSnapshot.exists()) {
-            const userFromDatabase: User = {
-                id: userSnapshot.data().id,
-                name: userSnapshot.data().name,
-                email: userSnapshot.data().email,
-                portrait: userSnapshot.data().portrait,
-            };
-            setUser(userFromDatabase);
-            console.log(`Got User`, userFromDatabase);
-        }
-    }
 
     useEffect(() => {
         if (authenticatedUser) {
-            UpdateUser(authenticatedUser);
-            GetUser(authenticatedUser);
+            const userReference = doc(database as Firestore, "users", authenticatedUser.uid);
+            onSnapshot(userReference, async (userSnapshot) => {
+                if (userSnapshot.data()) {
+                    const userFromDatabase: User = {
+                        id: userSnapshot.data()?.id,
+                        name: userSnapshot.data()?.name,
+                        email: userSnapshot.data()?.email,
+                        portrait: userSnapshot.data()?.portrait,
+                    };
+                    setUser(userFromDatabase);
+                    console.log(`Got User `, user);
+                } else {
+                    const initialUserData: Partial<User> = {
+                        id: authenticatedUser.uid,
+                        name: authenticatedUser.displayName ? authenticatedUser.displayName : undefined,
+                        email: authenticatedUser.email ? authenticatedUser.email : undefined,
+                        portrait: authenticatedUser.photoURL ? authenticatedUser.photoURL : undefined,
+                    };
+                    await setDoc(userReference, initialUserData, { merge: true });
+                    console.log(`Initialized User `, initialUserData);
+                }
+            });
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ authenticatedUser ]);
