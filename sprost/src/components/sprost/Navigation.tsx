@@ -18,7 +18,7 @@ const Navigation = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Button
-              variant="dark"
+              variant="primary"
               className="m-2"
               onClick={() => setCurrentView(<Account />)}>
               <PersonCircle
@@ -26,7 +26,7 @@ const Navigation = () => {
               Account
             </Button>
             <Button
-              variant="dark"
+              variant="primary"
               className="m-2"
               onClick={() => setCurrentView(<Dashboard />)}>
               <Speedometer
@@ -34,7 +34,7 @@ const Navigation = () => {
               Dashboard
             </Button>
             <Button
-              variant="dark"
+              variant="primary"
               className="m-2"
               onClick={() => setCurrentView(<Apps />)}>
               <WindowStack
