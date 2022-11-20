@@ -1,100 +1,165 @@
-import { useContext } from "react";
+import { doc, Firestore, setDoc } from "firebase/firestore";
+import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { Bookmarks, Envelope, Eye, Upload } from "react-bootstrap-icons";
+import { Bookmarks, DeviceSsd, Envelope, Eye } from "react-bootstrap-icons";
+import { Color } from "../../../types/Color";
+import { User } from "../../../types/User";
+import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
 import Information from "../modals/Information";
 import SignOut from "../SignOut";
 
 const Account = () => {
+    const database = useContext(DatabaseContext);
     const user = useContext(UserContext);
+    const [ nameInput, setNameInput ] = useState<string>();
+    const [ emailInput, setEmailInput ] = useState<string>();
+    const [ themeInput, setThemeInput ] = useState<Color>();
+    const [ canSave, setCanSave ] = useState<boolean>(false);
 
-    // TODO: Finish Form and save input to the database
+    // TODO: Input Validation
+
+    const themeOptions = [
+        {
+            value: `light`,
+            text: `Light`,
+        },
+        {
+            value: `dark`,
+            text: `Dark`,
+        },
+    ];
+
+    useEffect(() => {
+        setNameInput(user?.name);
+        setEmailInput(user?.email);
+        setThemeInput(user?.theme);
+    }, [ user ]);
+
+    useEffect(() => {
+        nameInput === user?.name &&
+        emailInput === user?.email &&
+        themeInput === user?.theme ?
+            setCanSave(false) :
+            setCanSave(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ user, emailInput, nameInput, themeInput ]);
+
+    const onNameChange = (event: any) => {
+        setNameInput(event.target.value);
+    };
+
+    const onEmailChange = (event: any) => {
+        setEmailInput(event.target.value);
+    };
+
+    const onThemeChange = (event: any) => {
+        setThemeInput({ name: event.target.value });
+    };
+
+    const onSubmit = async (event: any) => {
+        event.preventDefault();
+        if (user) {
+            const userInputData: Partial<User> = {
+                name: nameInput,
+                email: emailInput,
+                theme: themeInput,
+            };
+            const userReference = doc(database as Firestore, "users", user.id);
+            await setDoc(userReference, userInputData, { merge: true });
+        }
+    };
 
     return <>
-    <h1
-        className="my-3 mx-5">
-        Account
-        <Information
-            title="Account"
-            text="Every Sprost user has an account. Accounts enable users to save their preferences, apps, statistics, etc. to the cloud and access them anywhere. Sprost will never share your personal information with anyone else." />
-    </h1>
-    <hr
-        className="my-3 mx-5" />
-    <Row
-        className="gx-0 my-3">
-        <Col
-            lg={3}
-            md={6}
-            sm={12}
-            className="text-center">
-            <img
-                src={user?.portrait}
-                alt={`${user?.name}'s portrait`}
-                className="w-50 my-3 border border-2 border-dark rounded-circle" />
-            <p>
-                {user?.name}
-            </p>
-            <SignOut />
-        </Col>
-        <Col
-            lg={9}
-            md={6}
-            sm={12}>
-            <Form
-                className="my-3 mx-5">
-                <Form.Group
-                    controlId="userNameForm"
-                    className="my-3">
-                    <Form.Label>
-                        <Bookmarks
+        <h1
+            className="my-3 mx-5">
+            Account
+            <Information
+                title="Account"
+                text="Every Sprost user has an account. Accounts enable users to save their preferences, apps, statistics, etc. to the cloud and access them anywhere. Sprost will never share your personal information with anyone else." />
+        </h1>
+        <hr
+            className="my-3 mx-5" />
+        <Row
+            className="gx-0 my-3">
+            <Col
+                lg={3}
+                md={6}
+                sm={12}
+                className="text-center">
+                <img
+                    src={user?.portrait}
+                    alt={`${user?.name}'s portrait`}
+                    className="w-50 my-3 border border-2 border-dark rounded-circle" />
+                <br />
+                <SignOut />
+            </Col>
+            <Col
+                lg={9}
+                md={6}
+                sm={12}>
+                <Form
+                    className="my-3 mx-5"
+                    onSubmit={onSubmit}>
+                    <Form.Group
+                        className="my-3">
+                        <Form.Label>
+                            <Bookmarks
+                                className="mx-2" />
+                            Name
+                        </Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter name"
+                            onChange={onNameChange}
+                            defaultValue={user?.name} />
+                    </Form.Group>
+                    <Form.Group
+                        className="my-3">
+                        <Form.Label>
+                            <Envelope
+                                className="mx-2" />
+                            Email
+                        </Form.Label>
+                        <Form.Control
+                            type="email"
+                            placeholder="Enter email"
+                            onChange={onEmailChange}
+                            defaultValue={user?.email} />
+                    </Form.Group>
+                    <Form.Group
+                        className="my-3">
+                        <Form.Label>
+                            <Eye
+                                className="mx-2" />
+                            Theme
+                        </Form.Label>
+                        <Form.Select
+                            onChange={onThemeChange}
+                            value={themeInput?.name}>
+                            {
+                                themeOptions.map(themeOption =>
+                                    <option
+                                        key={themeOption.value}
+                                        value={themeOption.value}>
+                                        {themeOption.text}
+                                    </option>)
+                            }
+                        </Form.Select>
+                    </Form.Group>
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        className="my-3"
+                        disabled={!canSave}>
+                        <DeviceSsd
                             className="mx-2" />
-                        Name
-                    </Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter name" />
-                </Form.Group>
-                <Form.Group
-                    controlId="userEmailForm"
-                    className="my-3">
-                    <Form.Label>
-                        <Envelope
-                            className="mx-2" />
-                        Email
-                    </Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter email" />
-                </Form.Group>
-                <Form.Group
-                    controlId="userThemeForm"
-                    className="my-3">
-                    <Form.Label>
-                        <Eye
-                            className="mx-2" />
-                        Theme
-                    </Form.Label>
-                    <Form.Select>
-                        <option>
-                            Light
-                        </option>
-                        <option>
-                            Dark
-                        </option>
-                    </Form.Select>
-                </Form.Group>
-                <Button
-                    variant="primary"
-                    type="submit"
-                    className="my-3">
-                    <Upload
-                        className="mx-2" />
-                    Save
-                </Button>
-            </Form>
-        </Col>
-    </Row>
-</>;
+                        Save
+                    </Button>
+                </Form>
+            </Col>
+        </Row>
+    </>;
 }
 
 export default Account;

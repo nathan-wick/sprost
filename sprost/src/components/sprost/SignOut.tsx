@@ -9,7 +9,7 @@ const SignIn = () => {
     const authentication = useContext(AuthenticationContext);
     
     return <Button 
-            variant="warning"
+            variant="secondary"
             disabled={signingOut}
             onClick={() => {
                 setSigningOut(true);
