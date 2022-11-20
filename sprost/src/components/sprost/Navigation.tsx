@@ -8,7 +8,9 @@ import Dashboard from "./views/Dashboard";
 const Navigation = () => {
   const [currentView, setCurrentView] = useState<JSX.Element>(<Dashboard />);
 
-  return <>
+  // TODO: Replace Navbar with Sidebar
+
+  const oldNav = <>
     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand onClick={() => setCurrentView(<Dashboard />)}>
@@ -18,7 +20,7 @@ const Navigation = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Button
-              variant="primary"
+              variant="secondary"
               className="m-2"
               onClick={() => setCurrentView(<Account />)}>
               <PersonCircle
@@ -26,7 +28,7 @@ const Navigation = () => {
               Account
             </Button>
             <Button
-              variant="primary"
+              variant="secondary"
               className="m-2"
               onClick={() => setCurrentView(<Dashboard />)}>
               <Speedometer
@@ -34,7 +36,7 @@ const Navigation = () => {
               Dashboard
             </Button>
             <Button
-              variant="primary"
+              variant="secondary"
               className="m-2"
               onClick={() => setCurrentView(<Apps />)}>
               <WindowStack
@@ -47,6 +49,8 @@ const Navigation = () => {
     </Navbar>
     {currentView}
   </>;
+
+  return oldNav;
 }
 
 export default Navigation;

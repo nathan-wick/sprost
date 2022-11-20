@@ -10,7 +10,6 @@ const Information = (props: any) => {
     return <>
         <Button 
             variant="link"
-            size="sm"
             disabled={modal}
             onClick={showModal}>
                 <InfoCircle
