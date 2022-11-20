@@ -90,7 +90,7 @@ const Account = () => {
                 <img
                     src={user?.portrait}
                     alt={`${user?.name}'s portrait`}
-                    className="w-50 my-3 border border-2 border-dark rounded-circle" />
+                    className="w-50 my-3 border border-2 rounded-circle" />
                 <br />
                 <SignOut />
             </Col>
@@ -109,6 +109,7 @@ const Account = () => {
                             Name
                         </Form.Label>
                         <Form.Control
+                            className={user?.theme.name === `dark` ? `bg-black text-light` : `bg-white text-dark`}
                             type="text"
                             placeholder="Enter name"
                             onChange={onNameChange}
@@ -122,6 +123,7 @@ const Account = () => {
                             Email
                         </Form.Label>
                         <Form.Control
+                            className={user?.theme.name === `dark` ? `bg-black text-light` : `bg-white text-dark`}
                             type="email"
                             placeholder="Enter email"
                             onChange={onEmailChange}
@@ -135,6 +137,7 @@ const Account = () => {
                             Theme
                         </Form.Label>
                         <Form.Select
+                            className={user?.theme.name === `dark` ? `bg-black text-light` : `bg-white text-dark`}
                             onChange={onThemeChange}
                             value={themeInput?.name}>
                             {
