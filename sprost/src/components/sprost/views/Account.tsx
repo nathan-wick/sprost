@@ -8,6 +8,8 @@ import SignOut from "../SignOut";
 const Account = () => {
     const user = useContext(UserContext);
 
+    // TODO: Finish Form and save input to the database
+
     return <>
     <h1
         className="my-3 mx-5">

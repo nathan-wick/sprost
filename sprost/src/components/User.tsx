@@ -4,8 +4,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { User } from "../types/User";
 import { AuthenticationContext } from "./Authentication";
 import { DatabaseContext } from "./Database";
-import Navigation from "./sprost/Navigation";
-import Landing from "./sprost/views/Landing";
 
 export const UserContext = createContext<User | undefined>(undefined);
 
@@ -50,11 +48,7 @@ const UserContextProvider = (props: any) => {
     }, [ authenticatedUser ]);
 
     return <UserContext.Provider value={user}>
-        {
-            user ?
-            <Navigation /> :
-            <Landing />
-        }
+        {props.children}
     </UserContext.Provider>
 };
 
