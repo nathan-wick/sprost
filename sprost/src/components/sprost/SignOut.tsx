@@ -10,6 +10,7 @@ const SignIn = () => {
     
     return <Button 
             variant="secondary"
+            className="m-2"
             disabled={signingOut}
             onClick={() => {
                 setSigningOut(true);
