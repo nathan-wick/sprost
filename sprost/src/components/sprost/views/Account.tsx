@@ -6,7 +6,6 @@ import { Color } from "../../../types/Color";
 import { User } from "../../../types/User";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
-import Information from "../modals/Information";
 import SignOut from "../SignOut";
 
 const Account = () => {
@@ -74,9 +73,6 @@ const Account = () => {
         <h1
             className="my-3 mx-5">
             Account
-            <Information
-                title="Account"
-                text="Every Sprost user has an account. Accounts enable users to save their preferences, apps, statistics, etc. to the cloud and access them anywhere. Sprost will never share your personal information with anyone else." />
         </h1>
         <hr
             className="my-3 mx-5" />
