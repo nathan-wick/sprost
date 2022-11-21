@@ -84,20 +84,16 @@ const Account = () => {
             className="gx-0 my-3">
             <Col
                 lg={3}
-                md={6}
-                sm={12}
+                md={12}
                 className="text-center">
                 <img
                     src={user?.portrait}
                     alt={`${user?.name}'s portrait`}
                     className="w-50 my-3 border border-2 rounded-circle" />
-                <br />
-                <SignOut />
             </Col>
             <Col
                 lg={9}
-                md={6}
-                sm={12}>
+                md={12}>
                 <Form
                     className="my-3 mx-5"
                     onSubmit={onSubmit}>
@@ -153,12 +149,13 @@ const Account = () => {
                     <Button
                         variant="primary"
                         type="submit"
-                        className="my-3"
+                        className="m-2"
                         disabled={!canSave}>
                         <DeviceSsd
                             className="mx-2" />
-                        Save
+                        Save Preferences
                     </Button>
+                    <SignOut />
                 </Form>
             </Col>
         </Row>

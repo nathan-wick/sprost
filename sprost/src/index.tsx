@@ -16,6 +16,7 @@ const root = ReactDOM.createRoot(
 const Initial = () => {
   const user = useContext(UserContext);
   const initialView = user ? <Navigation /> : <Landing />;
+  
   return <div
     className={user?.theme.name === `dark` ?  `bg-dark text-light` : `bg-light text-dark`}
     style={{ height: `100vh` }}>
