@@ -6,4 +6,4 @@ export declare interface User {
     email?: string,
     portrait?: string,
     theme: Color,
-};
+}
