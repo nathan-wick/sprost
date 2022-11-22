@@ -1,9 +1,10 @@
+import React from "react";
 import SignIn from "../modals/SignIn";
 
 const Landing = () => {
-    return <>
-        <SignIn />
-    </>
-}
+	return <>
+		<SignIn />
+	</>;
+};
 
 export default Landing;
