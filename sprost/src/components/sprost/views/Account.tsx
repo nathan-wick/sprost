@@ -12,7 +12,9 @@ const Account = () => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
 	const [ nameInput, setNameInput ] = useState<string>();
+	const [ nameError, setNameError ] = useState<string>();
 	const [ emailInput, setEmailInput ] = useState<string>();
+	const [ emailError, setEmailError ] = useState<string>();
 	const [ themeInput, setThemeInput ] = useState<Color>();
 	const [ canSave, setCanSave ] = useState<boolean>(false);
 
@@ -40,15 +42,35 @@ const Account = () => {
         emailInput === user?.email &&
         themeInput === user?.theme ?
 			setCanSave(false) :
-			setCanSave(true);
-	}, [ user, emailInput, nameInput, themeInput ]);
+			nameError || emailError ?
+				setCanSave(false) :
+				setCanSave(true);
+	}, [ user, emailInput, nameInput, themeInput, nameError, emailError ]);
 
 	const onNameChange = (event: { target: { value: string; }; }) => {
-		setNameInput(event.target.value);
+		if (event.target.value) {
+			if (event.target.value.match(/^[a-zA-Z\s]*$/g)) {
+				setNameInput(event.target.value);
+				setNameError(undefined);
+			} else {
+				setNameError("Please use only letters and spaces");
+			}
+		} else {
+			setNameError("Please enter a name");
+		}
 	};
 
 	const onEmailChange = (event: { target: { value: string; }; }) => {
-		setEmailInput(event.target.value);
+		if (event.target.value) {
+			if (event.target.value.match(/^\S+@\S+\.\S+$/)) {
+				setEmailInput(event.target.value);
+				setEmailError(undefined);
+			} else {
+				setEmailError("Please enter a valid email");
+			}
+		} else {
+			setEmailError("Please enter an email");
+		}
 	};
 
 	const onThemeChange = (event: { target: { value: string; }; }) => {
@@ -84,6 +106,7 @@ const Account = () => {
 				<img
 					src={user?.portrait}
 					alt={`${user?.name}'s portrait`}
+					referrerPolicy="no-referrer"
 					className="w-50 my-3 border border-2 rounded-circle" />
 			</Col>
 			<Col
@@ -104,7 +127,15 @@ const Account = () => {
 							type="text"
 							placeholder="Enter name"
 							onChange={onNameChange}
-							defaultValue={user?.name} />
+							defaultValue={user?.name}
+							maxLength={50} />
+						{
+							nameError &&
+								<p
+									className="text-danger">
+									{nameError}
+								</p>
+						}
 					</Form.Group>
 					<Form.Group
 						className="my-3">
@@ -118,7 +149,15 @@ const Account = () => {
 							type="email"
 							placeholder="Enter email"
 							onChange={onEmailChange}
-							defaultValue={user?.email} />
+							defaultValue={user?.email}
+							maxLength={50} />
+						{
+							emailError &&
+								<p
+									className="text-danger">
+									{emailError}
+								</p>
+						}
 					</Form.Group>
 					<Form.Group
 						className="my-3">
