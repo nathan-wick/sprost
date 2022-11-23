@@ -1,14 +1,13 @@
 import { doc, Firestore, setDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { Bookmarks, DeviceSsd, Envelope, Eye } from "react-bootstrap-icons";
+import { Bookmarks, DeviceSsd, Envelope, Eye, Gear } from "react-bootstrap-icons";
 import { Color } from "../../../types/Color";
 import { User } from "../../../types/User";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
-import SignOut from "../SignOut";
 
-const Account = () => {
+const Settings = () => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
 	const [ nameInput, setNameInput ] = useState<string>();
@@ -17,8 +16,6 @@ const Account = () => {
 	const [ emailError, setEmailError ] = useState<string>();
 	const [ themeInput, setThemeInput ] = useState<Color>();
 	const [ canSave, setCanSave ] = useState<boolean>(false);
-
-	// TODO: Input Validation
 
 	const themeOptions = [
 		{
@@ -93,7 +90,9 @@ const Account = () => {
 	return <>
 		<h1
 			className="my-3 mx-5">
-            Account
+			<Gear
+				className="mx-3" />
+            Settings
 		</h1>
 		<hr
 			className="my-3 mx-5" />
@@ -187,13 +186,12 @@ const Account = () => {
 						disabled={!canSave}>
 						<DeviceSsd
 							className="mx-2" />
-                        Save Preferences
+                        Save Settings
 					</Button>
-					<SignOut />
 				</Form>
 			</Col>
 		</Row>
 	</>;
 };
 
-export default Account;
+export default Settings;
