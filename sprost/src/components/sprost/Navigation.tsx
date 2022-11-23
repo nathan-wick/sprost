@@ -1,98 +1,103 @@
 import React, { useContext, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
-import { List, PersonCircle, Speedometer, WindowStack, X } from "react-bootstrap-icons";
-import { UserContext } from "../User";
-import Account from "./views/Account";
-import Apps from "./views/Apps";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { BoxArrowRight, Gear, PersonCircle, PlusCircle, Robot, Speedometer, WindowStack } from "react-bootstrap-icons";
+import Settings from "./views/Settings";
 import Dashboard from "./views/Dashboard";
+import { UserContext } from "../User";
+import { AuthenticationContext } from "../Authentication";
+import { Auth, signOut } from "firebase/auth";
 
 const Navigation = () => {
+	const authentication = useContext(AuthenticationContext);
 	const user = useContext(UserContext);
 	const [ currentView, setCurrentView ] = useState<JSX.Element>(<Dashboard />);
-	const [ openNavigation, setOpenNavigation ] = useState<boolean>(false);
 
-	// TODO: Fix background color when user scrolls all the way to the bottom
-	
-	const newNav = <>
-		<Row
-			className="gx-0 sticky-top">
-			<Col
-				sm={12}
-				className="bg-primary rounded">
-				<h1
-					className="my-2 text-white">
-					<Button
-						variant="light"
-						size="lg"
-						className="mx-4"
-						onClick={() => setOpenNavigation(openNavigation ? false : true)}>
-						{openNavigation ? <X className="mx-2" /> : <List className="mx-2" />}
-						Menu
-					</Button>
+	return <>
+		<Navbar
+			bg={user?.theme.name === "dark" ? "black" : "white"}
+			variant={user?.theme.name === "dark" ? "dark" : "light"}
+			expand="lg"
+			className="border-bottom rounded">
+			<Container>
+				<Navbar.Brand>
 					Sprost
-				</h1>
-			</Col>
-		</Row>
-		<Row
-			className="gx-0"
-			style={{ minHeight: "100vh" }}>
-			{
-				openNavigation &&
-					<Col
-						lg={3}
-						md={4}
-						sm={12}
-						className={`rounded ${user?.theme.name === "dark" ? "bg-black" : "bg-white"}`}>
-						<div className="m-2">
-							<Button
-								variant={user?.theme.name === "dark" ? "dark" : "light"}
-								size="lg"
-								className="w-100 my-2"
-								style={{ textAlign: "left" }}
-								onClick={() => {
-									setCurrentView(<Dashboard />);
-									setOpenNavigation(false);
-								}}>
-								<Speedometer
-									className="mx-2" />
-								Dashboard
-							</Button>
-							<Button
-								variant={user?.theme.name === "dark" ? "dark" : "light"}
-								size="lg"
-								className="w-100 my-2"
-								style={{ textAlign: "left" }}
-								onClick={() => {
-									setCurrentView(<Account />);
-									setOpenNavigation(false);
-								}}>
-								<PersonCircle
-									className="mx-2" />
-								Account
-							</Button>
-							<Button
-								variant={user?.theme.name === "dark" ? "dark" : "light"}
-								size="lg"
-								className="w-100 my-2"
-								style={{ textAlign: "left" }}
-								onClick={() => {
-									setCurrentView(<Apps />);
-									setOpenNavigation(false);
-								}}>
+				</Navbar.Brand>
+				<Navbar.Toggle 
+					aria-controls="basic-navbar-nav" />
+				<Navbar.Collapse
+					id="basic-navbar-nav">
+					<Nav
+						className="me-auto">
+						<Nav.Link
+							onClick={() => {
+								setCurrentView(<Dashboard />);
+							}}>
+							<Speedometer
+								className="mx-2" />
+							Dashboard
+						</Nav.Link>
+						<NavDropdown
+							title={[
 								<WindowStack
+									key={1}
+									className="mx-2" />,
+								"Apps",
+							]}
+							id="basic-nav-dropdown">
+							<NavDropdown.Item>
+								<Robot
 									className="mx-2" />
-								Apps
-							</Button>
-						</div>
-					</Col>
-			}
-			<Col>
-				{currentView}
-			</Col>
-		</Row>
-	</>;
-
-	return newNav;
+								Example App
+							</NavDropdown.Item>
+							<NavDropdown.Divider />
+							<NavDropdown.Item>
+								<PlusCircle
+									className="mx-2" />
+								New App
+							</NavDropdown.Item>
+						</NavDropdown>
+					</Nav>
+					<Nav>
+						<NavDropdown
+							title={[
+								user?.portrait ?
+									<img
+										src={user.portrait}
+										height={20}
+										width={20}
+										className="mx-2 border rounded-circle"
+										referrerPolicy="no-referrer"
+										alt="Account Portrait" /> :
+									<PersonCircle
+										key={1}
+										className="mx-2" />,
+								"Account",
+							]}
+							id="basic-nav-dropdown">
+							<NavDropdown.Item
+								onClick={() => {
+									setCurrentView(<Settings />);
+								}}>
+								<Gear
+									className="mx-2" />
+								Settings
+							</NavDropdown.Item>
+							<NavDropdown.Divider />
+							<NavDropdown.Item
+								onClick={() => {
+									signOut(authentication as Auth);
+								}}>
+								<BoxArrowRight
+									className="mx-2" />
+								Sign Out
+							</NavDropdown.Item>
+						</NavDropdown>
+					</Nav>
+				</Navbar.Collapse>
+			</Container>
+		</Navbar>
+		{currentView}
+	</>; 
 };
 
 export default Navigation;
