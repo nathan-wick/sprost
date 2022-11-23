@@ -15,10 +15,10 @@ const Navigation = () => {
 	
 	const newNav = <>
 		<Row
-			className="gx-0">
+			className="gx-0 sticky-top">
 			<Col
 				sm={12}
-				className="sticky-top bg-primary rounded">
+				className="bg-primary rounded">
 				<h1
 					className="my-2 text-white">
 					<Button
@@ -34,14 +34,15 @@ const Navigation = () => {
 			</Col>
 		</Row>
 		<Row
-			className="gx-0">
+			className="gx-0"
+			style={{ minHeight: "100vh" }}>
 			{
 				openNavigation &&
 					<Col
 						lg={3}
 						md={4}
 						sm={12}
-						className={`sticky-top rounded ${user?.theme.name === "dark" ? "bg-black" : "bg-white"}`}>
+						className={`rounded ${user?.theme.name === "dark" ? "bg-black" : "bg-white"}`}>
 						<div className="m-2">
 							<Button
 								variant={user?.theme.name === "dark" ? "dark" : "light"}
