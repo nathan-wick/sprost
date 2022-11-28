@@ -37,7 +37,7 @@ const SignIn = () => {
 	return <>
 		<Button 
 			variant="primary"
-			size="lg"
+			size="sm"
 			disabled={modal}
 			onClick={showModal}>
 			<PersonCircle
