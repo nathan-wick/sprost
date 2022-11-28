@@ -1,4 +1,4 @@
-import { doc, Firestore, setDoc } from "firebase/firestore";
+import { doc, Firestore, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Bookmarks, DeviceSsd, Envelope, Eye, Gear } from "react-bootstrap-icons";
@@ -83,21 +83,25 @@ const Settings = () => {
 				theme: themeInput,
 			};
 			const userReference = doc(database as Firestore, "users", user.id);
-			await setDoc(userReference, userInputData, { merge: true });
+			await updateDoc(userReference, userInputData);
 		}
 	};
 
-	return <>
-		<h1
-			className="my-3 mx-5">
-			<Gear
-				className="mx-3" />
-            Settings
-		</h1>
-		<hr
-			className="my-3 mx-5" />
+	return <div
+		className={`m-5 shadow rounded bg-${user?.theme.name === "dark" ? "black" : "white"}`}>
 		<Row
-			className="gx-0 my-3">
+			className="gx-0">
+			<Col>
+				<h1
+					className="m-3">
+					<Gear
+						className="mx-2" />
+					Settings
+				</h1>
+			</Col>
+		</Row>
+		<Row
+			className="gx-0">
 			<Col
 				lg={3}
 				md={12}
@@ -112,10 +116,10 @@ const Settings = () => {
 				lg={9}
 				md={12}>
 				<Form
-					className="my-3 mx-5"
+					className="m-3"
 					onSubmit={onSubmit}>
 					<Form.Group
-						className="my-3">
+						className="m-3">
 						<Form.Label>
 							<Bookmarks
 								className="mx-2" />
@@ -137,7 +141,7 @@ const Settings = () => {
 						}
 					</Form.Group>
 					<Form.Group
-						className="my-3">
+						className="m-3">
 						<Form.Label>
 							<Envelope
 								className="mx-2" />
@@ -159,7 +163,7 @@ const Settings = () => {
 						}
 					</Form.Group>
 					<Form.Group
-						className="my-3">
+						className="m-3">
 						<Form.Label>
 							<Eye
 								className="mx-2" />
@@ -191,7 +195,7 @@ const Settings = () => {
 				</Form>
 			</Col>
 		</Row>
-	</>;
+	</div>;
 };
 
 export default Settings;
