@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { BoxArrowRight, Gear, PersonCircle, PlusCircle, Robot, Speedometer, WindowStack } from "react-bootstrap-icons";
+import { BoxArrowRight, Gear, PersonCircle, Robot, RocketTakeoffFill, Speedometer, WindowStack } from "react-bootstrap-icons";
 import Settings from "./views/Settings";
 import Dashboard from "./views/Dashboard";
 import { UserContext } from "../User";
 import { AuthenticationContext } from "../Authentication";
 import { Auth, signOut } from "firebase/auth";
+import NewApp from "./modals/NewApp";
 
 const Navigation = () => {
 	const authentication = useContext(AuthenticationContext);
@@ -17,9 +18,12 @@ const Navigation = () => {
 			bg={user?.theme.name === "dark" ? "black" : "white"}
 			variant={user?.theme.name === "dark" ? "dark" : "light"}
 			expand="lg"
-			className="border-bottom rounded">
+			className="shadow rounded">
 			<Container>
-				<Navbar.Brand>
+				<Navbar.Brand
+					className="text-primary">
+					<RocketTakeoffFill
+						className="mx-2" />
 					Sprost
 				</Navbar.Brand>
 				<Navbar.Toggle 
@@ -44,17 +48,22 @@ const Navigation = () => {
 								"Apps",
 							]}
 							id="basic-nav-dropdown">
-							<NavDropdown.Item>
-								<Robot
-									className="mx-2" />
-								Example App
-							</NavDropdown.Item>
+							{
+								user?.apps?.map((app, index) =>
+									<NavDropdown.Item
+										key={index}>
+										<Robot
+											className="mx-2" />
+										{app.name}
+										{" "}
+										<small
+											className="text-muted">
+											v{app.version.major}.{app.version.minor}.{app.version.patch}
+										</small>
+									</NavDropdown.Item>)
+							}
 							<NavDropdown.Divider />
-							<NavDropdown.Item>
-								<PlusCircle
-									className="mx-2" />
-								New App
-							</NavDropdown.Item>
+							<NewApp />
 						</NavDropdown>
 					</Nav>
 					<Nav>
@@ -62,6 +71,7 @@ const Navigation = () => {
 							title={[
 								user?.portrait ?
 									<img
+										key={1}
 										src={user.portrait}
 										height={20}
 										width={20}
@@ -69,7 +79,7 @@ const Navigation = () => {
 										referrerPolicy="no-referrer"
 										alt="Account Portrait" /> :
 									<PersonCircle
-										key={1}
+										key={2}
 										className="mx-2" />,
 								"Account",
 							]}
