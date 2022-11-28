@@ -31,6 +31,7 @@ const UserContextProvider = (props: any) => {
 						email: userSnapshot.data()?.email,
 						portrait: userSnapshot.data()?.portrait,
 						theme: userSnapshot.data()?.theme,
+						apps: userSnapshot.data()?.apps,
 					};
 					setUser(userFromDatabase);
 					console.log("Got User ", user);

@@ -1,3 +1,4 @@
+import { App } from "./App";
 import { Color } from "./Color";
 
 export declare interface User {
@@ -6,19 +7,5 @@ export declare interface User {
     name?: string,
     email?: string,
     portrait?: string,
-    apps?: [{
-        id: string,
-        name: string,
-        version: string,
-        navigation: {
-            views?: [string],
-        },
-        views?: [{
-            id: string,
-            name: string,
-            components?: [{
-                type: "heading" | "paragraph",
-            }],
-        }],
-    }],
+    apps?: App[],
 }
