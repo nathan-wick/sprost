@@ -12,7 +12,7 @@ const NewApp = () => {
 	const user = useContext(UserContext);
 	const [ modal, setModal ] = useState<boolean>(false);
 	const [ nameInput, setNameInput ] = useState<string>();
-	const [ nameError, setNameError ] = useState<string>();
+	const [ nameError, setNameError ] = useState<string | undefined>("Please enter an app name");
 	const [ canSave, setCanSave ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
 	const hideModal = () => setModal(false);
@@ -24,10 +24,14 @@ const NewApp = () => {
 	const onNameChange = (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
 			if (event.target.value.match(/^[a-zA-Z\s]*$/g)) {
-				setNameInput(event.target.value);
-				setNameError(undefined);
+				if (!user?.apps?.find(app => app.name === event.target.value)) {
+					setNameInput(event.target.value);
+					setNameError(undefined);
+				} else {
+					setNameError("Please enter a unique app name");
+				}
 			} else {
-				setNameError("Please use only letters and spaces");
+				setNameError("Please enter only letters and spaces");
 			}
 		} else {
 			setNameError("Please enter an app name");
@@ -65,8 +69,7 @@ const NewApp = () => {
 			show={modal}
 			onHide={hideModal}
 			className="text-dark">
-			<Modal.Header
-				closeButton>
+			<Modal.Header>
 				<Modal.Title>
 					<PlusCircle
 						className="mx-2" />
@@ -84,26 +87,40 @@ const NewApp = () => {
 						<Form.Control
 							className={user?.theme.name === "dark" ? "bg-black text-light" : "bg-white text-dark"}
 							type="text"
-							placeholder="Enter an app name"
+							defaultValue={nameInput}
 							onChange={onNameChange}
 							maxLength={50} />
 						{
-							nameError &&
+							nameError ?
 								<p
 									className="text-danger">
 									{nameError}
+								</p> :
+								<p
+									className="text-success">
+									{nameInput} is a valid app name
 								</p>
 						}
 					</FormGroup>
 				</Form>
+				<p
+					className="text-muted">
+					An app name cannot be changed after creation. The app name you enter now will be permanent.
+				</p>
 			</Modal.Body>
 			<Modal.Footer>
+				<Button
+					variant="outline-secondary"
+					className="m-2"
+					onClick={hideModal}>
+					Cancel
+				</Button>
 				<Button
 					variant="primary"
 					className="m-2"
 					disabled={!canSave}
 					onClick={onSubmit}>
-					Continue
+					Create {nameInput}
 				</Button>
 			</Modal.Footer>
 		</Modal>
