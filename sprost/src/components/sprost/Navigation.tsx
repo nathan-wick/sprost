@@ -73,11 +73,6 @@ const Navigation = () => {
 													<Robot
 														className="mx-2" />
 													{app.name}
-													{" "}
-													<small
-														className="text-muted">
-														v{app.version.major}.{app.version.minor}.{app.version.patch}
-													</small>
 												</NavDropdown.Item>)
 										}
 										<NavDropdown.Divider />
