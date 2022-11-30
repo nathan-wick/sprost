@@ -30,7 +30,7 @@ const Navigation = () => {
 			bg={user?.theme.name === "dark" ? "black" : "white"}
 			variant={user?.theme.name === "dark" ? "dark" : "light"}
 			expand="lg"
-			className="shadow rounded">
+			className="bg-gradient shadow rounded">
 			<Container>
 				<Navbar.Brand
 					className="text-primary">
