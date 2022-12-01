@@ -12,6 +12,7 @@ const NewApp = () => {
 	const user = useContext(UserContext);
 	const [ modal, setModal ] = useState<boolean>(false);
 	const [ nameInput, setNameInput ] = useState<string>();
+	const [ nameId, setNameId ] = useState<string>();
 	const [ nameError, setNameError ] = useState<string | undefined>("Please enter an app name");
 	const [ canSave, setCanSave ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
@@ -24,8 +25,10 @@ const NewApp = () => {
 	const onNameChange = (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
 			if (event.target.value.match(/^[a-zA-Z\s]*$/g)) {
-				if (!user?.apps?.find(app => app.name === event.target.value)) {
+				const newNameId = event.target.value.toLowerCase().replaceAll(" ", "-");
+				if (!user?.apps?.find(app => app.id === newNameId)) {
 					setNameInput(event.target.value);
+					setNameId(newNameId);
 					setNameError(undefined);
 				} else {
 					setNameError("Please enter a unique app name");
@@ -42,6 +45,7 @@ const NewApp = () => {
 		event.preventDefault();
 		if (user) {
 			const appData: App = {
+				id: String(nameId),
 				name: String(nameInput),
 				version: {
 					major: 0,
@@ -105,7 +109,11 @@ const NewApp = () => {
 				</Form>
 				<p
 					className="text-muted">
-					An app name cannot be changed after creation. The app name you enter now will be permanent.
+					App ID: {nameId}
+				</p>
+				<p
+					className="text-muted">
+					App name and ID cannot be changed after creation.
 				</p>
 			</Modal.Body>
 			<Modal.Footer>
