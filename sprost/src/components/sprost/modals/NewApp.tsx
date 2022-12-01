@@ -12,7 +12,7 @@ const NewApp = () => {
 	const user = useContext(UserContext);
 	const [ modal, setModal ] = useState<boolean>(false);
 	const [ nameInput, setNameInput ] = useState<string>();
-	const [ nameId, setNameId ] = useState<string>();
+	const [ nameRoute, setNameRoute ] = useState<string>();
 	const [ nameError, setNameError ] = useState<string | undefined>("Please enter an app name");
 	const [ canSave, setCanSave ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
@@ -25,10 +25,10 @@ const NewApp = () => {
 	const onNameChange = (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
 			if (event.target.value.match(/^[a-zA-Z\s]*$/g)) {
-				const newNameId = event.target.value.toLowerCase().replaceAll(" ", "-");
-				if (!user?.apps?.find(app => app.id === newNameId)) {
+				const newNameRoute = event.target.value.toLowerCase().replaceAll(" ", "-");
+				if (!user?.apps?.find(app => app.route === newNameRoute)) {
 					setNameInput(event.target.value);
-					setNameId(newNameId);
+					setNameRoute(newNameRoute);
 					setNameError(undefined);
 				} else {
 					setNameError("Please enter a unique app name");
@@ -45,7 +45,7 @@ const NewApp = () => {
 		event.preventDefault();
 		if (user) {
 			const appData: App = {
-				id: String(nameId),
+				route: String(nameRoute),
 				name: String(nameInput),
 				version: {
 					major: 0,
@@ -109,11 +109,11 @@ const NewApp = () => {
 				</Form>
 				<p
 					className="text-muted">
-					App ID: {nameId}
+					App Route: {nameRoute}
 				</p>
 				<p
 					className="text-muted">
-					App name and ID cannot be changed after creation.
+					App name and route cannot be changed after creation.
 				</p>
 			</Modal.Body>
 			<Modal.Footer>
