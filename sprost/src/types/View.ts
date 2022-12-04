@@ -1,5 +1,5 @@
 export declare interface View {
-    id: string,
+    route: string,
     name: string,
     type: "information",
 }
