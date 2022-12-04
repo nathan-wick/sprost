@@ -10,10 +10,12 @@ import NewApp from "./modals/NewApp";
 import Landing from "./views/Landing";
 import SignIn from "./modals/SignIn";
 import App from "./views/App";
+import { AppsContext } from "../Apps";
 
 const Navigation = () => {
 	const authentication = useContext(AuthenticationContext);
 	const user = useContext(UserContext);
+	const apps = useContext(AppsContext);
 	const [ currentView, setCurrentView ] = useState<JSX.Element>(<Landing />);
 
 	useEffect(() => {
@@ -64,9 +66,9 @@ const Navigation = () => {
 										]}
 										id="basic-nav-dropdown">
 										{
-											user?.apps?.map((app, index) =>
+											apps?.map(app =>
 												<NavDropdown.Item
-													key={index}
+													key={app.route}
 													onClick={() => {
 														setCurrentView(<App app={app} />);
 													}}>

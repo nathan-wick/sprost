@@ -7,6 +7,7 @@ import Authentication from "./components/Authentication";
 import Database from "./components/Database";
 import User from "./components/User";
 import Navigation from "./components/sprost/Navigation";
+import Apps from "./components/Apps";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,7 +20,9 @@ root.render(
 				<Database>
 					<Authentication>
 						<User>
-							<Navigation />
+							<Apps>
+								<Navigation />
+							</Apps>
 						</User>
 					</Authentication>
 				</Database>

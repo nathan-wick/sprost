@@ -11,7 +11,7 @@ const UserContextProvider = (props: any) => {
 	const authentication = useContext(AuthenticationContext);
 	const database = useContext(DatabaseContext);
 	const [ authenticatedUser, setAuthenticatedUser ] = useState<AuthenticatedUser | null>(null);
-	const [ user, setUser ] = useState<User | undefined>(undefined);
+	const [ user, setUser ] = useState<User>();
 
 	onAuthStateChanged(authentication as Auth, (newAuthenticatedUser) => {
 		newAuthenticatedUser ?
@@ -23,18 +23,17 @@ const UserContextProvider = (props: any) => {
 		if (authenticatedUser) {
 			const userReference = doc(database as Firestore, "users", authenticatedUser.uid);
 			onSnapshot(userReference, async (userSnapshot) => {
-				if (userSnapshot.data()) {
+				const userData = userSnapshot.data();
+				if (userData) {
 					// Get User
 					const userFromDatabase: User = {
-						id: userSnapshot.data()?.id,
-						name: userSnapshot.data()?.name,
-						email: userSnapshot.data()?.email,
-						portrait: userSnapshot.data()?.portrait,
-						theme: userSnapshot.data()?.theme,
-						apps: userSnapshot.data()?.apps,
+						id: userData.id,
+						name: userData.name,
+						email: userData.email,
+						portrait: userData.portrait,
+						theme: userData.theme,
 					};
 					setUser(userFromDatabase);
-					console.log("Got User ", user);
 				} else {
 					// Initialize User
 					const initialUserData: Partial<User> = {
@@ -44,12 +43,13 @@ const UserContextProvider = (props: any) => {
 						portrait: authenticatedUser.photoURL ? authenticatedUser.photoURL : undefined,
 						theme: { name: "light" },
 					};
-					await setDoc(userReference, initialUserData, { merge: true });
-					console.log("Initialized User ", initialUserData);
+					await setDoc(userReference, initialUserData);
 				}
 			});
 		}
 	}, [ authenticatedUser ]);
+
+	useEffect(() => console.log("Got User ", user), [ user ]);
 
 	return <UserContext.Provider value={user}>
 		{props.children}

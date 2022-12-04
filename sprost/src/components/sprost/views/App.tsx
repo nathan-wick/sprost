@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { DeviceSsd, Eye, InfoCircle, Pencil, PlusCircle, RocketTakeoffFill, Trash, Window, WindowStack } from "react-bootstrap-icons";
+import { DeviceSsd, Eye, InfoCircle, Pencil, RocketTakeoffFill, Trash, Window, WindowStack } from "react-bootstrap-icons";
 import { UserContext } from "../../User";
 
 const App = (props: any) => {
@@ -85,13 +85,9 @@ const App = (props: any) => {
 				</h1>
 			</Col>
 			<Col>
-				<Button
-					className="w-100 shadow"
-					variant="outline-primary">
-					<PlusCircle
-						className="mx-2" />
-					New View
-				</Button>
+				{
+					// TODO NewView
+				}
 			</Col>
 		</Row>
 		<Row

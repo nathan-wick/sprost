@@ -1,14 +1,11 @@
-import { doc, Firestore, setDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Form, FormGroup, Modal, NavDropdown } from "react-bootstrap";
+import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { Bookmarks, PlusCircle } from "react-bootstrap-icons";
 import { App } from "../../../types/App";
 import { AppsContext } from "../../Apps";
-import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
 
-const NewApp = () => {
-	const database = useContext(DatabaseContext);
+const NewView = (appRoute: string) => {
 	const user = useContext(UserContext);
 	const apps = useContext(AppsContext);
 	const [ modal, setModal ] = useState<boolean>(false);
@@ -18,6 +15,8 @@ const NewApp = () => {
 	const [ canSave, setCanSave ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
 	const hideModal = () => setModal(false);
+
+	console.log(appRoute);
 
 	useEffect(() => {
 		setCanSave(!!nameInput && !nameError);
@@ -32,41 +31,30 @@ const NewApp = () => {
 					setNameRoute(newNameRoute);
 					setNameError(undefined);
 				} else {
-					setNameError("Please enter a unique app name");
+					setNameError("Please enter a unique view name");
 				}
 			} else {
 				setNameError("Please enter only letters and spaces");
 			}
 		} else {
-			setNameError("Please enter an app name");
+			setNameError("Please enter a view name");
 		}
 	};
 
 	const onSubmit = async (event: { preventDefault: () => void; }) => {
 		event.preventDefault();
-		if (user) {
-			const appData: App = {
-				route: String(nameRoute),
-				name: String(nameInput),
-				version: {
-					major: 0,
-					minor: 0,
-					patch: 0,
-				},
-			};
-			const appReference = doc(database as Firestore, "users", user.id, "apps", appData.route);
-			await setDoc(appReference, appData);
-			hideModal();
-		}
+		// TODO Create new view
 	};
 	
 	return <>
-		<NavDropdown.Item
+		<Button
+			className="w-100 shadow"
+			variant="outline-primary"
 			onClick={showModal}>
 			<PlusCircle
 				className="mx-2" />
-			New App
-		</NavDropdown.Item>
+            New View
+		</Button>
 
 		<Modal 
 			show={modal}
@@ -76,7 +64,7 @@ const NewApp = () => {
 				<Modal.Title>
 					<PlusCircle
 						className="mx-2" />
-					New App
+					New View
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
@@ -85,7 +73,7 @@ const NewApp = () => {
 						<Form.Label>
 							<Bookmarks
 								className="mx-2" />
-                            App Name
+                            View Name
 						</Form.Label>
 						<Form.Control
 							className={user?.theme.name === "dark" ? "bg-black text-light" : "bg-white text-dark"}
@@ -101,18 +89,18 @@ const NewApp = () => {
 								</p> :
 								<p
 									className="text-success">
-									{nameInput} is a valid app name
+									{nameInput} is a valid view name
 								</p>
 						}
 					</FormGroup>
 				</Form>
 				<p
 					className="text-muted">
-					App Route: {nameRoute}
+					View Route: {nameRoute}
 				</p>
 				<p
 					className="text-muted">
-					App name and route cannot be changed after creation.
+					View name and route cannot be changed after creation.
 				</p>
 			</Modal.Body>
 			<Modal.Footer>
@@ -134,4 +122,4 @@ const NewApp = () => {
 	</>;
 };
 
-export default NewApp;
+export default NewView;
