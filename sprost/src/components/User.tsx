@@ -22,8 +22,8 @@ const UserContextProvider = (props: any) => {
 	useEffect(() => {
 		if (authenticatedUser) {
 			const userReference = doc(database as Firestore, "users", authenticatedUser.uid);
-			onSnapshot(userReference, async (userSnapshot) => {
-				const userData = userSnapshot.data();
+			onSnapshot(userReference, async (userDocument) => {
+				const userData = userDocument.data();
 				if (userData) {
 					// Get User
 					const userFromDatabase: User = {

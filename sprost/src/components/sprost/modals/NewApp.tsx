@@ -1,5 +1,5 @@
 import { doc, Firestore, setDoc } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal, NavDropdown } from "react-bootstrap";
 import { Bookmarks, PlusCircle } from "react-bootstrap-icons";
 import { App } from "../../../types/App";
@@ -15,13 +15,9 @@ const NewApp = () => {
 	const [ nameInput, setNameInput ] = useState<string>();
 	const [ nameRoute, setNameRoute ] = useState<string>();
 	const [ nameError, setNameError ] = useState<string | undefined>("Please enter an app name");
-	const [ canSave, setCanSave ] = useState<boolean>(false);
+	const [ isLoading, setIsLoading ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
 	const hideModal = () => setModal(false);
-
-	useEffect(() => {
-		setCanSave(!!nameInput && !nameError);
-	}, [ nameInput, nameError ]);
 
 	const onNameChange = (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
@@ -42,7 +38,15 @@ const NewApp = () => {
 		}
 	};
 
+	const reset = () => {
+		setNameInput(undefined);
+		setNameRoute(undefined);
+		setNameError("Please enter an app name");
+		setIsLoading(false);
+	};
+
 	const onSubmit = async (event: { preventDefault: () => void; }) => {
+		setIsLoading(true);
 		event.preventDefault();
 		if (user) {
 			const appData: App = {
@@ -56,8 +60,9 @@ const NewApp = () => {
 			};
 			const appReference = doc(database as Firestore, "users", user.id, "apps", appData.route);
 			await setDoc(appReference, appData);
-			hideModal();
 		}
+		hideModal();
+		reset();
 	};
 	
 	return <>
@@ -72,7 +77,8 @@ const NewApp = () => {
 			show={modal}
 			onHide={hideModal}
 			className="text-dark">
-			<Modal.Header>
+			<Modal.Header
+				className="bg-primary bg-gradient text-white">
 				<Modal.Title>
 					<PlusCircle
 						className="mx-2" />
@@ -125,9 +131,13 @@ const NewApp = () => {
 				<Button
 					variant="primary"
 					className="m-2"
-					disabled={!canSave}
+					disabled={!nameInput || !!nameError || isLoading}
 					onClick={onSubmit}>
-					Create {nameInput}
+					{
+						isLoading ?
+							<>Loading...</> :
+							<>Create {nameInput}</>
+					}
 				</Button>
 			</Modal.Footer>
 		</Modal>

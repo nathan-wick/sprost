@@ -14,11 +14,11 @@ const AppsContextProvider = (props: any) => {
 	useEffect(() => {
 		if (user) {
 			// Get User's Apps
-			const appsFromDatabase: App[] = [];
 			const appsReference = collection(database as Firestore, "users", user.id, "apps");
 			onSnapshot(appsReference, (appsSnapshot) => {
-				appsSnapshot.forEach((appSnapshot) => {
-					const appData = appSnapshot.data();
+				const appsFromDatabase: App[] = [];
+				appsSnapshot.forEach((appDocument) => {
+					const appData = appDocument.data();
 					const appFromDatabase: App = {
 						route: appData.route,
 						name: appData.name,
