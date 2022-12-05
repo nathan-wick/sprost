@@ -72,12 +72,9 @@ const Navigation = () => {
 													onClick={() => {
 														setCurrentView(<App app={app} />);
 													}}>
-													<Robot
-														className="mx-2" />
 													{app.name}
 												</NavDropdown.Item>)
 										}
-										<NavDropdown.Divider />
 										<NewApp />
 									</NavDropdown>
 								</>

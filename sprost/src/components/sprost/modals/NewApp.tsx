@@ -1,7 +1,7 @@
 import { doc, Firestore, setDoc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal, NavDropdown } from "react-bootstrap";
-import { Bookmarks, PlusCircle } from "react-bootstrap-icons";
+import { PlusCircle, Signpost, Tag } from "react-bootstrap-icons";
 import { App } from "../../../types/App";
 import { AppsContext } from "../../Apps";
 import { DatabaseContext } from "../../Database";
@@ -17,7 +17,7 @@ const NewApp = () => {
 	const [ nameError, setNameError ] = useState<string | undefined>("Please enter an app name");
 	const [ isLoading, setIsLoading ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
-	const hideModal = () => setModal(false);
+	const hideModal = () => reset();
 
 	const onNameChange = (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
@@ -28,12 +28,18 @@ const NewApp = () => {
 					setNameRoute(newNameRoute);
 					setNameError(undefined);
 				} else {
+					setNameInput(undefined);
+					setNameRoute(undefined);
 					setNameError("Please enter a unique app name");
 				}
 			} else {
-				setNameError("Please enter only letters and spaces");
+				setNameInput(undefined);
+				setNameRoute(undefined);
+				setNameError("Please enter only letters (a-z) and spaces");
 			}
 		} else {
+			setNameInput(undefined);
+			setNameRoute(undefined);
 			setNameError("Please enter an app name");
 		}
 	};
@@ -43,6 +49,7 @@ const NewApp = () => {
 		setNameRoute(undefined);
 		setNameError("Please enter an app name");
 		setIsLoading(false);
+		setModal(false);
 	};
 
 	const onSubmit = async (event: { preventDefault: () => void; }) => {
@@ -62,7 +69,6 @@ const NewApp = () => {
 			await setDoc(appReference, appData);
 		}
 		hideModal();
-		reset();
 	};
 	
 	return <>
@@ -89,7 +95,7 @@ const NewApp = () => {
 				<Form>
 					<FormGroup>
 						<Form.Label>
-							<Bookmarks
+							<Tag
 								className="mx-2" />
                             App Name
 						</Form.Label>
@@ -112,14 +118,17 @@ const NewApp = () => {
 						}
 					</FormGroup>
 				</Form>
-				<p
-					className="text-muted">
-					App Route: {nameRoute}
-				</p>
-				<p
-					className="text-muted">
-					App name and route cannot be changed after creation.
-				</p>
+				{
+					nameRoute &&
+					<>
+						<p
+							className="text-muted">
+							<Signpost
+								className="mx-2" />
+							App Route: <b>{nameRoute}</b>
+						</p>
+					</>
+				}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button
