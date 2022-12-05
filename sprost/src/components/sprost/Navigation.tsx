@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { BoxArrowRight, Gear, PersonCircle, Robot, RocketTakeoffFill, Speedometer, WindowStack } from "react-bootstrap-icons";
+import { BarChart, BoxArrowRight, Gear, PersonCircle, RocketTakeoffFill, WindowStack } from "react-bootstrap-icons";
 import Settings from "./views/Settings";
 import Dashboard from "./views/Dashboard";
 import { UserContext } from "../User";
@@ -31,6 +31,7 @@ const Navigation = () => {
 		<Navbar
 			bg={user?.theme.name === "dark" ? "black" : "white"}
 			variant={user?.theme.name === "dark" ? "dark" : "light"}
+			sticky="top"
 			expand="lg"
 			className="bg-gradient shadow rounded">
 			<Container>
@@ -53,7 +54,7 @@ const Navigation = () => {
 										onClick={() => {
 											setCurrentView(<Dashboard />);
 										}}>
-										<Speedometer
+										<BarChart
 											className="mx-2" />
 										Dashboard
 									</Nav.Link>
