@@ -1,66 +1,88 @@
-import React, { useContext, useEffect, useState } from "react";
+import { doc, Firestore, setDoc } from "firebase/firestore";
+import React, { useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
-import { Bookmarks, PlusCircle } from "react-bootstrap-icons";
-import { App } from "../../../types/App";
-import { AppsContext } from "../../Apps";
+import { PlusCircle, Signpost, Tag } from "react-bootstrap-icons";
+import { View } from "../../../types/View";
+import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
 
-const NewView = (appRoute: string) => {
+const NewView = (props: any) => {
+	const app = props.app;
+	const views = props.views;
+	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
-	const apps = useContext(AppsContext);
 	const [ modal, setModal ] = useState<boolean>(false);
 	const [ nameInput, setNameInput ] = useState<string>();
 	const [ nameRoute, setNameRoute ] = useState<string>();
-	const [ nameError, setNameError ] = useState<string | undefined>("Please enter an app name");
-	const [ canSave, setCanSave ] = useState<boolean>(false);
+	const [ nameError, setNameError ] = useState<string | undefined>("Please enter a view name");
+	const [ isLoading, setIsLoading ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
-	const hideModal = () => setModal(false);
-
-	console.log(appRoute);
-
-	useEffect(() => {
-		setCanSave(!!nameInput && !nameError);
-	}, [ nameInput, nameError ]);
+	const hideModal = () => reset();
 
 	const onNameChange = (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
 			if (event.target.value.match(/^[a-zA-Z\s]*$/g)) {
 				const newNameRoute = event.target.value.toLowerCase().replaceAll(" ", "-");
-				if (!apps?.find(app => app.route === newNameRoute)) {
+				if (!views?.find((view: { route: string; }) => view.route === newNameRoute)) {
 					setNameInput(event.target.value);
 					setNameRoute(newNameRoute);
 					setNameError(undefined);
 				} else {
+					setNameInput(undefined);
+					setNameRoute(undefined);
 					setNameError("Please enter a unique view name");
 				}
 			} else {
-				setNameError("Please enter only letters and spaces");
+				setNameInput(undefined);
+				setNameRoute(undefined);
+				setNameError("Please enter only letters (a-z) and spaces");
 			}
 		} else {
+			setNameInput(undefined);
+			setNameRoute(undefined);
 			setNameError("Please enter a view name");
 		}
 	};
 
+	const reset = () => {
+		setNameInput(undefined);
+		setNameRoute(undefined);
+		setNameError("Please enter a view name");
+		setIsLoading(false);
+		setModal(false);
+	};
+
 	const onSubmit = async (event: { preventDefault: () => void; }) => {
+		setIsLoading(true);
 		event.preventDefault();
-		// TODO Create new view
+		if (user) {
+			const viewData: View = {
+				route: String(nameRoute),
+				name: String(nameInput),
+				type: "information",
+			};
+			const appReference = doc(database as Firestore, "users", user.id, "apps", app.route, "views", viewData.route);
+			await setDoc(appReference, viewData);
+		}
+		hideModal();
 	};
 	
 	return <>
 		<Button
-			className="w-100 shadow"
-			variant="outline-primary"
+			variant="primary"
+			className="w-50 shadow"
 			onClick={showModal}>
 			<PlusCircle
 				className="mx-2" />
-            New View
+			New View
 		</Button>
 
 		<Modal 
 			show={modal}
 			onHide={hideModal}
 			className="text-dark">
-			<Modal.Header>
+			<Modal.Header
+				className="bg-primary bg-gradient text-white">
 				<Modal.Title>
 					<PlusCircle
 						className="mx-2" />
@@ -71,7 +93,7 @@ const NewView = (appRoute: string) => {
 				<Form>
 					<FormGroup>
 						<Form.Label>
-							<Bookmarks
+							<Tag
 								className="mx-2" />
                             View Name
 						</Form.Label>
@@ -94,14 +116,17 @@ const NewView = (appRoute: string) => {
 						}
 					</FormGroup>
 				</Form>
-				<p
-					className="text-muted">
-					View Route: {nameRoute}
-				</p>
-				<p
-					className="text-muted">
-					View name and route cannot be changed after creation.
-				</p>
+				{
+					nameRoute &&
+					<>
+						<p
+							className="text-muted">
+							<Signpost
+								className="mx-2" />
+							View Route: <b>{nameRoute}</b>
+						</p>
+					</>
+				}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button
@@ -113,9 +138,13 @@ const NewView = (appRoute: string) => {
 				<Button
 					variant="primary"
 					className="m-2"
-					disabled={!canSave}
+					disabled={!nameInput || !!nameError || isLoading}
 					onClick={onSubmit}>
-					Create {nameInput}
+					{
+						isLoading ?
+							<>Loading...</> :
+							<>Create {nameInput}</>
+					}
 				</Button>
 			</Modal.Footer>
 		</Modal>
