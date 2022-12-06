@@ -1,7 +1,7 @@
 import { collection, Firestore, onSnapshot } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { BoxSeam, ColumnsGap, Eye, InfoCircle, Pencil, RocketTakeoffFill, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
+import { BoxSeam, ColumnsGap, InfoCircle, RocketTakeoffFill, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
 import { View } from "../../../types/View";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
@@ -149,7 +149,7 @@ const App = (props: any) => {
 								<Col
 									sm={12}
 									className="p-1">
-									<EditView view={view} />
+									<EditView app={app} view={view} />
 								</Col>
 							</Row>
 						</div>

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Button, ButtonGroup, Col, Modal, Row } from "react-bootstrap";
-import { DeviceSsd, Pencil, PlusCircle, X, XLg } from "react-bootstrap-icons";
+import { Button, Col, Modal, Row } from "react-bootstrap";
+import { DeviceSsd, Pencil, XLg } from "react-bootstrap-icons";
+import NewComponent from "./NewComponent";
 
 const EditView = (props: any) => {
+	const app = props.app;
 	const view = props.view;
 	const [ modal, setModal ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
@@ -57,13 +59,7 @@ const EditView = (props: any) => {
 								lg={4}
 								sm={12}
 								className="p-1">
-								<Button
-									variant="primary"
-									className="w-100">
-									<PlusCircle
-										className="mx-2" />
-									New Component
-								</Button>
+								<NewComponent app={app} view={view} />
 							</Col>
 							<Col
 								lg={4}
