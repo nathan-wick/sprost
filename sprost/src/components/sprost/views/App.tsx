@@ -5,6 +5,7 @@ import { BoxSeam, ColumnsGap, Eye, InfoCircle, Pencil, RocketTakeoffFill, Signpo
 import { View } from "../../../types/View";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
+import EditView from "../modals/EditView";
 import NewView from "../modals/NewView";
 
 const App = (props: any) => {
@@ -59,13 +60,13 @@ const App = (props: any) => {
 			</Col>
 		</Row>
 		<Row
-			className="gx-0">
+			className="gx-0 p-3">
 			<Col
 				lg={4}
 				md={6}
 				sm={12} >
 				<div
-					className={`mx-5 mt-5 p-2 shadow rounded bg-${user?.theme.name === "dark" ? "black" : "white"}`}>
+					className={`m-3 p-2 shadow rounded bg-${user?.theme.name === "dark" ? "black" : "white"}`}>
 					<h3
 						className="mb-3">
 						<InfoCircle
@@ -110,7 +111,7 @@ const App = (props: any) => {
 			</Col>
 		</Row>
 		<Row
-			className="gx-0">
+			className="gx-0 p-3">
 			{
 				views?.map(view => 
 					<Col
@@ -119,7 +120,7 @@ const App = (props: any) => {
 						md={6}
 						sm={12}>
 						<div
-							className={`mx-5 mt-5 p-2 shadow rounded bg-${user?.theme.name === "dark" ? "black" : "white"}`}>
+							className={`m-3 p-2 shadow rounded bg-${user?.theme.name === "dark" ? "black" : "white"}`}>
 							<h3
 								className="mb-3">
 								<Window
@@ -146,26 +147,9 @@ const App = (props: any) => {
 							<Row
 								className="mt-4 gx-0">
 								<Col
-									sm={6}
+									sm={12}
 									className="p-1">
-									<Button
-										className="w-100"
-										variant="outline-primary">
-										<Eye
-											className="mx-2" />
-										View
-									</Button>
-								</Col>
-								<Col
-									sm={6}
-									className="p-1">
-									<Button
-										className="w-100"
-										variant="outline-primary">
-										<Pencil
-											className="mx-2" />
-										Edit
-									</Button>
+									<EditView view={view} />
 								</Col>
 							</Row>
 						</div>
