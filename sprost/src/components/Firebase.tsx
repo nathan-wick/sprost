@@ -1,9 +1,9 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
-import React, { createContext } from "react";
+import React, { createContext, FC } from "react";
 
 export const FirebaseContext = createContext<FirebaseApp | undefined>(undefined);
 
-const FirebaseContextProvider = (props: any) => {
+const FirebaseContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 	const firebaseConfig = {
 		apiKey: "AIzaSyDeL2Od5-EifO2pyz4BqNwfHVyyiZV0ULU",
 		authDomain: "nathan-wick-sprost.firebaseapp.com",
@@ -15,7 +15,7 @@ const FirebaseContextProvider = (props: any) => {
 	const firebaseApp = initializeApp(firebaseConfig);
 
 	return <FirebaseContext.Provider value={firebaseApp}>
-		{props.children}
+		{children}
 	</FirebaseContext.Provider>;
 };
 

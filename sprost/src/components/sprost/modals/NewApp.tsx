@@ -3,14 +3,13 @@ import React, { useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal, NavDropdown } from "react-bootstrap";
 import { PlusCircle, Signpost, Tag } from "react-bootstrap-icons";
 import { App } from "../../../types/App";
-import { AppsContext } from "../../Apps";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
 
 const NewApp = () => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
-	const apps = useContext(AppsContext);
+	const apps = user?.apps;
 	const [ modal, setModal ] = useState<boolean>(false);
 	const [ nameInput, setNameInput ] = useState<string>();
 	const [ nameRoute, setNameRoute ] = useState<string>();
@@ -56,7 +55,7 @@ const NewApp = () => {
 		setIsLoading(true);
 		event.preventDefault();
 		if (user) {
-			const appData: App = {
+			const newApp: App = {
 				route: String(nameRoute),
 				name: String(nameInput),
 				version: {
@@ -64,9 +63,11 @@ const NewApp = () => {
 					minor: 0,
 					patch: 0,
 				},
+				views: [],
 			};
-			const appReference = doc(database as Firestore, "users", user.id, "apps", appData.route);
-			await setDoc(appReference, appData);
+			user.apps.push(newApp);
+			const userReference = doc(database as Firestore, "users", user.id);
+			await setDoc(userReference, user, { merge: true });
 		}
 		hideModal();
 	};

@@ -8,5 +8,5 @@ export declare interface App {
         minor: number,
         patch: number,
     },
-    views?: View[],
+    views: View[],
 }

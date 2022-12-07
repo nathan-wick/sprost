@@ -1,40 +1,14 @@
-import { collection, Firestore, onSnapshot } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { FC, useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { BoxSeam, ColumnsGap, InfoCircle, RocketTakeoffFill, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
-import { View } from "../../../types/View";
-import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
 import EditView from "../modals/EditView";
 import NewView from "../modals/NewView";
 
-const App = (props: any) => {
-	const app = props.app;
-	const database = useContext(DatabaseContext);
+const App: FC<{ appRoute: string }> = ({ appRoute }) => {
 	const user = useContext(UserContext);
-	const [ views, setViews ] = useState<View[]>();
-
-	useEffect(() => {
-		if (user && app) {
-			// Get App's View
-			const viewsReference = collection(database as Firestore, "users", user.id, "apps", app.route, "views");
-			onSnapshot(viewsReference, (viewsSnapshot) => {
-				const viewsFromDatabase: View[] = [];
-				viewsSnapshot.forEach((viewDocument) => {
-					const viewData = viewDocument.data();
-					const viewFromDatabase: View = {
-						route: viewData.route,
-						name: viewData.name,
-						type: viewData.type,
-					};
-					viewsFromDatabase.push(viewFromDatabase);
-				});
-				setViews(viewsFromDatabase);
-			});
-		}
-	}, [ app ]);
-
-	useEffect(() => console.log("Got Views ", views), [ views ]);
+	const app = user?.apps.find(app => app.route === appRoute);
+	const views = app?.views;
 
 	return <>
 		<Row
@@ -44,7 +18,7 @@ const App = (props: any) => {
 				md={4}
 				sm={12}>
 				<h1>
-					{app.name}
+					{app?.name}
 				</h1>
 			</Col>
 			<Col
@@ -76,19 +50,19 @@ const App = (props: any) => {
 					<small>
 						<Tag
 							className="mx-2"/>
-						Name: <b>{app.name}</b>
+						Name: <b>{app?.name}</b>
 					</small>
 					<br />
 					<small>
 						<Signpost
 							className="mx-2" />
-						Route: <b>{app.route}</b>
+						Route: <b>{app?.route}</b>
 					</small>
 					<br />
 					<small>
 						<BoxSeam
 							className="mx-2" />
-						Version: <b>{app.version.major}.{app.version.minor}.{app.version.patch}</b>
+						Version: <b>{app?.version.major}.{app?.version.minor}.{app?.version.patch}</b>
 					</small>
 				</div>
 			</Col>
@@ -107,7 +81,7 @@ const App = (props: any) => {
 			</Col>
 			<Col
 				className="text-end">
-				<NewView app={app} views={views} />
+				<NewView appRoute={appRoute} />
 			</Col>
 		</Row>
 		<Row
@@ -136,7 +110,7 @@ const App = (props: any) => {
 							<small>
 								<Signpost
 									className="mx-2" />
-								Route: <b>{app.route}/{view.route}</b>
+								Route: <b>{app?.route}/{view.route}</b>
 							</small>
 							<br />
 							<small>
@@ -149,7 +123,7 @@ const App = (props: any) => {
 								<Col
 									sm={12}
 									className="p-1">
-									<EditView app={app} view={view} />
+									<EditView appRoute={appRoute} viewRoute={view.route} />
 								</Col>
 							</Row>
 						</div>
