@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { DeviceSsd, Pencil, XLg } from "react-bootstrap-icons";
+import { UserContext } from "../../User";
 import NewComponent from "./NewComponent";
 
-const EditView = (props: any) => {
-	const app = props.app;
-	const view = props.view;
+const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewRoute }) => {
+	const user = useContext(UserContext);
+	const app = user?.apps.find(app => app.route === appRoute);
+	const view = app?.views.find(view => view.route === viewRoute);
 	const [ modal, setModal ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
 	const hideModal = () => setModal(false);
@@ -34,7 +36,7 @@ const EditView = (props: any) => {
 						<Modal.Title>
 							<Pencil
 								className="mx-2" />
-							{view.name}
+							{view?.name}
 						</Modal.Title>
 					</Col>
 					<Col
@@ -59,7 +61,7 @@ const EditView = (props: any) => {
 								lg={4}
 								sm={12}
 								className="p-1">
-								<NewComponent app={app} view={view} />
+								<NewComponent appRoute={appRoute} viewRoute={viewRoute} />
 							</Col>
 							<Col
 								lg={4}

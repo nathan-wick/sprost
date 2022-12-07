@@ -1,14 +1,12 @@
-import { addDoc, collection, Firestore } from "firebase/firestore";
-import React, { useContext, useState } from "react";
+import { doc, Firestore, setDoc } from "firebase/firestore";
+import React, { FC, useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { ColumnsGap, PlusCircle } from "react-bootstrap-icons";
 import { Component } from "../../../types/Component";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
 
-const NewComponent = (props: any) => {
-	const app = props.app;
-	const view = props.view;
+const NewComponent: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewRoute }) => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
 	const [ modal, setModal ] = useState<boolean>(false);
@@ -42,11 +40,12 @@ const NewComponent = (props: any) => {
 		setIsLoading(true);
 		event.preventDefault();
 		if (user) {
-			const componentData: Component = {
+			const newComponent: Component = {
 				type: typeInput,
 			};
-			const componentReference = collection(database as Firestore, "users", user.id, "apps", app.route, "views", view.route, "components");
-			await addDoc(componentReference, componentData);
+			user?.apps.find(app => app.route === appRoute)?.views.find(view => view.route === viewRoute)?.components.push(newComponent);
+			const userReference = doc(database as Firestore, "users", user.id);
+			await setDoc(userReference, user, { merge: true });
 		}
 		hideModal();
 	};

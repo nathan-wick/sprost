@@ -1,13 +1,13 @@
 import { Auth, onAuthStateChanged, User as AuthenticatedUser } from "firebase/auth";
 import { doc, Firestore, onSnapshot, setDoc } from "firebase/firestore";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, FC, useContext, useEffect, useState } from "react";
 import { User } from "../types/User";
 import { AuthenticationContext } from "./Authentication";
 import { DatabaseContext } from "./Database";
 
 export const UserContext = createContext<User | undefined>(undefined);
 
-const UserContextProvider = (props: any) => {
+const UserContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 	const authentication = useContext(AuthenticationContext);
 	const database = useContext(DatabaseContext);
 	const [ authenticatedUser, setAuthenticatedUser ] = useState<AuthenticatedUser | null>(null);
@@ -32,6 +32,7 @@ const UserContextProvider = (props: any) => {
 						email: userData.email,
 						portrait: userData.portrait,
 						theme: userData.theme,
+						apps: userData.apps,
 					};
 					setUser(userFromDatabase);
 				} else {
@@ -42,6 +43,7 @@ const UserContextProvider = (props: any) => {
 						email: authenticatedUser.email ? authenticatedUser.email : undefined,
 						portrait: authenticatedUser.photoURL ? authenticatedUser.photoURL : undefined,
 						theme: { name: "light" },
+						apps: [],
 					};
 					await setDoc(userReference, initialUserData);
 				}
@@ -52,7 +54,7 @@ const UserContextProvider = (props: any) => {
 	useEffect(() => console.log("Got User ", user), [ user ]);
 
 	return <UserContext.Provider value={user}>
-		{props.children}
+		{children}
 	</UserContext.Provider>;
 };
 

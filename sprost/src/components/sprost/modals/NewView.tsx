@@ -1,16 +1,15 @@
 import { doc, Firestore, setDoc } from "firebase/firestore";
-import React, { useContext, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { PlusCircle, Signpost, Tag } from "react-bootstrap-icons";
 import { View } from "../../../types/View";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
 
-const NewView = (props: any) => {
-	const app = props.app;
-	const views = props.views;
+const NewView: FC<{ appRoute: string }> = ({ appRoute }) => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
+	const views = user?.apps.find(app => app.route === appRoute)?.views;
 	const [ modal, setModal ] = useState<boolean>(false);
 	const [ nameInput, setNameInput ] = useState<string>();
 	const [ nameRoute, setNameRoute ] = useState<string>();
@@ -56,13 +55,15 @@ const NewView = (props: any) => {
 		setIsLoading(true);
 		event.preventDefault();
 		if (user) {
-			const viewData: View = {
+			const newView: View = {
 				route: String(nameRoute),
 				name: String(nameInput),
 				type: "information",
+				components: [],
 			};
-			const appReference = doc(database as Firestore, "users", user.id, "apps", app.route, "views", viewData.route);
-			await setDoc(appReference, viewData);
+			user?.apps.find(app => app.route === appRoute)?.views.push(newView);
+			const userReference = doc(database as Firestore, "users", user.id);
+			await setDoc(userReference, user, { merge: true });
 		}
 		hideModal();
 	};

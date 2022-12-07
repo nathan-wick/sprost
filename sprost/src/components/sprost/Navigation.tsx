@@ -10,18 +10,21 @@ import NewApp from "./modals/NewApp";
 import Landing from "./views/Landing";
 import SignIn from "./modals/SignIn";
 import App from "./views/App";
-import { AppsContext } from "../Apps";
 
 const Navigation = () => {
 	const authentication = useContext(AuthenticationContext);
 	const user = useContext(UserContext);
-	const apps = useContext(AppsContext);
+	const apps = user?.apps;
 	const [ currentView, setCurrentView ] = useState<JSX.Element>(<Landing />);
 
 	useEffect(() => {
-		user ?
-			setCurrentView(<Dashboard />) :
+		if (user) {
+			if (currentView === <Landing />) {
+				setCurrentView(<Dashboard />);
+			}
+		} else {
 			setCurrentView(<Landing />);
+		}
 
 		document.body.style.backgroundColor = `var(--bs-${user?.theme.name})`;
 		document.body.style.color = `var(--bs-${user?.theme.name === "dark" ? "light" : "dark"})`;
@@ -71,7 +74,7 @@ const Navigation = () => {
 												<NavDropdown.Item
 													key={app.route}
 													onClick={() => {
-														setCurrentView(<App app={app} />);
+														setCurrentView(<App appRoute={app.route} />);
 													}}>
 													{app.name}
 												</NavDropdown.Item>)
