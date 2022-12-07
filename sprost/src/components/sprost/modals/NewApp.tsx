@@ -1,14 +1,17 @@
 import { doc, Firestore, setDoc } from "firebase/firestore";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, FormGroup, Modal, NavDropdown } from "react-bootstrap";
 import { PlusCircle, Signpost, Tag } from "react-bootstrap-icons";
-import { App } from "../../../types/App";
+import { App as AppType } from "../../../types/App";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
+import { NavigationContext } from "../Navigation";
+import App from "../views/App";
 
 const NewApp = () => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
+	const { setCurrentView } = useContext(NavigationContext);
 	const apps = user?.apps;
 	const [ modal, setModal ] = useState<boolean>(false);
 	const [ nameInput, setNameInput ] = useState<string>();
@@ -17,6 +20,8 @@ const NewApp = () => {
 	const [ isLoading, setIsLoading ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
 	const hideModal = () => reset();
+
+	useEffect(() => console.log(setCurrentView), [ setCurrentView ]);
 
 	const onNameChange = (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
@@ -55,7 +60,7 @@ const NewApp = () => {
 		setIsLoading(true);
 		event.preventDefault();
 		if (user) {
-			const newApp: App = {
+			const newApp: AppType = {
 				route: String(nameRoute),
 				name: String(nameInput),
 				version: {
@@ -70,6 +75,8 @@ const NewApp = () => {
 			await setDoc(userReference, user, { merge: true });
 		}
 		hideModal();
+		console.log(setCurrentView, String(nameRoute));
+		setCurrentView(<App appRoute={String(nameRoute)} />);
 	};
 	
 	return <>
