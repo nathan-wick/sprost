@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { BarChart, BoxArrowRight, Gear, PersonCircle, RocketTakeoffFill, WindowStack } from "react-bootstrap-icons";
 import Settings from "./views/Settings";
@@ -11,11 +11,24 @@ import Landing from "./views/Landing";
 import SignIn from "./modals/SignIn";
 import App from "./views/App";
 
-const Navigation = () => {
+export const NavigationContext = createContext<{
+	currentView: JSX.Element,
+	setCurrentView: React.Dispatch<React.SetStateAction<JSX.Element>>,
+}>({
+	currentView: <Landing />,
+	setCurrentView: () => {
+		// Current View Setter
+	},
+});
+
+const NavigationContextProvider = () => {
 	const authentication = useContext(AuthenticationContext);
 	const user = useContext(UserContext);
 	const apps = user?.apps;
 	const [ currentView, setCurrentView ] = useState<JSX.Element>(<Landing />);
+	const navigation = { currentView, setCurrentView };
+
+	useEffect(() => console.log(navigation.currentView.type.name, setCurrentView.name), [ navigation ]);
 
 	useEffect(() => {
 		if (user) {
@@ -128,8 +141,10 @@ const Navigation = () => {
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>
-		{currentView}
+		<NavigationContext.Provider value={navigation}>
+			{currentView}
+		</NavigationContext.Provider>
 	</>; 
 };
 
-export default Navigation;
+export default NavigationContextProvider;
