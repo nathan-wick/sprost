@@ -1,5 +1,5 @@
 import { doc, Firestore, setDoc } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal, NavDropdown } from "react-bootstrap";
 import { PlusCircle, Signpost, Tag } from "react-bootstrap-icons";
 import { App as AppType } from "../../../types/App";
@@ -20,8 +20,6 @@ const NewApp = () => {
 	const [ isLoading, setIsLoading ] = useState<boolean>(false);
 	const showModal = () => setModal(true);
 	const hideModal = () => reset();
-
-	useEffect(() => console.log(setCurrentView), [ setCurrentView ]);
 
 	const onNameChange = (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
@@ -75,7 +73,6 @@ const NewApp = () => {
 			await setDoc(userReference, user, { merge: true });
 		}
 		hideModal();
-		console.log(setCurrentView, String(nameRoute));
 		setCurrentView(<App appRoute={String(nameRoute)} />);
 	};
 	
