@@ -53,7 +53,7 @@ const NewComponent: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, v
 	return <>
 		<Button
 			variant="primary"
-			className="w-100"
+			className="w-100 shadow"
 			onClick={showModal}>
 			<PlusCircle
 				className="mx-2" />
