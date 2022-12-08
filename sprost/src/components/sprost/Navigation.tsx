@@ -28,11 +28,9 @@ const NavigationContextProvider = () => {
 	const [ currentView, setCurrentView ] = useState<JSX.Element>(<Landing />);
 	const navigation = { currentView, setCurrentView };
 
-	useEffect(() => console.log(navigation.currentView.type.name, setCurrentView.name), [ navigation ]);
-
 	useEffect(() => {
 		if (user) {
-			if (currentView === <Landing />) {
+			if (currentView.type.name === "Landing") {
 				setCurrentView(<Dashboard />);
 			}
 		} else {
@@ -92,7 +90,9 @@ const NavigationContextProvider = () => {
 													{app.name}
 												</NavDropdown.Item>)
 										}
-										<NewApp />
+										<NavigationContext.Provider value={navigation}>
+											<NewApp />
+										</NavigationContext.Provider>
 									</NavDropdown>
 								</>
 						}
