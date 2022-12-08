@@ -1,6 +1,6 @@
 import React, { FC, useContext, useState } from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
-import { DeviceSsd, Pencil, XLg } from "react-bootstrap-icons";
+import { BoxArrowLeft, DeviceSsd, Pencil } from "react-bootstrap-icons";
 import { UserContext } from "../../User";
 import NewComponent from "./NewComponent";
 
@@ -31,7 +31,7 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 				<Row
 					className="gx-0 w-100">
 					<Col
-						lg={3}
+						md={6}
 						sm={12}>
 						<Modal.Title>
 							<Pencil
@@ -40,40 +40,30 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 						</Modal.Title>
 					</Col>
 					<Col
-						lg={9}
+						md={6}
 						sm={12}>
 						<Row
 							className="gx-0">
 							<Col
-								lg={4}
-								sm={12}
-								className="p-1">
+								className="p-2">
 								<Button
-									variant="outline-secondary"
+									variant="outline-danger"
 									className="w-100"
 									onClick={hideModal}>
-									<XLg
+									<BoxArrowLeft
 										className="mx-2" />
 									Exit
 								</Button>
 							</Col>
 							<Col
-								lg={4}
-								sm={12}
-								className="p-1">
-								<NewComponent appRoute={appRoute} viewRoute={viewRoute} />
-							</Col>
-							<Col
-								lg={4}
-								sm={12}
-								className="p-1">
+								className="p-2">
 								<Button
 									variant="primary"
 									className="w-100"
 									disabled={true}>
 									<DeviceSsd
 										className="mx-2" />
-									Save & Exit
+									Save Changes
 								</Button>
 							</Col>
 						</Row>
@@ -81,6 +71,33 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 				</Row>
 			</Modal.Header>
 			<Modal.Body>
+				<Row
+					className="gx-0 h-100">
+					<Col
+						md={6}
+						sm={12}
+						className="h-100 border rounded">
+						Preview
+					</Col>
+					<Col
+						md={6}
+						sm={12}>
+						<Row
+							className="gx-0">
+							<Col
+								className="p-2">
+								<NewComponent appRoute={appRoute} viewRoute={viewRoute} />
+							</Col>
+						</Row>
+						{
+							view?.components.map((component, index) => 
+								<div
+									key={index}>
+									<p>{component.type}</p>
+								</div>)
+						}
+					</Col>
+				</Row>
 				
 			</Modal.Body>
 		</Modal>
