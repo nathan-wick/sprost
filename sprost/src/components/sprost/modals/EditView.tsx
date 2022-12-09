@@ -93,7 +93,7 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 							view?.components.map((component, index) => 
 								<div
 									key={index}>
-									<p>{component.type}</p>
+									<p>{component.type.text}</p>
 								</div>)
 						}
 					</Col>
