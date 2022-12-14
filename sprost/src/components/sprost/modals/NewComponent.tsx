@@ -87,7 +87,6 @@ const NewComponent: FC<{
 			newView.version = newView.version + 1;
 			newView.components.push(newComponent);
 			setEditView(newView);
-			console.log(newView);
 		}
 		hideModal();
 	};

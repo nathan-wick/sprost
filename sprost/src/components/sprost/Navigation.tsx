@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { BarChart, BoxArrowRight, Gear, PersonCircle, RocketTakeoffFill, WindowStack } from "react-bootstrap-icons";
+import { AppIndicator, BarChart, BoxArrowRight, Gear, PersonCircle, RocketTakeoffFill } from "react-bootstrap-icons";
 import Settings from "./views/Settings";
 import Dashboard from "./views/Dashboard";
 import { UserContext } from "../User";
@@ -74,7 +74,7 @@ const NavigationContextProvider = () => {
 									</Nav.Link>
 									<NavDropdown
 										title={[
-											<WindowStack
+											<AppIndicator
 												key={1}
 												className="mx-2" />,
 											"Apps",
