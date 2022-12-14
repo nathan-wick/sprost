@@ -1,16 +1,20 @@
-import { doc, Firestore, setDoc } from "firebase/firestore";
-import React, { FC, useContext, useState } from "react";
+import React, { Dispatch, FC, SetStateAction, useContext, useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { ColumnsGap, PlusCircle } from "react-bootstrap-icons";
 import { Component } from "../../../types/Component";
 import { Header } from "../../../types/components/Header";
 import { Paragraph } from "../../../types/components/Paragraph";
 import { Title } from "../../../types/components/Title";
-import { DatabaseContext } from "../../Database";
+import { View } from "../../../types/View";
 import { UserContext } from "../../User";
 
-const NewComponent: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewRoute }) => {
-	const database = useContext(DatabaseContext);
+const NewComponent: FC<{
+	editView: View | undefined,
+	setEditView: Dispatch<SetStateAction<View | undefined>>,
+}> = ({
+	editView,
+	setEditView,
+}) => {
 	const user = useContext(UserContext);
 	const [ modal, setModal ] = useState<boolean>(false);
 	const [ typeInput, setTypeInput ] = useState<string>("header");
@@ -19,15 +23,18 @@ const NewComponent: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, v
 	const hideModal = () => reset();
 
 	const defaultHeader: Header ={
+		id: "header",
 		text: "New Header",
 	};
 
 	const defaultTitle: Title ={
+		id: "title",
 		text: "New Title",
-		size: 1,
+		size: "medium",
 	};
 
 	const defaultParagraph: Paragraph ={
+		id: "paragraph",
 		text: "New Paragraph",
 	};
 
@@ -56,10 +63,10 @@ const NewComponent: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, v
 		setModal(false);
 	};
 
-	const onSubmit = async (event: { preventDefault: () => void; }) => {
+	const onSubmit = (event: { preventDefault: () => void; }) => {
 		setIsLoading(true);
 		event.preventDefault();
-		if (user) {
+		if (editView) {
 			let componentType: Header | Title | Paragraph;
 			switch(typeInput) {
 			case "header":
@@ -76,9 +83,11 @@ const NewComponent: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, v
 			const newComponent: Component = {
 				type: componentType,
 			};
-			user?.apps.find(app => app.route === appRoute)?.views.find(view => view.route === viewRoute)?.components.push(newComponent);
-			const userReference = doc(database as Firestore, "users", user.id);
-			await setDoc(userReference, user, { merge: true });
+			const newView = structuredClone(editView);
+			newView.version = newView.version + 1;
+			newView.components.push(newComponent);
+			setEditView(newView);
+			console.log(newView);
 		}
 		hideModal();
 	};

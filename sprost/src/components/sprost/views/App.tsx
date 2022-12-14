@@ -1,12 +1,14 @@
 import React, { FC, useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { BoxSeam, ColumnsGap, InfoCircle, RocketTakeoffFill, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
+import { BoxSeam, ColumnsGap, InfoCircle, Pencil, RocketTakeoffFill, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
 import { UserContext } from "../../User";
-import EditView from "../modals/EditView";
+import EditView from "../EditView";
 import NewView from "../modals/NewView";
+import { NavigationContext } from "../Navigation";
 
 const App: FC<{ appRoute: string }> = ({ appRoute }) => {
 	const user = useContext(UserContext);
+	const { setCurrentView } = useContext(NavigationContext);
 	const app = user?.apps.find(app => app.route === appRoute);
 	const views = app?.views;
 
@@ -123,7 +125,14 @@ const App: FC<{ appRoute: string }> = ({ appRoute }) => {
 								<Col
 									sm={12}
 									className="p-1">
-									<EditView appRoute={appRoute} viewRoute={view.route} />
+									<Button
+										className="w-100"
+										variant="outline-primary"
+										onClick={() => setCurrentView(<EditView appRoute={appRoute} viewRoute={view.route} />)}>
+										<Pencil
+											className="mx-2" />
+										Edit
+									</Button>
 								</Col>
 							</Row>
 						</div>

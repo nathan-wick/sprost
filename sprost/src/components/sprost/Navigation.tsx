@@ -41,7 +41,7 @@ const NavigationContextProvider = () => {
 		document.body.style.color = `var(--bs-${user?.theme.name === "dark" ? "light" : "dark"})`;
 	}, [ user ]);
 
-	return <>
+	return <NavigationContext.Provider value={navigation}>
 		<Navbar
 			bg={user?.theme.name === "dark" ? "black" : "white"}
 			variant={user?.theme.name === "dark" ? "dark" : "light"}
@@ -90,9 +90,7 @@ const NavigationContextProvider = () => {
 													{app.name}
 												</NavDropdown.Item>)
 										}
-										<NavigationContext.Provider value={navigation}>
-											<NewApp />
-										</NavigationContext.Provider>
+										<NewApp />
 									</NavDropdown>
 								</>
 						}
@@ -141,10 +139,8 @@ const NavigationContextProvider = () => {
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>
-		<NavigationContext.Provider value={navigation}>
-			{currentView}
-		</NavigationContext.Provider>
-	</>; 
+		{currentView}
+	</NavigationContext.Provider>; 
 };
 
 export default NavigationContextProvider;

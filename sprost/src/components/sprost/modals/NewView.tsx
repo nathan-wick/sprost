@@ -56,6 +56,7 @@ const NewView: FC<{ appRoute: string }> = ({ appRoute }) => {
 		event.preventDefault();
 		if (user) {
 			const newView: View = {
+				version: 0,
 				route: String(nameRoute),
 				name: String(nameInput),
 				type: "information",
