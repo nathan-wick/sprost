@@ -1,6 +1,6 @@
 import React, { FC, useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { BoxSeam, ColumnsGap, InfoCircle, Pencil, RocketTakeoffFill, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
+import { App as AppIcon, BoxSeam, ColumnsGap, InfoCircle, Pencil, RocketTakeoffFill, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
 import { UserContext } from "../../User";
 import EditView from "../EditView";
 import NewView from "../modals/NewView";
@@ -20,6 +20,8 @@ const App: FC<{ appRoute: string }> = ({ appRoute }) => {
 				md={4}
 				sm={12}>
 				<h1>
+					<AppIcon
+						className="mx-2" />
 					{app?.name}
 				</h1>
 			</Col>
@@ -127,7 +129,7 @@ const App: FC<{ appRoute: string }> = ({ appRoute }) => {
 									className="p-1">
 									<Button
 										className="w-100"
-										variant="outline-primary"
+										variant="primary"
 										onClick={() => setCurrentView(<EditView appRoute={appRoute} viewRoute={view.route} />)}>
 										<Pencil
 											className="mx-2" />
