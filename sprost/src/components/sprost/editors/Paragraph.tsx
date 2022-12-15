@@ -1,10 +1,10 @@
 import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import { Form } from "react-bootstrap";
-import { CardImage, Chat } from "react-bootstrap-icons";
-import { Header as HeaderType } from "../../../types/components/Header";
+import { CardText, Chat } from "react-bootstrap-icons";
+import { Paragraph as ParagraphType } from "../../../types/components/Paragraph";
 import { View } from "../../../types/View";
 
-const Header: FC<{
+const Paragraph: FC<{
 	componentId: string,
 	editView: View | undefined,
 	setEditView: Dispatch<SetStateAction<View | undefined>>,
@@ -19,14 +19,14 @@ const Header: FC<{
 		setMessageInput(event.target.value);
 	};
 	const onSubmit = () => {
-		const newHeader: HeaderType = {
-			id: "header",
+		const newParagraph: ParagraphType = {
+			id: "paragraph",
 			message: String(messageInput),
 		};
 		const newView: View = structuredClone(editView);
 		const newComponent = newView.components.find(component => component.id === componentId);
 		if (newComponent) {
-			newComponent.type = newHeader;
+			newComponent.type = newParagraph;
 			newView.isSaved = false;
 			setEditView(newView);
 		}
@@ -36,9 +36,9 @@ const Header: FC<{
 		className="mx-2 mt-4 p-2 rounded shadow"
 		onSubmit={event => event.preventDefault()}>
 		<h3>
-			<CardImage
+			<CardText
 				className="mx-2"/>
-			Header
+			Paragraph
 		</h3>
 		<Form.Label
 			className="mt-2">
@@ -47,12 +47,13 @@ const Header: FC<{
 			Message
 		</Form.Label>
 		<Form.Control
-			type="text"
+			as="textarea"
+			rows={3}
 			onChange={onMessageChange}
 			onBlur={onSubmit}
 			defaultValue={messageInput}
-			maxLength={50} />
+			maxLength={500} />
 	</Form>;
 };
 
-export default Header;
+export default Paragraph;
