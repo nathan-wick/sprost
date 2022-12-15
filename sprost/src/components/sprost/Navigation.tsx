@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { AppIndicator, BarChart, BoxArrowRight, Gear, PersonCircle, RocketTakeoffFill } from "react-bootstrap-icons";
+import { App as AppIcon, BarChart, BoxArrowRight, Gear, Grid, PersonCircle, RocketTakeoffFill } from "react-bootstrap-icons";
 import Settings from "./views/Settings";
 import Dashboard from "./views/Dashboard";
 import { UserContext } from "../User";
@@ -74,7 +74,7 @@ const NavigationContextProvider = () => {
 									</Nav.Link>
 									<NavDropdown
 										title={[
-											<AppIndicator
+											<Grid
 												key={1}
 												className="mx-2" />,
 											"Apps",
@@ -87,6 +87,8 @@ const NavigationContextProvider = () => {
 													onClick={() => {
 														setCurrentView(<App appRoute={app.route} />);
 													}}>
+													<AppIcon
+														className="mx-2"/>
 													{app.name}
 												</NavDropdown.Item>)
 										}

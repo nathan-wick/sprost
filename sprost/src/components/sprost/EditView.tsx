@@ -6,6 +6,8 @@ import { View } from "../../types/View";
 import { DatabaseContext } from "../Database";
 import { UserContext } from "../User";
 import Header from "./editors/Header";
+import Title from "./editors/Title";
+import Paragraph from "./editors/Paragraph";
 import NewComponent from "./modals/NewComponent";
 import { NavigationContext } from "./Navigation";
 import App from "./views/App";
@@ -103,9 +105,9 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 								case "header":
 									return <Header componentId={component.id} editView={editView} setEditView={setEditView} />;
 								case "title":
-									return <p>{component.type.id}</p>;
+									return <Title componentId={component.id} editView={editView} setEditView={setEditView} />;
 								case "paragraph":
-									return <p>{component.type.id}</p>;
+									return <Paragraph componentId={component.id} editView={editView} setEditView={setEditView} />;
 								default:
 									return <></>;
 								}
