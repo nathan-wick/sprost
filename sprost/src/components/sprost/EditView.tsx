@@ -5,6 +5,7 @@ import { BoxArrowLeft, DeviceSsd, Pencil } from "react-bootstrap-icons";
 import { View } from "../../types/View";
 import { DatabaseContext } from "../Database";
 import { UserContext } from "../User";
+import Header from "./editors/Header";
 import NewComponent from "./modals/NewComponent";
 import { NavigationContext } from "./Navigation";
 import App from "./views/App";
@@ -24,12 +25,15 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 	const saveUser = async () => {
 		setIsSaving(true);
 		if (user) {
+			const newView = structuredClone(editView);
+			newView.isSaved = true;
 			const newUser = structuredClone(user);
 			const newUserAppViews = newUser.apps.find((app: { route: string; }) => app.route === appRoute).views;
 			const newUserAppViewIndex = newUserAppViews.findIndex((view: { route: string; }) => view.route === viewRoute);
-			newUserAppViews[newUserAppViewIndex] = structuredClone(editView);
+			newUserAppViews[newUserAppViewIndex] = newView;
 			const userReference = doc(database as Firestore, "users", user.id);
 			await setDoc(userReference, newUser, { merge: true });
+			setEditView(newView);
 		}
 		setIsSaving(false);
 	};
@@ -50,7 +54,7 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 			<Col
 				className="mx-2">
 				<Button
-					variant={editView?.version === savedView?.version ? "primary" : "danger"}
+					variant={editView?.isSaved ? "primary" : "danger"}
 					className="w-100 shadow"
 					onClick={exit}>
 					<BoxArrowLeft
@@ -61,13 +65,13 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 			<Col
 				className="mx-2">
 				<Button
-					variant={editView?.version === savedView?.version ? "success" : "primary"}
+					variant={editView?.isSaved ? "success" : "primary"}
 					className="w-100 shadow"
-					disabled={isSaving || editView?.version === savedView?.version}
+					disabled={isSaving || editView?.isSaved}
 					onClick={saveUser}>
 					<DeviceSsd
 						className="mx-2" />
-					{isSaving ? "Saving..." : editView?.version === savedView?.version ? "Saved" : "Save"}
+					{isSaving ? "Saving..." : editView?.isSaved ? "Saved" : "Save"}
 				</Button>
 			</Col>
 		</Row>
@@ -75,15 +79,14 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 			className="gx-0 m-5">
 			<Col
 				md={6}
-				sm={12}>
+				sm={12}
+				className="d-none d-lg-block">
 				<div
 					className="m-2 rounded shadow">
 					Preview
 				</div>
 			</Col>
-			<Col
-				md={6}
-				sm={12}>
+			<Col>
 				<Row
 					className="gx-0">
 					<Col
@@ -98,7 +101,7 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 							{(() => {
 								switch (component.type.id) {
 								case "header":
-									return <p>{component.type.id}</p>;
+									return <Header componentId={component.id} editView={editView} setEditView={setEditView} />;
 								case "title":
 									return <p>{component.type.id}</p>;
 								case "paragraph":

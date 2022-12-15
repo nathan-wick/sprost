@@ -24,18 +24,18 @@ const NewComponent: FC<{
 
 	const defaultHeader: Header ={
 		id: "header",
-		text: "New Header",
+		message: "New Header",
 	};
 
 	const defaultTitle: Title ={
 		id: "title",
-		text: "New Title",
+		message: "New Title",
 		size: "medium",
 	};
 
 	const defaultParagraph: Paragraph ={
 		id: "paragraph",
-		text: "New Paragraph",
+		message: "New Paragraph",
 	};
 
 	const typeOptions = [
@@ -80,11 +80,20 @@ const NewComponent: FC<{
 				componentType = defaultParagraph;
 				break;
 			}
+			const createUniqueId = () => {
+				let newUniqueId = Math.random().toString(36).slice(-8);
+				while (editView.components.find((component: { id: string; }) => component.id === newUniqueId)) {
+					newUniqueId = Math.random().toString(36).slice(-8);
+				}
+				return newUniqueId;
+			};
+			const uniqueId = createUniqueId();
 			const newComponent: Component = {
+				id: uniqueId,
 				type: componentType,
 			};
 			const newView = structuredClone(editView);
-			newView.version = newView.version + 1;
+			newView.isSaved = false;
 			newView.components.push(newComponent);
 			setEditView(newView);
 		}
