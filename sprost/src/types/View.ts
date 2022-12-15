@@ -1,7 +1,7 @@
 import { Component } from "./Component";
 
 export declare interface View {
-    version: number,
+    isSaved: boolean,
     route: string,
     name: string,
     type: "information",

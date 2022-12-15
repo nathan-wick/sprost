@@ -1,5 +1,5 @@
 export declare interface Title {
     id: "title",
-    text: string,
+    message: string,
     size: "small" | "medium" | "large",
 }
