@@ -1,7 +1,7 @@
 import { doc, Firestore, setDoc } from "firebase/firestore";
 import React, { FC, useContext, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { BoxArrowLeft, DeviceSsd, Pencil } from "react-bootstrap-icons";
+import { ArrowsAngleContract, ArrowsAngleExpand, BoxArrowLeft, DeviceSsd, Pencil } from "react-bootstrap-icons";
 import { View } from "../../types/View";
 import { DatabaseContext } from "../Database";
 import { UserContext } from "../User";
@@ -19,6 +19,7 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 	const savedView = user?.apps.find(app => app.route === appRoute)?.views.find(view => view.route === viewRoute);
 	const [ editView, setEditView ] = useState<View | undefined>(structuredClone(savedView));
 	const [ isSaving, setIsSaving ] = useState<boolean>(false);
+	const [ previewIsExpanded, setPreviewIsExpanded ] = useState<boolean>(false);
 
 	const exit = () => {
 		setCurrentView(<App appRoute={String(appRoute)} />);
@@ -67,6 +68,22 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 			<Col
 				className="mx-2">
 				<Button
+					variant={"primary"}
+					className="w-100 shadow"
+					onClick={() => setPreviewIsExpanded(!previewIsExpanded)}>
+					{
+						previewIsExpanded ?
+							<ArrowsAngleContract
+								className="mx-2" /> :
+							<ArrowsAngleExpand
+								className="mx-2" />
+					}
+					Preview
+				</Button>
+			</Col>
+			<Col
+				className="mx-2">
+				<Button
 					variant={editView?.isSaved ? "success" : "primary"}
 					className="w-100 shadow"
 					disabled={isSaving || editView?.isSaved}
@@ -80,11 +97,11 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 		<Row
 			className="gx-0 m-5">
 			<Col
-				md={6}
+				md={previewIsExpanded ? 12 : 6}
 				sm={12}
-				className="d-none d-lg-block">
+				className={previewIsExpanded ? "" : "d-none d-lg-block"}>
 				<div
-					className="m-2 rounded shadow">
+					className="m-2 mb-4 rounded shadow">
 					Preview
 				</div>
 			</Col>
