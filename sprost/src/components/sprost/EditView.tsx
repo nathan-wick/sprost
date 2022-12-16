@@ -1,6 +1,6 @@
 import { doc, Firestore, setDoc } from "firebase/firestore";
 import React, { FC, useContext, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, ButtonGroup, Col, Row } from "react-bootstrap";
 import { ArrowsAngleContract, ArrowsAngleExpand, BoxArrowLeft, DeviceSsd, Pencil } from "react-bootstrap-icons";
 import { View } from "../../types/View";
 import { DatabaseContext } from "../Database";
@@ -55,43 +55,37 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 				</h1>
 			</Col>
 			<Col
-				className="mx-2">
-				<Button
-					variant={editView?.isSaved ? "primary" : "danger"}
-					className="w-100 shadow"
-					onClick={exit}>
-					<BoxArrowLeft
-						className="mx-2" />
-					Exit
-				</Button>
-			</Col>
-			<Col
-				className="mx-2">
-				<Button
-					variant={"primary"}
-					className="w-100 shadow"
-					onClick={() => setPreviewIsExpanded(!previewIsExpanded)}>
-					{
-						previewIsExpanded ?
-							<ArrowsAngleContract
-								className="mx-2" /> :
-							<ArrowsAngleExpand
-								className="mx-2" />
-					}
-					Preview
-				</Button>
-			</Col>
-			<Col
-				className="mx-2">
-				<Button
-					variant={editView?.isSaved ? "success" : "primary"}
-					className="w-100 shadow"
-					disabled={isSaving || editView?.isSaved}
-					onClick={saveUser}>
-					<DeviceSsd
-						className="mx-2" />
-					{isSaving ? "Saving..." : editView?.isSaved ? "Saved" : "Save"}
-				</Button>
+				className="p-2">
+				<ButtonGroup
+					className="w-100 shadow">
+					<Button
+						variant={editView?.isSaved ? "primary" : "outline-danger"}
+						onClick={exit}>
+						<BoxArrowLeft
+							className="mx-2" />
+						Exit
+					</Button>
+					<Button
+						variant={"outline-primary"}
+						onClick={() => setPreviewIsExpanded(!previewIsExpanded)}>
+						{
+							previewIsExpanded ?
+								<ArrowsAngleContract
+									className="mx-2" /> :
+								<ArrowsAngleExpand
+									className="mx-2" />
+						}
+						Preview
+					</Button>
+					<Button
+						variant={editView?.isSaved ? "outline-success" : "primary"}
+						disabled={isSaving || editView?.isSaved}
+						onClick={saveUser}>
+						<DeviceSsd
+							className="mx-2" />
+						{isSaving ? "Saving..." : editView?.isSaved ? "Saved" : "Save"}
+					</Button>
+				</ButtonGroup>
 			</Col>
 		</Row>
 		<Row
