@@ -2,16 +2,16 @@ import { doc, Firestore, setDoc } from "firebase/firestore";
 import React, { FC, useContext, useState } from "react";
 import { Button, ButtonGroup, Col, Row } from "react-bootstrap";
 import { ArrowsAngleContract, ArrowsAngleExpand, BoxArrowLeft, DeviceSsd, Pencil } from "react-bootstrap-icons";
-import { View } from "../../types/View";
-import { DatabaseContext } from "../Database";
-import { UserContext } from "../User";
-import Header from "./editors/Header";
-import Title from "./editors/Title";
-import Paragraph from "./editors/Paragraph";
-import NewComponent from "./modals/NewComponent";
-import { NavigationContext } from "./Navigation";
-import Editor from "./views/Editor";
-import App from "../app/App";
+import { View } from "../../../types/View";
+import { DatabaseContext } from "../../Database";
+import { UserContext } from "../../User";
+import Header from "../editors/Header";
+import Title from "../editors/Title";
+import Paragraph from "../editors/Paragraph";
+import NewComponent from "../modals/NewComponent";
+import { NavigationContext } from "../Navigation";
+import EditApp from "./EditApp";
+import App from "../../app/App";
 
 const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewRoute }) => {
 	const database = useContext(DatabaseContext);
@@ -24,7 +24,7 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 	const [ previewIsExpanded, setPreviewIsExpanded ] = useState<boolean>(false);
 
 	const exit = () => {
-		setCurrentView(<Editor appRoute={String(appRoute)} />);
+		setCurrentView(<EditApp appRoute={String(appRoute)} />);
 	};
 	
 	const saveUser = async () => {

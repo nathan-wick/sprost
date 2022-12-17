@@ -2,11 +2,11 @@ import React, { FC, useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { App as AppIcon, BoxSeam, ColumnsGap, InfoCircle, Pencil, RocketTakeoffFill, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
 import { UserContext } from "../../User";
-import EditView from "../EditView";
+import EditView from "./EditView";
 import NewView from "../modals/NewView";
 import { NavigationContext } from "../Navigation";
 
-const App: FC<{ appRoute: string }> = ({ appRoute }) => {
+const EditApp: FC<{ appRoute: string }> = ({ appRoute }) => {
 	const user = useContext(UserContext);
 	const { setCurrentView } = useContext(NavigationContext);
 	const app = user?.apps.find(app => app.route === appRoute);
@@ -145,4 +145,4 @@ const App: FC<{ appRoute: string }> = ({ appRoute }) => {
 	</>;
 };
 
-export default App;
+export default EditApp;
