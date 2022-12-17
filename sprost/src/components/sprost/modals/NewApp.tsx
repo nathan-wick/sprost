@@ -6,7 +6,7 @@ import { App as AppType } from "../../../types/App";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
 import { NavigationContext } from "../Navigation";
-import App from "../views/App";
+import Editor from "../views/Editor";
 
 const NewApp = () => {
 	const database = useContext(DatabaseContext);
@@ -73,7 +73,7 @@ const NewApp = () => {
 			await setDoc(userReference, user, { merge: true });
 		}
 		hideModal();
-		setCurrentView(<App appRoute={String(nameRoute)} />);
+		setCurrentView(<Editor appRoute={String(nameRoute)} />);
 	};
 	
 	return <>
