@@ -10,19 +10,21 @@ import Title from "./editors/Title";
 import Paragraph from "./editors/Paragraph";
 import NewComponent from "./modals/NewComponent";
 import { NavigationContext } from "./Navigation";
-import App from "./views/App";
+import Editor from "./views/Editor";
+import App from "../app/App";
 
 const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewRoute }) => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
 	const { setCurrentView } = useContext(NavigationContext);
-	const savedView = user?.apps.find(app => app.route === appRoute)?.views.find(view => view.route === viewRoute);
+	const app = user?.apps.find(app => app.route === appRoute);
+	const savedView = app?.views.find(view => view.route === viewRoute);
 	const [ editView, setEditView ] = useState<View | undefined>(structuredClone(savedView));
 	const [ isSaving, setIsSaving ] = useState<boolean>(false);
 	const [ previewIsExpanded, setPreviewIsExpanded ] = useState<boolean>(false);
 
 	const exit = () => {
-		setCurrentView(<App appRoute={String(appRoute)} />);
+		setCurrentView(<Editor appRoute={String(appRoute)} />);
 	};
 	
 	const saveUser = async () => {
@@ -96,7 +98,10 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 				className={previewIsExpanded ? "" : "d-none d-lg-block"}>
 				<div
 					className="m-2 mb-4 rounded shadow">
-					Preview
+					{
+						app &&
+							<App app={app} viewRoute={viewRoute} />
+					}
 				</div>
 			</Col>
 			<Col>
