@@ -79,9 +79,41 @@ const App: FC<{ app: AppType, viewRoute: string }> = ({ app, viewRoute }) => {
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>
-		<p>
-			{currentView?.name}
-		</p>
+		{
+			currentView?.components.map(component => {
+				switch(component.type.id) {
+				case "header":
+					return <h1
+						key={component.id}>
+						{component.type.message}
+					</h1>;
+				case "title":
+					switch(component.type.size) {
+					case "large":
+						return <h2
+							key={component.id}>
+							{component.type.message}
+						</h2>;
+					case "medium":
+						return <h3
+							key={component.id}>
+							{component.type.message}
+						</h3>;
+					case "small":
+						return <h4
+							key={component.id}>
+							{component.type.message}
+						</h4>;
+					}
+					break;
+				case "paragraph":
+					return <p
+						key={component.id}>
+						{component.type.message}
+					</p>;
+				}
+			})
+		}
 	</>;
 };
 

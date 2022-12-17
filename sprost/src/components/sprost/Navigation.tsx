@@ -9,7 +9,7 @@ import { Auth, signOut } from "firebase/auth";
 import NewApp from "./modals/NewApp";
 import Landing from "./views/Landing";
 import SignIn from "./modals/SignIn";
-import Editor from "./views/Editor";
+import EditApp from "./views/EditApp";
 
 export const NavigationContext = createContext<{
 	currentView: JSX.Element,
@@ -85,7 +85,7 @@ const NavigationContextProvider = () => {
 												<NavDropdown.Item
 													key={app.route}
 													onClick={() => {
-														setCurrentView(<Editor appRoute={app.route} />);
+														setCurrentView(<EditApp appRoute={app.route} />);
 													}}>
 													<AppIcon
 														className="mx-2"/>
