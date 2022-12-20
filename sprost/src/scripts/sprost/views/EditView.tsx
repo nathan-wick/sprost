@@ -1,8 +1,8 @@
 import { doc, Firestore, setDoc } from "firebase/firestore";
 import React, { FC, useContext, useState } from "react";
 import { Button, ButtonGroup, Col, Row } from "react-bootstrap";
-import { ArrowsAngleContract, ArrowsAngleExpand, BoxArrowLeft, DeviceSsd, Pencil } from "react-bootstrap-icons";
-import { View } from "../../../types/View";
+import { ArrowsAngleContract, ArrowsAngleExpand, BoxArrowLeft, DeviceSsd, Window } from "react-bootstrap-icons";
+import { View as ViewType } from "../../../types/View";
 import { DatabaseContext } from "../../Database";
 import { UserContext } from "../../User";
 import Header from "../editors/Header";
@@ -11,7 +11,7 @@ import Paragraph from "../editors/Paragraph";
 import NewComponent from "../modals/NewComponent";
 import { NavigationContext } from "../Navigation";
 import EditApp from "./EditApp";
-import App from "../../app/App";
+import View from "../../app/View";
 
 const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewRoute }) => {
 	const database = useContext(DatabaseContext);
@@ -19,7 +19,7 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 	const { setCurrentView } = useContext(NavigationContext);
 	const app = user?.apps.find(app => app.route === appRoute);
 	const savedView = app?.views.find(view => view.route === viewRoute);
-	const [ editView, setEditView ] = useState<View | undefined>(structuredClone(savedView));
+	const [ editView, setEditView ] = useState<ViewType | undefined>(structuredClone(savedView));
 	const [ isSaving, setIsSaving ] = useState<boolean>(false);
 	const [ previewIsExpanded, setPreviewIsExpanded ] = useState<boolean>(false);
 
@@ -51,7 +51,7 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 				md={4}
 				sm={12}>
 				<h1>
-					<Pencil
+					<Window
 						className="mx-2" />
 					{editView?.name}
 				</h1>
@@ -100,7 +100,7 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 					className="m-2 mb-4 rounded shadow">
 					{
 						app &&
-							<App app={app} viewRoute={viewRoute} />
+							<View app={app} view={editView} />
 					}
 				</div>
 			</Col>

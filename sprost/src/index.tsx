@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
-import Firebase from "./components/Firebase";
-import Authentication from "./components/Authentication";
-import Database from "./components/Database";
-import User from "./components/User";
-import Navigation from "./components/sprost/Navigation";
+import Firebase from "./scripts/Firebase";
+import Authentication from "./scripts/Authentication";
+import Database from "./scripts/Database";
+import User from "./scripts/User";
+import Navigation from "./scripts/sprost/Navigation";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
