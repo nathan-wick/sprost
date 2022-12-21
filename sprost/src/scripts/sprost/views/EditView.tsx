@@ -11,7 +11,7 @@ import Paragraph from "../editors/Paragraph";
 import NewComponent from "../modals/NewComponent";
 import { NavigationContext } from "../Navigation";
 import EditApp from "./EditApp";
-import View from "../../app/View";
+import View from "../../generative/View";
 
 const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewRoute }) => {
 	const database = useContext(DatabaseContext);
