@@ -130,7 +130,7 @@ const NewApp = () => {
 							className="text-muted">
 							<Signpost
 								className="mx-2" />
-							App Route: <b>{nameRoute}</b>
+							sprost.com/{user?.route}/<b>{nameRoute}</b>
 						</p>
 					</>
 				}

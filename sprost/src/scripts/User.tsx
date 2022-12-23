@@ -1,5 +1,5 @@
 import { Auth, onAuthStateChanged, User as AuthenticatedUser } from "firebase/auth";
-import { doc, Firestore, onSnapshot, setDoc } from "firebase/firestore";
+import { collection, doc, Firestore, getDocs, limit, onSnapshot, query, setDoc, where } from "firebase/firestore";
 import React, { createContext, FC, useContext, useEffect, useState } from "react";
 import { User } from "../types/User";
 import { AuthenticationContext } from "./Authentication";
@@ -12,6 +12,24 @@ const UserContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 	const database = useContext(DatabaseContext);
 	const [ authenticatedUser, setAuthenticatedUser ] = useState<AuthenticatedUser | null>(null);
 	const [ user, setUser ] = useState<User>();
+	const createUserRoute = async (name: string) => {
+		let route = name.toLowerCase().replaceAll(" ", "-");
+		let routeIsUnique = false;
+		let iteration = 1;
+		while (!routeIsUnique) {
+			console.log(route, iteration);
+			if (iteration > 1) {
+				route = route + String(iteration);
+			}
+			const usersWithRoute = await getDocs(query(collection(database as Firestore, "users"), where("route", "==", route), limit(1)));
+			if (usersWithRoute.empty) {
+				routeIsUnique = true;
+			} else {
+				iteration += 1;
+			}
+		}
+		return route;
+	};
 
 	onAuthStateChanged(authentication as Auth, (newAuthenticatedUser) => {
 		newAuthenticatedUser ?
@@ -28,6 +46,7 @@ const UserContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 					// Get User
 					const userFromDatabase: User = {
 						id: userData.id,
+						route: userData.route,
 						name: userData.name,
 						email: userData.email,
 						portrait: userData.portrait,
@@ -39,9 +58,10 @@ const UserContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 					// Initialize User
 					const initialUserData: Partial<User> = {
 						id: authenticatedUser.uid,
-						name: authenticatedUser.displayName ? authenticatedUser.displayName : undefined,
-						email: authenticatedUser.email ? authenticatedUser.email : undefined,
-						portrait: authenticatedUser.photoURL ? authenticatedUser.photoURL : undefined,
+						route: await createUserRoute(authenticatedUser.displayName ?? authenticatedUser.uid),
+						name: authenticatedUser.displayName ?? undefined,
+						email: authenticatedUser.email ?? undefined,
+						portrait: authenticatedUser.photoURL ?? undefined,
 						theme: { name: "light" },
 						apps: [],
 					};

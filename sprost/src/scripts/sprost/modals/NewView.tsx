@@ -9,7 +9,8 @@ import { UserContext } from "../../User";
 const NewView: FC<{ appRoute: string }> = ({ appRoute }) => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
-	const views = user?.apps.find(app => app.route === appRoute)?.views;
+	const app = user?.apps.find(app => app.route === appRoute);
+	const views = app?.views;
 	const [ modal, setModal ] = useState<boolean>(false);
 	const [ nameInput, setNameInput ] = useState<string>();
 	const [ nameRoute, setNameRoute ] = useState<string>();
@@ -125,7 +126,7 @@ const NewView: FC<{ appRoute: string }> = ({ appRoute }) => {
 							className="text-muted">
 							<Signpost
 								className="mx-2" />
-							View Route: <b>{nameRoute}</b>
+							sprost.com/{user?.route}/{app?.route}/<b>{nameRoute}</b>
 						</p>
 					</>
 				}

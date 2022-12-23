@@ -1,7 +1,7 @@
-import { doc, Firestore, updateDoc } from "firebase/firestore";
+import { collection, doc, Firestore, getDocs, limit, query, updateDoc, where } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { Bookmarks, DeviceSsd, Envelope, Eye, Gear } from "react-bootstrap-icons";
+import { Bookmarks, DeviceSsd, Envelope, Eye, Gear, Signpost } from "react-bootstrap-icons";
 import { Color } from "../../../types/Color";
 import { User } from "../../../types/User";
 import { DatabaseContext } from "../../Database";
@@ -11,12 +11,32 @@ const Settings = () => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
 	const [ nameInput, setNameInput ] = useState<string>();
+	const [ nameRoute, setNameRoute ] = useState<string>();
 	const [ nameError, setNameError ] = useState<string>();
 	const [ emailInput, setEmailInput ] = useState<string>();
 	const [ emailError, setEmailError ] = useState<string>();
 	const [ themeInput, setThemeInput ] = useState<Color>();
 	const [ canSave, setCanSave ] = useState<boolean>(false);
-
+	const createUserRoute = async (name: string) => {
+		let route = name.toLowerCase().replaceAll(" ", "-");
+		if (route !== user?.route) {
+			let routeIsUnique = false;
+			let iteration = 1;
+			while (!routeIsUnique) {
+				console.log(route, iteration);
+				if (iteration > 1) {
+					route = route + String(iteration);
+				}
+				const usersWithRoute = await getDocs(query(collection(database as Firestore, "users"), where("route", "==", route), limit(1)));
+				if (usersWithRoute.empty) {
+					routeIsUnique = true;
+				} else {
+					iteration += 1;
+				}
+			}
+		}
+		return route;
+	};
 	const themeOptions = [
 		{
 			value: "light",
@@ -30,12 +50,14 @@ const Settings = () => {
 
 	useEffect(() => {
 		setNameInput(user?.name);
+		setNameRoute(user?.route);
 		setEmailInput(user?.email);
 		setThemeInput(user?.theme);
 	}, [ user ]);
 
 	useEffect(() => {
 		nameInput === user?.name &&
+		nameRoute === user?.route &&
         emailInput === user?.email &&
         themeInput === user?.theme ?
 			setCanSave(false) :
@@ -44,7 +66,7 @@ const Settings = () => {
 				setCanSave(true);
 	}, [ user, emailInput, nameInput, themeInput, nameError, emailError ]);
 
-	const onNameChange = (event: { target: { value: string; }; }) => {
+	const onNameChange = async (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
 			if (event.target.value.match(/^[a-zA-Z\s]*$/g)) {
 				setNameInput(event.target.value);
@@ -54,6 +76,12 @@ const Settings = () => {
 			}
 		} else {
 			setNameError("Please enter a name");
+		}
+	};
+
+	const onRouteChange = async () => {
+		if (!nameError && nameInput) {
+			setNameRoute(await createUserRoute(nameInput));
 		}
 	};
 
@@ -79,6 +107,7 @@ const Settings = () => {
 		if (user) {
 			const userInputData: Partial<User> = {
 				name: nameInput,
+				route: nameRoute,
 				email: emailInput,
 				theme: themeInput,
 			};
@@ -130,13 +159,20 @@ const Settings = () => {
 							type="text"
 							placeholder="Enter name"
 							onChange={onNameChange}
+							onBlur={onRouteChange}
 							defaultValue={user?.name}
 							maxLength={50} />
 						{
-							nameError &&
+							nameError ?
 								<p
 									className="text-danger">
 									{nameError}
+								</p> :
+								<p
+									className="text-muted">
+									<Signpost
+										className="mx-2" />
+									sprost.com/<b>{nameRoute}</b>
 								</p>
 						}
 					</Form.Group>
