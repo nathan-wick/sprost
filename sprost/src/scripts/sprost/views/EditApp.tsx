@@ -60,7 +60,7 @@ const EditApp: FC<{ appRoute: string }> = ({ appRoute }) => {
 					<small>
 						<Signpost
 							className="mx-2" />
-						Route: <b>{app?.route}</b>
+						Route: sprost.com/{user?.route}/<b>{app?.route}</b>
 					</small>
 					<br />
 					<small>
@@ -114,7 +114,7 @@ const EditApp: FC<{ appRoute: string }> = ({ appRoute }) => {
 							<small>
 								<Signpost
 									className="mx-2" />
-								Route: <b>{app?.route}/{view.route}</b>
+								Route: sprost.com/{user?.route}/{app?.route}/<b>{view.route}</b>
 							</small>
 							<br />
 							<small>
