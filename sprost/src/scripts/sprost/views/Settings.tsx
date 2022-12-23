@@ -1,4 +1,4 @@
-import { collection, doc, Firestore, getDocs, limit, query, updateDoc, where } from "firebase/firestore";
+import { deleteDoc, doc, Firestore, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Bookmarks, DeviceSsd, Envelope, Eye, Gear, Signpost } from "react-bootstrap-icons";
@@ -10,13 +10,13 @@ import { UserContext } from "../../User";
 const Settings = () => {
 	const database = useContext(DatabaseContext);
 	const user = useContext(UserContext);
+	const userReference = user ? doc(database as Firestore, "users", user.id) : undefined;
 	const [ nameInput, setNameInput ] = useState<string>();
-	const [ nameRoute, setNameRoute ] = useState<string>();
+	const [ routeInput, setRouteInput ] = useState<string>();
 	const [ nameError, setNameError ] = useState<string>();
 	const [ emailInput, setEmailInput ] = useState<string>();
 	const [ emailError, setEmailError ] = useState<string>();
 	const [ themeInput, setThemeInput ] = useState<Color>();
-	const [ canSave, setCanSave ] = useState<boolean>(false);
 	const createUserRoute = async (name: string) => {
 		let route = name.toLowerCase().replaceAll(" ", "-");
 		if (route !== user?.route) {
@@ -24,14 +24,17 @@ const Settings = () => {
 			let iteration = 1;
 			while (!routeIsUnique) {
 				console.log(route, iteration);
+				let newRoute = route;
 				if (iteration > 1) {
-					route = route + String(iteration);
+					newRoute = route + String(iteration);
 				}
-				const usersWithRoute = await getDocs(query(collection(database as Firestore, "users"), where("route", "==", route), limit(1)));
-				if (usersWithRoute.empty) {
-					routeIsUnique = true;
-				} else {
+				const publicUserReference = doc(database as Firestore, "public", newRoute);
+				const publicUserSnapshot = await getDoc(publicUserReference);
+				if (publicUserSnapshot.exists()) {
 					iteration += 1;
+				} else {
+					route = newRoute;
+					routeIsUnique = true;
 				}
 			}
 		}
@@ -50,21 +53,10 @@ const Settings = () => {
 
 	useEffect(() => {
 		setNameInput(user?.name);
-		setNameRoute(user?.route);
+		setRouteInput(user?.route);
 		setEmailInput(user?.email);
 		setThemeInput(user?.theme);
 	}, [ user ]);
-
-	useEffect(() => {
-		nameInput === user?.name &&
-		nameRoute === user?.route &&
-        emailInput === user?.email &&
-        themeInput === user?.theme ?
-			setCanSave(false) :
-			nameError || emailError ?
-				setCanSave(false) :
-				setCanSave(true);
-	}, [ user, emailInput, nameInput, themeInput, nameError, emailError ]);
 
 	const onNameChange = async (event: { target: { value: string; }; }) => {
 		if (event.target.value) {
@@ -79,9 +71,24 @@ const Settings = () => {
 		}
 	};
 
-	const onRouteChange = async () => {
-		if (!nameError && nameInput) {
-			setNameRoute(await createUserRoute(nameInput));
+	const saveName = async () => {
+		if (user && userReference && !nameError && nameInput) {
+			const newRoute = await createUserRoute(nameInput);
+			setRouteInput(newRoute);
+			const publicUserReference = doc(database as Firestore, "public", user.route);
+			const publicUserSnapshot = await getDoc(publicUserReference);
+			const publicUserData: Partial<User> = {
+				name: nameInput,
+				portrait: publicUserSnapshot.data()?.portrait,
+			};
+			await deleteDoc(publicUserReference);
+			const newPublicUserReference = doc(database as Firestore, "public", newRoute);
+			const userInputData: Partial<User> = {
+				name: nameInput,
+				route: newRoute,
+			};
+			await updateDoc(userReference, userInputData);
+			await setDoc(newPublicUserReference, publicUserData);
 		}
 	};
 
@@ -98,20 +105,24 @@ const Settings = () => {
 		}
 	};
 
+	const saveEmail = async () => {
+		if (userReference && !emailError) {
+			const userInputData: Partial<User> = {
+				email: emailInput,
+			};
+			await updateDoc(userReference, userInputData);
+		}
+	};
+
 	const onThemeChange = (event: { target: { value: string; }; }) => {
 		setThemeInput({ name: event.target.value });
 	};
 
-	const onSubmit = async (event: { preventDefault: () => void; }) => {
-		event.preventDefault();
-		if (user) {
+	const saveTheme = async () => {
+		if (userReference) {
 			const userInputData: Partial<User> = {
-				name: nameInput,
-				route: nameRoute,
-				email: emailInput,
 				theme: themeInput,
 			};
-			const userReference = doc(database as Firestore, "users", user.id);
 			await updateDoc(userReference, userInputData);
 		}
 	};
@@ -145,8 +156,7 @@ const Settings = () => {
 				lg={9}
 				md={12}>
 				<Form
-					className="m-3"
-					onSubmit={onSubmit}>
+					className="m-3">
 					<Form.Group
 						className="m-3">
 						<Form.Label>
@@ -159,7 +169,7 @@ const Settings = () => {
 							type="text"
 							placeholder="Enter name"
 							onChange={onNameChange}
-							onBlur={onRouteChange}
+							onBlur={saveName}
 							defaultValue={user?.name}
 							maxLength={50} />
 						{
@@ -172,7 +182,7 @@ const Settings = () => {
 									className="text-muted">
 									<Signpost
 										className="mx-2" />
-									sprost.com/<b>{nameRoute}</b>
+									sprost.com/<b>{routeInput}</b>
 								</p>
 						}
 					</Form.Group>
@@ -188,6 +198,7 @@ const Settings = () => {
 							type="email"
 							placeholder="Enter email"
 							onChange={onEmailChange}
+							onBlur={saveEmail}
 							defaultValue={user?.email}
 							maxLength={50} />
 						{
@@ -208,6 +219,7 @@ const Settings = () => {
 						<Form.Select
 							className={user?.theme.name === "dark" ? "bg-black text-light" : "bg-white text-dark"}
 							onChange={onThemeChange}
+							onBlur={saveTheme}
 							value={themeInput?.name}>
 							{
 								themeOptions.map(themeOption =>
@@ -219,15 +231,6 @@ const Settings = () => {
 							}
 						</Form.Select>
 					</Form.Group>
-					<Button
-						variant="primary"
-						type="submit"
-						className="m-2"
-						disabled={!canSave}>
-						<DeviceSsd
-							className="mx-2" />
-                        Save Settings
-					</Button>
 				</Form>
 			</Col>
 		</Row>

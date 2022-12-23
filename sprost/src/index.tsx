@@ -8,7 +8,7 @@ import Database from "./scripts/Database";
 import User from "./scripts/User";
 import Navigation from "./scripts/sprost/Navigation";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import App from "./scripts/generative/App";
+import App from "./scripts/public/App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

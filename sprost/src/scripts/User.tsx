@@ -1,5 +1,5 @@
 import { Auth, onAuthStateChanged, User as AuthenticatedUser } from "firebase/auth";
-import { collection, doc, Firestore, getDocs, limit, onSnapshot, query, setDoc, where } from "firebase/firestore";
+import { doc, Firestore, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import React, { createContext, FC, useContext, useEffect, useState } from "react";
 import { User } from "../types/User";
 import { AuthenticationContext } from "./Authentication";
@@ -18,14 +18,17 @@ const UserContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 		let iteration = 1;
 		while (!routeIsUnique) {
 			console.log(route, iteration);
+			let newRoute = route;
 			if (iteration > 1) {
-				route = route + String(iteration);
+				newRoute = route + String(iteration);
 			}
-			const usersWithRoute = await getDocs(query(collection(database as Firestore, "users"), where("route", "==", route), limit(1)));
-			if (usersWithRoute.empty) {
-				routeIsUnique = true;
-			} else {
+			const publicUserReference = doc(database as Firestore, "public", newRoute);
+			const publicUserSnapshot = await getDoc(publicUserReference);
+			if (publicUserSnapshot.exists()) {
 				iteration += 1;
+			} else {
+				route = newRoute;
+				routeIsUnique = true;
 			}
 		}
 		return route;
@@ -39,13 +42,14 @@ const UserContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 
 	useEffect(() => {
 		if (authenticatedUser) {
-			const userReference = doc(database as Firestore, "users", authenticatedUser.uid);
+			const id = authenticatedUser.uid;
+			const userReference = doc(database as Firestore, "users", id);
 			onSnapshot(userReference, async (userDocument) => {
 				const userData = userDocument.data();
 				if (userData) {
 					// Get User
 					const userFromDatabase: User = {
-						id: userData.id,
+						id,
 						route: userData.route,
 						name: userData.name,
 						email: userData.email,
@@ -56,16 +60,21 @@ const UserContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 					setUser(userFromDatabase);
 				} else {
 					// Initialize User
+					const name = authenticatedUser.displayName ?? undefined;
+					const route = await createUserRoute(name ?? id);
+					const portrait = authenticatedUser.photoURL ?? undefined;
 					const initialUserData: Partial<User> = {
-						id: authenticatedUser.uid,
-						route: await createUserRoute(authenticatedUser.displayName ?? authenticatedUser.uid),
-						name: authenticatedUser.displayName ?? undefined,
+						name, route, portrait,
 						email: authenticatedUser.email ?? undefined,
-						portrait: authenticatedUser.photoURL ?? undefined,
 						theme: { name: "light" },
 						apps: [],
 					};
 					await setDoc(userReference, initialUserData);
+					const publicUserReference = doc(database as Firestore, "public", route);
+					const initialPublicUserData: Partial<User> = {
+						name, portrait,
+					};
+					await setDoc(publicUserReference, initialPublicUserData);
 				}
 			});
 		}
