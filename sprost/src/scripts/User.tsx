@@ -1,6 +1,7 @@
 import { Auth, onAuthStateChanged, User as AuthenticatedUser } from "firebase/auth";
 import { doc, Firestore, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import React, { createContext, FC, useContext, useEffect, useState } from "react";
+import { App } from "../types/App";
 import { User } from "../types/User";
 import { AuthenticationContext } from "./Authentication";
 import { DatabaseContext } from "./Database";
@@ -63,16 +64,16 @@ const UserContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
 					const name = authenticatedUser.displayName ?? undefined;
 					const route = await createUserRoute(name ?? id);
 					const portrait = authenticatedUser.photoURL ?? undefined;
+					const apps: App[] = [];
 					const initialUserData: Partial<User> = {
-						name, route, portrait,
+						name, route, portrait, apps,
 						email: authenticatedUser.email ?? undefined,
 						theme: { name: "light" },
-						apps: [],
 					};
 					await setDoc(userReference, initialUserData);
 					const publicUserReference = doc(database as Firestore, "public", route);
 					const initialPublicUserData: Partial<User> = {
-						name, portrait,
+						name, portrait, apps,
 					};
 					await setDoc(publicUserReference, initialPublicUserData);
 				}

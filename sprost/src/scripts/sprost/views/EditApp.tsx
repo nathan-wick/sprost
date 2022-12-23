@@ -1,10 +1,11 @@
 import React, { FC, useContext } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { App as AppIcon, BoxSeam, ColumnsGap, InfoCircle, Pencil, RocketTakeoffFill, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
+import { App as AppIcon, BoxSeam, ColumnsGap, InfoCircle, Pencil, Signpost, Tag, Window, WindowStack } from "react-bootstrap-icons";
 import { UserContext } from "../../User";
 import EditView from "./EditView";
 import NewView from "../modals/NewView";
 import { NavigationContext } from "../Navigation";
+import NewRelease from "../modals/NewRelease";
 
 const EditApp: FC<{ appRoute: string }> = ({ appRoute }) => {
 	const user = useContext(UserContext);
@@ -27,14 +28,7 @@ const EditApp: FC<{ appRoute: string }> = ({ appRoute }) => {
 			</Col>
 			<Col
 				className="text-end">
-				<Button
-					className="w-50 shadow"
-					disabled={true}
-					variant="primary">
-					<RocketTakeoffFill
-						className="mx-2" />
-					Release
-				</Button>
+				<NewRelease app={app} />
 			</Col>
 		</Row>
 		<Row

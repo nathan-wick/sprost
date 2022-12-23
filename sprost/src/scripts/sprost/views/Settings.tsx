@@ -1,7 +1,7 @@
 import { deleteDoc, doc, Firestore, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { Bookmarks, DeviceSsd, Envelope, Eye, Gear, Signpost } from "react-bootstrap-icons";
+import { Col, Form, Row } from "react-bootstrap";
+import { Bookmarks, Envelope, Eye, Gear, Signpost } from "react-bootstrap-icons";
 import { Color } from "../../../types/Color";
 import { User } from "../../../types/User";
 import { DatabaseContext } from "../../Database";
