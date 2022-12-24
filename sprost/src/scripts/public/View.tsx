@@ -1,15 +1,12 @@
 import React, { FC } from "react";
-import { App as AppType } from "../../types/App";
 import { View as ViewType } from "../../types/View";
 import { Component as ComponentType } from "../../types/Component";
-import Navigation from "./components/Navigation";
 import Header from "./components/Header";
 import Title from "./components/Title";
 import Paragraph from "./components/Paragraph";
 
-const View: FC<{ app: AppType, view?: ViewType }> = ({ app, view }) => {
+const View: FC<{ view: ViewType }> = ({ view }) => {
 	return <>
-		<Navigation app={app} />
 		{
 			view?.components.map((component: ComponentType) => {
 				switch(component.type.id) {
