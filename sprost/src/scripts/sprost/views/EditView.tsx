@@ -99,8 +99,8 @@ const EditView: FC<{ appRoute: string, viewRoute: string }> = ({ appRoute, viewR
 				<div
 					className="m-2 mb-4 rounded shadow">
 					{
-						app &&
-							<View app={app} view={editView} />
+						editView &&
+							<View view={editView} />
 					}
 				</div>
 			</Col>
