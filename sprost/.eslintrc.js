@@ -19,7 +19,12 @@ module.exports = {
     },
     "plugins": [],
     "rules": {
+        "max-len": [
+            2,
+            {"code": 100}
+        ],
         "max-lines-per-function": 0,
+        "no-magic-numbers": 0,
         "no-ternary": 0
     }
 };
