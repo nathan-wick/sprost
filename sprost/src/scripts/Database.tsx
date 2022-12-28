@@ -1,17 +1,18 @@
-import { FirebaseApp } from "firebase/app";
-import { Firestore, getFirestore } from "firebase/firestore";
-import React, { createContext, FC, useContext } from "react";
-import { FirebaseContext } from "./Firebase";
+import {Firestore, getFirestore} from "firebase/firestore";
+import React, {FC, createContext, useContext} from "react";
+import {FirebaseApp} from "firebase/app";
+import {FirebaseContext} from "./Firebase";
 
-export const DatabaseContext = createContext<Firestore | undefined>(undefined);
+export const DatabaseContext = createContext<Firestore | "undefined">("undefined"),
+    DatabaseContextProvider: FC<{ children: JSX.Element }> = ({children}) => {
 
-const DatabaseContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
-	const firebaseApp = useContext(FirebaseContext);
-	const database = getFirestore(firebaseApp as FirebaseApp);
+        const firebaseApp = useContext(FirebaseContext),
+            database = getFirestore(firebaseApp as FirebaseApp);
 
-	return <DatabaseContext.Provider value={database}>
-		{children}
-	</DatabaseContext.Provider>;
-};
+        return <DatabaseContext.Provider value={database}>
+            {children}
+        </DatabaseContext.Provider>;
+
+    };
 
 export default DatabaseContextProvider;
