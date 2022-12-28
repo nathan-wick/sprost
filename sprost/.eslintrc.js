@@ -23,6 +23,7 @@ module.exports = {
             2,
             {"code": 100}
         ],
+        "max-lines": 0,
         "max-lines-per-function": 0,
         "no-magic-numbers": 0,
         "no-nested-ternary": 0,
