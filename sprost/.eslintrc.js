@@ -25,6 +25,7 @@ module.exports = {
         ],
         "max-lines-per-function": 0,
         "no-magic-numbers": 0,
-        "no-ternary": 0
+        "no-ternary": 0,
+        "sort-vars": 0
     }
 };

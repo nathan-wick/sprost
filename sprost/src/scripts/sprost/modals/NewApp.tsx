@@ -1,4 +1,3 @@
-/* eslint-disable sort-vars */
 import {Button, Form, FormGroup, Modal, NavDropdown} from "react-bootstrap";
 import {Firestore, doc, setDoc} from "firebase/firestore";
 import {PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
