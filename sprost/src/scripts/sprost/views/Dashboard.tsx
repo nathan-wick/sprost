@@ -1,14 +1,12 @@
 import React from "react";
 
-const Dashboard = () => {
-	return <>
-		<h1
-			className="my-3 mx-5">
+const Dashboard = () => <>
+    <h1
+        className="my-3 mx-5">
             Dashboard
-		</h1>
-		<hr
-			className="my-3 mx-5" />
-	</>;
-};
+    </h1>
+    <hr
+        className="my-3 mx-5" />
+</>;
 
 export default Dashboard;
