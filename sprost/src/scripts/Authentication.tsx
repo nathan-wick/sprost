@@ -1,16 +1,17 @@
-import { Auth, getAuth } from "firebase/auth";
-import React, { createContext, FC, useContext } from "react";
-import { FirebaseContext } from "./Firebase";
+import {Auth, getAuth} from "firebase/auth";
+import React, {FC, createContext, useContext} from "react";
+import {FirebaseContext} from "./Firebase";
 
-export const AuthenticationContext = createContext<Auth | undefined>(undefined);
+export const AuthenticationContext = createContext<Auth | "undefined">("undefined"),
+    AuthenticationContextProvider: FC<{ children: JSX.Element }> = ({children}) => {
 
-const AuthenticationContextProvider: FC<{ children: JSX.Element }> = ({ children }) => {
-	const firebaseApp = useContext(FirebaseContext);
-	const authentication = getAuth(firebaseApp);
+        const firebaseApp = useContext(FirebaseContext),
+            authentication = getAuth(firebaseApp);
 
-	return <AuthenticationContext.Provider value={authentication}>
-		{children}
-	</AuthenticationContext.Provider>;
-};
+        return <AuthenticationContext.Provider value={authentication}>
+            {children}
+        </AuthenticationContext.Provider>;
+
+    };
 
 export default AuthenticationContextProvider;
