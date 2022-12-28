@@ -13,7 +13,9 @@ const NewApp = () => {
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
         {setCurrentView} = useContext(NavigationContext),
-        apps = user?.apps,
+        apps = user === "undefined"
+            ? "undefined"
+            : user.apps,
         [
             modal,
             setModal
@@ -55,7 +57,7 @@ const NewApp = () => {
                         " ",
                         "-"
                     );
-                    if (apps?.find((app) => app.route === newNameRoute)) {
+                    if (apps !== "undefined" && apps.find((app) => app.route === newNameRoute)) {
 
                         manageNameError("Please enter a unique app name");
 
@@ -95,7 +97,7 @@ const NewApp = () => {
 
             setIsLoading(true);
             event.preventDefault();
-            if (user) {
+            if (user !== "undefined") {
 
                 const newApp: AppType = {
                     "name": String(nameInput),
@@ -154,9 +156,6 @@ const NewApp = () => {
                             App Name
                         </Form.Label>
                         <Form.Control
-                            className={user?.theme.name === "dark"
-                                ? "bg-black text-light"
-                                : "bg-white text-dark"}
                             type="text"
                             defaultValue={nameInput}
                             onChange={onNameChange}
@@ -175,13 +174,13 @@ const NewApp = () => {
                     </FormGroup>
                 </Form>
                 {
-                    nameRoute &&
+                    nameRoute && user !== "undefined" &&
                     <>
                         <p
                             className="text-muted">
                             <Signpost
                                 className="mx-2" />
-                            sprost.com/{user?.route}/<b>{nameRoute}</b>
+                            sprost.com/{user.route}/<b>{nameRoute}</b>
                         </p>
                     </>
                 }

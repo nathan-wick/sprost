@@ -31,9 +31,9 @@ const App: FC<{
 
             const getCurrentApp = async () => {
 
-                if (propsAppRoute) {
+                if (propsAppRoute && user !== "undefined") {
 
-                    setCurrentApp(user?.apps.find((userApp) => userApp.route === propsAppRoute));
+                    setCurrentApp(user.apps.find((userApp) => userApp.route === propsAppRoute));
 
                 } else {
 

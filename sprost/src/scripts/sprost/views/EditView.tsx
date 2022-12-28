@@ -20,8 +20,12 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
         {setCurrentView} = useContext(NavigationContext),
-        app = user?.apps.find((userApp) => userApp.route === appRoute),
-        savedView = app?.views.find((view) => view.route === viewRoute),
+        app = user === "undefined"
+            ? "undefined"
+            : user.apps.find((userApp) => userApp.route === appRoute) ?? "undefined",
+        savedView = app === "undefined"
+            ? "undefined"
+            : app.views.find((view) => view.route === viewRoute),
         [
             editView,
             setEditView
@@ -42,7 +46,7 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
         saveUser = async () => {
 
             setIsSaving(true);
-            if (user) {
+            if (user !== "undefined") {
 
                 const newView: ViewType = structuredClone(editView),
                     newUser: User = structuredClone(user),

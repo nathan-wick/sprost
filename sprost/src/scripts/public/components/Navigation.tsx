@@ -38,8 +38,9 @@ const Navigation: FC<{app: AppType}> = ({app}) => {
                     }
                 </Nav>
                 <Nav>
-                    {user
-                        ? <NavDropdown
+                    {user === "undefined"
+                        ? <SignIn />
+                        : <NavDropdown
                             title={[
                                 user?.portrait
                                     ? <img
@@ -58,16 +59,15 @@ const Navigation: FC<{app: AppType}> = ({app}) => {
                             <NavDropdown.Item>
                                 <Gear
                                     className="mx-2" />
-                                Settings
+                            Settings
                             </NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item>
                                 <BoxArrowRight
                                     className="mx-2" />
-                                Sign Out
+                            Sign Out
                             </NavDropdown.Item>
-                        </NavDropdown>
-                        : <SignIn />}
+                        </NavDropdown>}
                 </Nav>
             </Navbar.Collapse>
         </Container>

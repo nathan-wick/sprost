@@ -8,10 +8,12 @@ import {User} from "../../../types/User";
 import {UserContext} from "../../User";
 
 const NewRelease: FC<{
-    app: App | undefined,
+    app: App | "undefined",
 }> = ({app}) => {
 
-    let version = structuredClone(app?.version);
+    let version = app === "undefined"
+        ? "undefined"
+        : structuredClone(app.version);
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
         [
@@ -53,7 +55,9 @@ const NewRelease: FC<{
         onReleaseTypeChange = (event: { target: { value: string; }; }) => {
 
             setReleaseType(event.target.value);
-            version = structuredClone(app?.version);
+            version = app === "undefined"
+                ? "undefined"
+                : structuredClone(app.version);
             if (version) {
 
                 switch (event.target.value) {
@@ -89,7 +93,9 @@ const NewRelease: FC<{
         reset = () => {
 
             setReleaseType("minor");
-            version = structuredClone(app?.version);
+            version = app === "undefined"
+                ? "undefined"
+                : structuredClone(app.version);
             setNewVersion(version
                 ? {
                     "major": version.major,
@@ -106,10 +112,12 @@ const NewRelease: FC<{
         onSubmit = async () => {
 
             setIsLoading(true);
-            if (user && app && newVersion) {
+            if (user !== "undefined" && app && newVersion) {
 
-                const newApp = user.apps.find((newUserApp) => newUserApp.route === app.route);
-                if (newApp && newVersion !== "undefined") {
+                const newApp = app === "undefined"
+                    ? "undefined"
+                    : user.apps.find((newUserApp) => newUserApp.route === app.route) ?? "undefined";
+                if (newApp !== "undefined" && newVersion !== "undefined") {
 
                     newApp.version = newVersion;
                     const userReference = doc(
@@ -145,7 +153,7 @@ const NewRelease: FC<{
     return <>
         <Button
             className="w-50 shadow"
-            disabled={app?.views.length
+            disabled={app !== "undefined" && app.views.length
                 ? app.views.length < 1
                 : true}
             variant="primary"
@@ -176,9 +184,6 @@ const NewRelease: FC<{
                             Release Size
                         </Form.Label>
                         <Form.Select
-                            className={user?.theme.name === "dark"
-                                ? "bg-black text-light"
-                                : "bg-white text-dark"}
                             onChange={onReleaseTypeChange}
                             value={releaseType}>
                             {

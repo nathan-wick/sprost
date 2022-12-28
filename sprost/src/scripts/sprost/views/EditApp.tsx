@@ -12,8 +12,12 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
 
     const user = useContext(UserContext),
         {setCurrentView} = useContext(NavigationContext),
-        app = user?.apps.find((userApp) => userApp.route === appRoute),
-        views = app?.views;
+        app = user === "undefined"
+            ? "undefined"
+            : user.apps.find((userApp) => userApp.route === appRoute) ?? "undefined",
+        views = app === "undefined"
+            ? "undefined"
+            : app.views;
 
     return <>
         <Row
@@ -25,7 +29,9 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                 <h1>
                     <AppIcon
                         className="mx-2" />
-                    {app?.name}
+                    {app === "undefined"
+                        ? "undefined"
+                        : app.name}
                 </h1>
             </Col>
             <Col
@@ -40,9 +46,10 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                 md={6}
                 sm={12} >
                 <div
-                    className={`m-3 p-2 shadow rounded bg-${user?.theme.name === "dark"
-                        ? "black"
-                        : "white"}`}>
+                    className={`m-3 p-2 shadow rounded bg-${
+                        user !== "undefined" && user.theme.name === "dark"
+                            ? "black"
+                            : "white"}`}>
                     <h3
                         className="mb-3">
                         <InfoCircle
@@ -52,20 +59,33 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                     <small>
                         <Tag
                             className="mx-2"/>
-                        Name: <b>{app?.name}</b>
+                        Name: <b>{app === "undefined"
+                            ? "undefined"
+                            : app.name}</b>
                     </small>
                     <br />
                     <small>
                         <Signpost
                             className="mx-2" />
-                        Route: sprost.com/{user?.route}/<b>{app?.route}</b>
+                        Route: sprost.com/{user === "undefined"
+                            ? "undefined"
+                            : user.route}/<b>{app === "undefined"
+                            ? "undefined"
+                            : app?.route}</b>
                     </small>
                     <br />
                     <small>
                         <BoxSeam
                             className="mx-2" />
-                        Version: <b>{app?.version.major}.
-                            {app?.version.minor}.{app?.version.patch}</b>
+                        Version: <b>{app === "undefined"
+                            ? "undefined"
+                            : app.version.major}.
+                        {app === "undefined"
+                            ? "undefined"
+                            : app.version.minor}.
+                        {app === "undefined"
+                            ? "undefined"
+                            : app.version.patch}</b>
                     </small>
                 </div>
             </Col>
@@ -90,15 +110,12 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
         <Row
             className="gx-0 p-3">
             {
-                views?.map((view) => <Col
+                views !== "undefined" && views?.map((view) => <Col
                     key={view.route}
                     lg={4}
                     md={6}
                     sm={12}>
-                    <div
-                        className={`m-3 p-2 shadow rounded bg-${user?.theme.name === "dark"
-                            ? "black"
-                            : "white"}`}>
+                    <div>
                         <h3
                             className="mb-3">
                             <Window
@@ -114,7 +131,11 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                         <small>
                             <Signpost
                                 className="mx-2" />
-                            Route: sprost.com/{user?.route}/{app?.route}/<b>{view.route}</b>
+                            Route: sprost.com/{user === "undefined"
+                                ? "undefined"
+                                : user.route}/{app === "undefined"
+                                ? "undefined"
+                                : app?.route}/<b>{view.route}</b>
                         </small>
                         <br />
                         <small>

@@ -10,8 +10,12 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
 
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
-        app = user?.apps.find((userApp) => userApp.route === appRoute),
-        views = app?.views,
+        app = user === "undefined"
+            ? "undefined"
+            : user.apps.find((userApp) => userApp.route === appRoute) ?? "undefined",
+        views = app === "undefined"
+            ? "undefined"
+            : app.views,
         [
             modal,
             setModal
@@ -53,7 +57,8 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                         " ",
                         "-"
                     );
-                    if (views?.find((view: { route: string; }) => view.route === newNameRoute)) {
+                    if (views !== "undefined" &&
+                        views.find((view: { route: string; }) => view.route === newNameRoute)) {
 
                         manageNameError("Please enter a unique view name");
 
@@ -93,7 +98,7 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
 
             setIsLoading(true);
             event.preventDefault();
-            if (user) {
+            if (user !== "undefined") {
 
                 const newView: View = {
                     "components": [],
@@ -107,7 +112,7 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                         "users",
                         user.id
                     );
-                user?.apps.find((userApp) => userApp.route === appRoute)?.views.push(newView);
+                user.apps.find((userApp) => userApp.route === appRoute)?.views.push(newView);
                 await setDoc(
                     userReference,
                     user,
@@ -150,9 +155,6 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                             View Name
                         </Form.Label>
                         <Form.Control
-                            className={user?.theme.name === "dark"
-                                ? "bg-black text-light"
-                                : "bg-white text-dark"}
                             type="text"
                             defaultValue={nameInput}
                             onChange={onNameChange}
@@ -171,13 +173,13 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                     </FormGroup>
                 </Form>
                 {
-                    nameRoute &&
+                    nameRoute && user !== "undefined" && app !== "undefined" &&
                     <>
                         <p
                             className="text-muted">
                             <Signpost
                                 className="mx-2" />
-                            sprost.com/{user?.route}/{app?.route}/<b>{nameRoute}</b>
+                            sprost.com/{user.route}/{app.route}/<b>{nameRoute}</b>
                         </p>
                     </>
                 }

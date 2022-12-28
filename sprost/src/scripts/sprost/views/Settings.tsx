@@ -11,13 +11,13 @@ const Settings = () => {
 
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
-        userReference = user
-            ? doc(
+        userReference = user === "undefined"
+            ? "undefined"
+            : doc(
                 database as Firestore,
                 "users",
                 user.id
-            )
-            : "undefined",
+            ),
         [
             nameInput,
             setNameInput
@@ -68,7 +68,7 @@ const Settings = () => {
                 " ",
                 "-"
             );
-            if (route !== user?.route) {
+            if (user !== "undefined" && route !== user.route) {
 
                 let routeIsUnique = false,
                     iteration = 1;
@@ -130,7 +130,7 @@ const Settings = () => {
         },
         saveName = async () => {
 
-            if (user && userReference !== "undefined" && !nameError && nameInput) {
+            if (user !== "undefined" && userReference !== "undefined" && !nameError && nameInput) {
 
                 const newRoute = await createUserRoute(nameInput),
                     publicUserReference = doc(
@@ -227,19 +227,21 @@ const Settings = () => {
     useEffect(
         () => {
 
-            setNameInput(user?.name);
-            setRouteInput(user?.route);
-            setEmailInput(user?.email);
-            setThemeInput(user?.theme);
+            if (user !== "undefined") {
+
+                setNameInput(user?.name);
+                setRouteInput(user?.route);
+                setEmailInput(user?.email);
+                setThemeInput(user?.theme);
+
+            }
 
         },
         [user]
     );
 
     return <div
-        className={`m-5 shadow rounded bg-${user?.theme.name === "dark"
-            ? "black"
-            : "white"}`}>
+        className={"m-5 shadow rounded"}>
         <Row
             className="gx-0">
             <Col>
@@ -258,8 +260,12 @@ const Settings = () => {
                 md={12}
                 className="text-center">
                 <img
-                    src={user?.portrait}
-                    alt={`${user?.name}'s portrait`}
+                    src={user === "undefined"
+                        ? "undefined"
+                        : user.portrait}
+                    alt={`${user === "undefined"
+                        ? "undefined"
+                        : user.name}'s portrait`}
                     referrerPolicy="no-referrer"
                     className="w-50 my-3 border border-2 rounded-circle" />
             </Col>
@@ -276,14 +282,13 @@ const Settings = () => {
                             Name
                         </Form.Label>
                         <Form.Control
-                            className={user?.theme.name === "dark"
-                                ? "bg-black text-light"
-                                : "bg-white text-dark"}
                             type="text"
                             placeholder="Enter name"
                             onChange={onNameChange}
                             onBlur={saveName}
-                            defaultValue={user?.name}
+                            defaultValue={user === "undefined"
+                                ? "undefined"
+                                : user.name}
                             maxLength={50} />
                         {
                             nameError
@@ -307,14 +312,13 @@ const Settings = () => {
                             Email
                         </Form.Label>
                         <Form.Control
-                            className={user?.theme.name === "dark"
-                                ? "bg-black text-light"
-                                : "bg-white text-dark"}
                             type="email"
                             placeholder="Enter email"
                             onChange={onEmailChange}
                             onBlur={saveEmail}
-                            defaultValue={user?.email}
+                            defaultValue={user === "undefined"
+                                ? "undefined"
+                                : user.email}
                             maxLength={50} />
                         {
                             emailError &&
@@ -332,9 +336,6 @@ const Settings = () => {
                             Theme
                         </Form.Label>
                         <Form.Select
-                            className={user?.theme.name === "dark"
-                                ? "bg-black text-light"
-                                : "bg-white text-dark"}
                             onChange={onThemeChange}
                             onBlur={saveTheme}
                             value={themeInput?.name}>

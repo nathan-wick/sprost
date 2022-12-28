@@ -1,11 +1,10 @@
 import {Button, Form, FormGroup, Modal} from "react-bootstrap";
 import {ColumnsGap, PlusCircle} from "react-bootstrap-icons";
-import React, {Dispatch, FC, SetStateAction, useContext, useState} from "react";
+import React, {Dispatch, FC, SetStateAction, useState} from "react";
 import {Component} from "../../../types/Component";
 import {Header} from "../../../types/components/Header";
 import {Paragraph} from "../../../types/components/Paragraph";
 import {Title} from "../../../types/components/Title";
-import {UserContext} from "../../User";
 import {View} from "../../../types/View";
 import createUniqueString from "../../../utilities/createUniqueString";
 
@@ -14,8 +13,7 @@ const NewComponent: FC<{
     setEditView: Dispatch<SetStateAction<View | undefined>>,
 }> = ({editView, setEditView}) => {
 
-    const user = useContext(UserContext),
-        [
+    const [
             modal,
             setModal
         ] = useState<boolean>(false),
@@ -135,9 +133,6 @@ const NewComponent: FC<{
                             Component Type
                         </Form.Label>
                         <Form.Select
-                            className={user?.theme.name === "dark"
-                                ? "bg-black text-light"
-                                : "bg-white text-dark"}
                             onChange={onTypeChange}
                             value={typeInput}>
                             {

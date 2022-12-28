@@ -25,7 +25,9 @@ export const NavigationContext = createContext<{
 
         const authentication = useContext(AuthenticationContext),
             user = useContext(UserContext),
-            apps = user?.apps,
+            apps = user === "undefined"
+                ? "undefined"
+                : user.apps,
             [
                 currentView,
                 setCurrentView
@@ -36,24 +38,24 @@ export const NavigationContext = createContext<{
         useEffect(
             () => {
 
-                if (user) {
-
-                    if (currentView.type.name === "Landing") {
-
-                        setCurrentView(<Dashboard />);
-
-                    }
-
-                } else {
+                if (user === "undefined") {
 
                     setCurrentView(<Landing />);
 
+                } else if (currentView.type.name === "Landing") {
+
+                    setCurrentView(<Dashboard />);
+
                 }
 
-                document.body.style.backgroundColor = `var(--bs-${user?.theme.name})`;
-                document.body.style.color = `var(--bs-${user?.theme.name === "dark"
-                    ? "light"
-                    : "dark"})`;
+                if (user !== "undefined") {
+
+                    document.body.style.backgroundColor = `var(--bs-${user?.theme.name})`;
+                    document.body.style.color = `var(--bs-${user?.theme.name === "dark"
+                        ? "light"
+                        : "dark"})`;
+
+                }
 
             },
             [user]
@@ -61,12 +63,6 @@ export const NavigationContext = createContext<{
 
         return <NavigationContext.Provider value={navigation}>
             <Navbar
-                bg={user?.theme.name === "dark"
-                    ? "black"
-                    : "white"}
-                variant={user?.theme.name === "dark"
-                    ? "dark"
-                    : "light"}
                 sticky="top"
                 expand="lg"
                 className="bg-gradient shadow rounded">
@@ -105,18 +101,19 @@ export const NavigationContext = createContext<{
                                             ]}
                                             id="basic-nav-dropdown">
                                             {
-                                                apps?.map((app) => <NavDropdown.Item
-                                                    key={app.route}
-                                                    onClick={() => {
+                                                apps !== "undefined" &&
+                                                    apps.map((app) => <NavDropdown.Item
+                                                        key={app.route}
+                                                        onClick={() => {
 
-                                                        setCurrentView(<EditApp
-                                                            appRoute={app.route} />);
+                                                            setCurrentView(<EditApp
+                                                                appRoute={app.route} />);
 
-                                                    }}>
-                                                    <AppIcon
-                                                        className="mx-2"/>
-                                                    {app.name}
-                                                </NavDropdown.Item>)
+                                                        }}>
+                                                        <AppIcon
+                                                            className="mx-2"/>
+                                                        {app.name}
+                                                    </NavDropdown.Item>)
                                             }
                                             <NewApp />
                                         </NavDropdown>
@@ -125,8 +122,9 @@ export const NavigationContext = createContext<{
                         </Nav>
                         <Nav>
                             {
-                                user
-                                    ? <NavDropdown
+                                user === "undefined"
+                                    ? <SignIn />
+                                    : <NavDropdown
                                         title={[
                                             user?.portrait
                                                 ? <img
@@ -151,7 +149,7 @@ export const NavigationContext = createContext<{
                                             }}>
                                             <Gear
                                                 className="mx-2" />
-                                            Settings
+                                        Settings
                                         </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item
@@ -162,10 +160,9 @@ export const NavigationContext = createContext<{
                                             }}>
                                             <BoxArrowRight
                                                 className="mx-2" />
-                                            Sign Out
+                                        Sign Out
                                         </NavDropdown.Item>
                                     </NavDropdown>
-                                    : <SignIn />
                             }
                         </Nav>
                     </Navbar.Collapse>
