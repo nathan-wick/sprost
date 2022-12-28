@@ -6,7 +6,9 @@ export const AuthenticationContext = createContext<Auth | "undefined">("undefine
     AuthenticationContextProvider: FC<{ children: JSX.Element }> = ({children}) => {
 
         const firebaseApp = useContext(FirebaseContext),
-            authentication = getAuth(firebaseApp);
+            authentication = firebaseApp === "undefined"
+                ? "undefined"
+                : getAuth(firebaseApp);
 
         return <AuthenticationContext.Provider value={authentication}>
             {children}
