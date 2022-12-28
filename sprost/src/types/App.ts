@@ -1,4 +1,4 @@
-import { View } from "./View";
+import {View} from "./View";
 
 export declare interface App {
     route: string,

@@ -1,5 +1,5 @@
-import { App } from "./App";
-import { Color } from "./Color";
+import {App} from "./App";
+import {Color} from "./Color";
 
 export declare interface User {
     id: string,
