@@ -21,27 +21,27 @@ const Settings = () => {
         [
             nameInput,
             setNameInput
-        ] = useState<string>(),
+        ] = useState<string>("undefined"),
         [
             routeInput,
             setRouteInput
-        ] = useState<string>(),
+        ] = useState<string>("undefined"),
         [
             nameError,
             setNameError
-        ] = useState<string>(),
+        ] = useState<string>("undefined"),
         [
             emailInput,
             setEmailInput
-        ] = useState<string>(),
+        ] = useState<string>("undefined"),
         [
             emailError,
             setEmailError
-        ] = useState<string>(),
+        ] = useState<string>("undefined"),
         [
             themeInput,
             setThemeInput
-        ] = useState<Color>(),
+        ] = useState<Color | "undefined">("undefined"),
         findRoute = async (route: string, iteration: number) => {
 
             let newRoute = route;
@@ -130,7 +130,8 @@ const Settings = () => {
         },
         saveName = async () => {
 
-            if (user !== "undefined" && userReference !== "undefined" && !nameError && nameInput) {
+            if (user !== "undefined" && userReference !== "undefined" &&
+                nameError === "undefined" && nameInput !== "undefined") {
 
                 const newRoute = await createUserRoute(nameInput),
                     publicUserReference = doc(
@@ -140,8 +141,9 @@ const Settings = () => {
                     ),
                     publicUserSnapshot = await getDoc(publicUserReference),
                     publicUserData: Partial<User> = {
+                        "apps": publicUserSnapshot.data()?.apps ?? [],
                         "name": nameInput,
-                        "portrait": publicUserSnapshot.data()?.portrait
+                        "portrait": publicUserSnapshot.data()?.portrait ?? "undefined"
                     },
                     newPublicUserReference = doc(
                         database as Firestore,
@@ -190,7 +192,7 @@ const Settings = () => {
         },
         saveEmail = async () => {
 
-            if (userReference !== "undefined" && !emailError) {
+            if (userReference !== "undefined" && emailError === "undefined") {
 
                 const userInputData: Partial<User> = {
                     "email": emailInput
@@ -210,7 +212,7 @@ const Settings = () => {
         },
         saveTheme = async () => {
 
-            if (userReference !== "undefined") {
+            if (userReference !== "undefined" && themeInput !== "undefined") {
 
                 const userInputData: Partial<User> = {
                     "theme": themeInput
@@ -229,10 +231,10 @@ const Settings = () => {
 
             if (user !== "undefined") {
 
-                setNameInput(user?.name);
-                setRouteInput(user?.route);
-                setEmailInput(user?.email);
-                setThemeInput(user?.theme);
+                setNameInput(user.name ?? "undefined");
+                setRouteInput(user.route);
+                setEmailInput(user.email ?? "undefined");
+                setThemeInput(user.theme);
 
             }
 
@@ -291,16 +293,16 @@ const Settings = () => {
                                 : user.name}
                             maxLength={50} />
                         {
-                            nameError
+                            nameError === "undefined"
                                 ? <p
-                                    className="text-danger">
-                                    {nameError}
-                                </p>
-                                : <p
                                     className="text-muted">
                                     <Signpost
                                         className="mx-2" />
                                     sprost.com/<b>{routeInput}</b>
+                                </p>
+                                : <p
+                                    className="text-danger">
+                                    {nameError}
                                 </p>
                         }
                     </Form.Group>
@@ -321,7 +323,7 @@ const Settings = () => {
                                 : user.email}
                             maxLength={50} />
                         {
-                            emailError &&
+                            emailError !== "undefined" &&
                                 <p
                                     className="text-danger">
                                     {emailError}
@@ -338,7 +340,9 @@ const Settings = () => {
                         <Form.Select
                             onChange={onThemeChange}
                             onBlur={saveTheme}
-                            value={themeInput?.name}>
+                            value={themeInput === "undefined"
+                                ? ""
+                                : themeInput.name}>
                             {
                                 themeOptions.map((themeOption) => <option
                                     key={themeOption.value}

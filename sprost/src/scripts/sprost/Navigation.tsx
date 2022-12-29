@@ -80,7 +80,7 @@ export const NavigationContext = createContext<{
                         <Nav
                             className="me-auto">
                             {
-                                user &&
+                                user !== "undefined" &&
                                     <>
                                         <Nav.Link
                                             onClick={() => {

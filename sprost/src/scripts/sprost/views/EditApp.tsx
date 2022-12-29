@@ -115,7 +115,8 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                     lg={4}
                     md={6}
                     sm={12}>
-                    <div>
+                    <div
+                        className="m-3 p-2 shadow rounded">
                         <h3
                             className="mb-3">
                             <Window

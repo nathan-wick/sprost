@@ -29,7 +29,7 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
         [
             editView,
             setEditView
-        ] = useState<ViewType | undefined>(structuredClone(savedView)),
+        ] = useState<ViewType | "undefined">(structuredClone(savedView)),
         [
             isSaving,
             setIsSaving
@@ -52,16 +52,18 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                     newUser: User = structuredClone(user),
                     newUserAppViews = newUser.apps.find((userApp: {
                         route: string;
-                    }) => userApp.route === appRoute)?.views,
-                    newUserAppViewIndex = newUserAppViews?.findIndex((view: {
-                        route: string;
-                    }) => view.route === viewRoute),
+                    }) => userApp.route === appRoute)?.views ?? "undefined",
+                    newUserAppViewIndex = newUserAppViews === "undefined"
+                        ? "undefined"
+                        : newUserAppViews.findIndex((view: {
+                                route: string;
+                            }) => view.route === viewRoute) ?? "undefined",
                     userReference = doc(
                         database as Firestore,
                         "users",
                         user.id
                     );
-                if (newUserAppViews && newUserAppViewIndex) {
+                if (newUserAppViews !== "undefined" && newUserAppViewIndex !== "undefined") {
 
                     newUserAppViews[newUserAppViewIndex] = newView;
                     newView.isSaved = true;
@@ -89,7 +91,9 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                 <h1>
                     <Window
                         className="mx-2" />
-                    {editView?.name}
+                    {editView === "undefined"
+                        ? ""
+                        : editView.name}
                 </h1>
             </Col>
             <Col
@@ -97,9 +101,11 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                 <ButtonGroup
                     className="w-100 shadow">
                     <Button
-                        variant={editView?.isSaved
+                        variant={editView === "undefined"
                             ? "primary"
-                            : "outline-danger"}
+                            : editView.isSaved
+                                ? "primary"
+                                : "outline-danger"}
                         onClick={exit}>
                         <BoxArrowLeft
                             className="mx-2" />
@@ -118,18 +124,23 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                         Preview
                     </Button>
                     <Button
-                        variant={editView?.isSaved
+                        variant={editView === "undefined"
                             ? "outline-success"
-                            : "primary"}
-                        disabled={isSaving || editView?.isSaved}
+                            : editView.isSaved
+                                ? "outline-success"
+                                : "primary"}
+                        // eslint-disable-next-line no-extra-parens
+                        disabled={isSaving || (editView !== "undefined" && editView?.isSaved)}
                         onClick={saveUser}>
                         <DeviceSsd
                             className="mx-2" />
                         {isSaving
                             ? "Saving..."
-                            : editView?.isSaved
-                                ? "Saved"
-                                : "Save"}
+                            : editView === "undefined"
+                                ? "saved"
+                                : editView.isSaved
+                                    ? "saved"
+                                    : "save"}
                     </Button>
                 </ButtonGroup>
             </Col>
@@ -147,7 +158,7 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                 <div
                     className="m-2 mb-4 rounded shadow">
                     {
-                        editView &&
+                        editView !== "undefined" &&
                             <View view={editView} />
                     }
                 </div>
@@ -161,7 +172,7 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                     </Col>
                 </Row>
                 {
-                    editView?.components.map((component, index) => <div
+                    editView !== "undefined" && editView.components.map((component, index) => <div
                         key={index}>
                         {(() => {
 

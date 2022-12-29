@@ -8,8 +8,8 @@ import moveComponent from "../../../utilities/moveComponent";
 
 const Title: FC<{
     componentId: string,
-    editView: View | undefined,
-    setEditView: Dispatch<SetStateAction<View | undefined>>,
+    editView: View,
+    setEditView: Dispatch<SetStateAction<View | "undefined">>,
 }> = ({componentId, editView, setEditView}) => {
 
     const editComponent = editView?.components.find((component) => component.id === componentId),

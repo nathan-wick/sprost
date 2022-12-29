@@ -9,8 +9,8 @@ import {View} from "../../../types/View";
 import createUniqueString from "../../../utilities/createUniqueString";
 
 const NewComponent: FC<{
-    editView: View | undefined,
-    setEditView: Dispatch<SetStateAction<View | undefined>>,
+    editView: View | "undefined",
+    setEditView: Dispatch<SetStateAction<View | "undefined">>,
 }> = ({editView, setEditView}) => {
 
     const [
@@ -87,7 +87,9 @@ const NewComponent: FC<{
                     break;
 
                 }
-                const uniqueId = createUniqueString(editView.components.map(({id}) => id)),
+                const uniqueId = editView === "undefined"
+                        ? "undefined"
+                        : createUniqueString(editView.components.map(({id}) => id)),
                     newComponent: Component = {
                         "id": uniqueId,
                         "type": componentType

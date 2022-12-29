@@ -23,11 +23,11 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
         [
             nameInput,
             setNameInput
-        ] = useState<string>(),
+        ] = useState<string>("undefined"),
         [
             nameRoute,
             setNameRoute
-        ] = useState<string>(),
+        ] = useState<string>("undefined"),
         [
             nameError,
             setNameError
@@ -156,7 +156,9 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                         </Form.Label>
                         <Form.Control
                             type="text"
-                            defaultValue={nameInput}
+                            defaultValue={nameInput === "undefined"
+                                ? ""
+                                : nameInput}
                             onChange={onNameChange}
                             maxLength={50} />
                         {
@@ -173,7 +175,7 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                     </FormGroup>
                 </Form>
                 {
-                    nameRoute && user !== "undefined" && app !== "undefined" &&
+                    nameRoute !== "undefined" && user !== "undefined" && app !== "undefined" &&
                     <>
                         <p
                             className="text-muted">
@@ -194,12 +196,14 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                 <Button
                     variant="primary"
                     className="m-2"
-                    disabled={!nameInput || nameError === "undefined" || isLoading}
+                    disabled={nameInput === "undefined" || nameError !== "undefined" || isLoading}
                     onClick={onSubmit}>
                     {
                         isLoading
                             ? <>Loading...</>
-                            : <>Create {nameInput}</>
+                            : <>Create {nameInput === "undefined"
+                                ? ""
+                                : nameInput}</>
                     }
                 </Button>
             </Modal.Footer>
