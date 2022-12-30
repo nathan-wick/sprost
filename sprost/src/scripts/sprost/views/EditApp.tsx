@@ -46,10 +46,7 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                 md={6}
                 sm={12} >
                 <div
-                    className={`m-3 p-2 shadow rounded bg-${
-                        user !== "undefined" && user.theme.name === "dark"
-                            ? "black"
-                            : "white"}`}>
+                    className="m-3 p-2 shadow rounded">
                     <h3
                         className="mb-3">
                         <InfoCircle

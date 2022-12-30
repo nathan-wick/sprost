@@ -125,7 +125,7 @@ export const UserContext = createContext<User | "undefined">("undefined"),
                                         name,
                                         portrait,
                                         route,
-                                        "theme": {"name": "light"}
+                                        "theme": "light"
                                     },
                                     publicUserReference = doc(
                                         database as Firestore,

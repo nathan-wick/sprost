@@ -1,5 +1,4 @@
-import "./index.css";
-import "bootstrap/dist/css/bootstrap.css";
+import "./custom.scss";
 import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
 import App from "./scripts/public/App";
 import Authentication from "./scripts/Authentication";

@@ -2,7 +2,6 @@ import {Bookmarks, Envelope, Eye, Gear, Signpost} from "react-bootstrap-icons";
 import {Col, Form, Row} from "react-bootstrap";
 import {Firestore, deleteDoc, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
 import React, {useContext, useEffect, useState} from "react";
-import {Color} from "../../../types/Color";
 import {DatabaseContext} from "../../Database";
 import {User} from "../../../types/User";
 import {UserContext} from "../../User";
@@ -41,7 +40,7 @@ const Settings = () => {
         [
             themeInput,
             setThemeInput
-        ] = useState<Color | "undefined">("undefined"),
+        ] = useState<"light" | "dark">("light"),
         findRoute = async (route: string, iteration: number) => {
 
             let newRoute = route;
@@ -207,12 +206,22 @@ const Settings = () => {
         },
         onThemeChange = (event: { target: { value: string; }; }) => {
 
-            setThemeInput({"name": event.target.value});
+            switch (event.target.value) {
+
+            case "dark":
+                setThemeInput("dark");
+                break;
+            case "light":
+            default:
+                setThemeInput("light");
+                break;
+
+            }
 
         },
         saveTheme = async () => {
 
-            if (userReference !== "undefined" && themeInput !== "undefined") {
+            if (userReference !== "undefined") {
 
                 const userInputData: Partial<User> = {
                     "theme": themeInput
@@ -340,9 +349,9 @@ const Settings = () => {
                         <Form.Select
                             onChange={onThemeChange}
                             onBlur={saveTheme}
-                            value={themeInput === "undefined"
-                                ? ""
-                                : themeInput.name}>
+                            value={user === "undefined"
+                                ? "light"
+                                : user.theme}>
                             {
                                 themeOptions.map((themeOption) => <option
                                     key={themeOption.value}

@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Initialize custom colors.
+$background: #f8f9fa;
+$foreground: #212529;
+$primary: #0d6efd;
+$secondary: #6c757d;
+$success: #198754;
+$danger: #dc3545;
+
+// Override Bootstrap's colors with custom colors.
+$body-bg: $background;
+$body-color: $foreground;
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "danger": $danger
+);
+
+// Import Bootstrap. This must always be at the bottom of the file.
+@import '~bootstrap/scss/bootstrap.scss';

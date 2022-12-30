@@ -48,15 +48,6 @@ export const NavigationContext = createContext<{
 
                 }
 
-                if (user !== "undefined") {
-
-                    document.body.style.backgroundColor = `var(--bs-${user?.theme.name})`;
-                    document.body.style.color = `var(--bs-${user?.theme.name === "dark"
-                        ? "light"
-                        : "dark"})`;
-
-                }
-
             },
             [user]
         );
