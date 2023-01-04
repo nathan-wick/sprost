@@ -3,10 +3,10 @@ import {Firestore, doc, setDoc} from "firebase/firestore";
 import {PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import React, {useContext, useState} from "react";
 import {App as AppType} from "../../../types/App";
-import {DatabaseContext} from "../../Database";
+import {DatabaseContext} from "../../../contexts/Database";
 import EditApp from "../views/EditApp";
 import {NavigationContext} from "../Navigation";
-import {UserContext} from "../../User";
+import {UserContext} from "../../../contexts/User";
 
 const NewApp = () => {
 

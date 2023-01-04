@@ -2,7 +2,7 @@ import {Auth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {Button, Modal} from "react-bootstrap";
 import React, {useContext, useState} from "react";
 import AppleIcon from "../../../assets/images/icons/apple.svg";
-import {AuthenticationContext} from "../../Authentication";
+import {AuthenticationContext} from "../../../contexts/Authentication";
 import GoogleIcon from "../../../assets/images/icons/google.svg";
 import MicrosoftIcon from "../../../assets/images/icons/microsoft.svg";
 import {PersonCircle} from "react-bootstrap-icons";

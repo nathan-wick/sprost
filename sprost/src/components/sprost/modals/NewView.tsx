@@ -2,8 +2,8 @@ import {Button, Form, FormGroup, Modal} from "react-bootstrap";
 import {Firestore, doc, setDoc} from "firebase/firestore";
 import {PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import React, {FC, useContext, useState} from "react";
-import {DatabaseContext} from "../../Database";
-import {UserContext} from "../../User";
+import {DatabaseContext} from "../../../contexts/Database";
+import {UserContext} from "../../../contexts/User";
 import {View} from "../../../types/View";
 
 const NewView: FC<{appRoute: string}> = ({appRoute}) => {

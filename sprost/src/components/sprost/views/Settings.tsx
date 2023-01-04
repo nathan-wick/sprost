@@ -2,9 +2,9 @@ import {Bookmarks, Envelope, Eye, Gear, Signpost} from "react-bootstrap-icons";
 import {Col, Form, Row} from "react-bootstrap";
 import {Firestore, deleteDoc, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
 import React, {useContext, useEffect, useState} from "react";
-import {DatabaseContext} from "../../Database";
+import {DatabaseContext} from "../../../contexts/Database";
 import {User} from "../../../types/User";
-import {UserContext} from "../../User";
+import {UserContext} from "../../../contexts/User";
 
 const Settings = () => {
 

@@ -3,7 +3,7 @@ import {ArrowsAngleContract, ArrowsAngleExpand, BoxArrowLeft, DeviceSsd,
 import {Button, ButtonGroup, Col, Row} from "react-bootstrap";
 import {Firestore, doc, setDoc} from "firebase/firestore";
 import React, {FC, useContext, useState} from "react";
-import {DatabaseContext} from "../../Database";
+import {DatabaseContext} from "../../../contexts/Database";
 import EditApp from "./EditApp";
 import Header from "../editors/Header";
 import {NavigationContext} from "../Navigation";
@@ -11,7 +11,7 @@ import NewComponent from "../modals/NewComponent";
 import Paragraph from "../editors/Paragraph";
 import Title from "../editors/Title";
 import {User} from "../../../types/User";
-import {UserContext} from "../../User";
+import {UserContext} from "../../../contexts/User";
 import View from "../../public/View";
 import {View as ViewType} from "../../../types/View";
 

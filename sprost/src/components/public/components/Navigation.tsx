@@ -5,7 +5,7 @@ import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import React, {FC, useContext} from "react";
 import {App as AppType} from "../../../types/App";
 import SignIn from "../../sprost/modals/SignIn";
-import {UserContext} from "../../User";
+import {UserContext} from "../../../contexts/User";
 
 const Navigation: FC<{app: AppType}> = ({app}) => {
 

@@ -3,9 +3,9 @@ import {Button, Form, FormGroup, Modal} from "react-bootstrap";
 import {Firestore, doc, setDoc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useState} from "react";
 import {App} from "../../../types/App";
-import {DatabaseContext} from "../../Database";
+import {DatabaseContext} from "../../../contexts/Database";
 import {User} from "../../../types/User";
-import {UserContext} from "../../User";
+import {UserContext} from "../../../contexts/User";
 
 const NewRelease: FC<{
     app: App | "undefined",

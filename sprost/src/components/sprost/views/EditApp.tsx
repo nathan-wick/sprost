@@ -6,7 +6,7 @@ import EditView from "./EditView";
 import {NavigationContext} from "../Navigation";
 import NewRelease from "../modals/NewRelease";
 import NewView from "../modals/NewView";
-import {UserContext} from "../../User";
+import {UserContext} from "../../../contexts/User";
 
 const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
 

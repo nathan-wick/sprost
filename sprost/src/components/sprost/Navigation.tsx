@@ -3,14 +3,14 @@ import {App as AppIcon, BarChart, BoxArrowRight, Gear, Grid, PersonCircle,
 import {Auth, signOut} from "firebase/auth";
 import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {AuthenticationContext} from "../Authentication";
+import {AuthenticationContext} from "../../contexts/Authentication";
 import Dashboard from "./views/Dashboard";
 import EditApp from "./views/EditApp";
 import Landing from "./views/Landing";
 import NewApp from "./modals/NewApp";
 import Settings from "./views/Settings";
 import SignIn from "./modals/SignIn";
-import {UserContext} from "../User";
+import {UserContext} from "../../contexts/User";
 
 export const NavigationContext = createContext<{
         currentView: JSX.Element,
