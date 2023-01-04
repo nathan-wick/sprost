@@ -12,7 +12,7 @@ import Paragraph from "../editors/Paragraph";
 import Title from "../editors/Title";
 import {User} from "../../../types/User";
 import {UserContext} from "../../../contexts/User";
-import View from "../../public/View";
+import View from "../../generated/View";
 import {View as ViewType} from "../../../types/View";
 
 const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRoute}) => {
