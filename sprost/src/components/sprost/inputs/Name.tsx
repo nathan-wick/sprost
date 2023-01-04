@@ -1,0 +1,196 @@
+import {Bookmarks, Signpost} from "react-bootstrap-icons";
+import {Firestore, deleteDoc, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
+import React, {useContext, useEffect, useState} from "react";
+import {DatabaseContext} from "../../../contexts/Database";
+import {Form} from "react-bootstrap";
+import {User} from "../../../types/User";
+import {UserContext} from "../../../contexts/User";
+
+const Name = () => {
+
+    const database = useContext(DatabaseContext),
+        user = useContext(UserContext),
+        userReference = user === "undefined"
+            ? "undefined"
+            : doc(
+                database as Firestore,
+                "users",
+                user.id
+            ),
+        [
+            nameInput,
+            setNameInput
+        ] = useState<string>("undefined"),
+        [
+            routeInput,
+            setRouteInput
+        ] = useState<string>("undefined"),
+        [
+            nameError,
+            setNameError
+        ] = useState<string>("undefined"),
+        findRoute = async (route: string, iteration: number) => {
+
+            let newRoute = route;
+            if (iteration > 1) {
+
+                newRoute = route + String(iteration);
+
+            }
+            const publicUserReference = doc(
+                    database as Firestore,
+                    "public",
+                    newRoute
+                ),
+                publicUserSnapshot = await getDoc(publicUserReference);
+            return {
+                newRoute,
+                publicUserSnapshot
+            };
+
+        },
+        createRoute = async (name: string) => {
+
+            let route = name.toLowerCase().replaceAll(
+                " ",
+                "-"
+            );
+            if (user !== "undefined" && route !== user.route) {
+
+                let routeIsUnique = false,
+                    iteration = 1;
+                while (!routeIsUnique) {
+
+                    // eslint-disable-next-line no-await-in-loop
+                    const {newRoute, publicUserSnapshot} = await findRoute(
+                        route,
+                        iteration
+                    );
+                    if (publicUserSnapshot.exists()) {
+
+                        iteration += 1;
+
+                    } else {
+
+                        route = newRoute;
+                        routeIsUnique = true;
+
+                    }
+
+                }
+
+            }
+            return route;
+
+        },
+        changeName = (event: { target: { value: string; }; }) => {
+
+            if (event.target.value) {
+
+                if (event.target.value.match(/^[a-zA-Z\s]*$/gu)) {
+
+                    setNameInput(event.target.value);
+                    setNameError("undefined");
+
+                } else {
+
+                    setNameError("Please use only letters and spaces");
+
+                }
+
+            } else {
+
+                setNameError("Please enter a name");
+
+            }
+
+        },
+        saveName = async () => {
+
+            if (user !== "undefined" && userReference !== "undefined" &&
+                nameError === "undefined" && nameInput !== "undefined") {
+
+                const newRoute = await createRoute(nameInput),
+                    publicUserReference = doc(
+                        database as Firestore,
+                        "public",
+                        user.route
+                    ),
+                    publicUserSnapshot = await getDoc(publicUserReference),
+                    publicUserData: Partial<User> = {
+                        "apps": publicUserSnapshot.data()?.apps ?? [],
+                        "name": nameInput,
+                        "portrait": publicUserSnapshot.data()?.portrait ?? "undefined"
+                    },
+                    newPublicUserReference = doc(
+                        database as Firestore,
+                        "public",
+                        newRoute
+                    ),
+                    userInputData: Partial<User> = {
+                        "name": nameInput,
+                        "route": newRoute
+                    };
+                setRouteInput(newRoute);
+                await deleteDoc(publicUserReference);
+                await updateDoc(
+                    userReference,
+                    userInputData
+                );
+                await setDoc(
+                    newPublicUserReference,
+                    publicUserData
+                );
+
+            }
+
+        };
+
+    useEffect(
+        () => {
+
+            if (user !== "undefined") {
+
+                setNameInput(user.name ?? "undefined");
+                setRouteInput(user.route);
+
+            }
+
+        },
+        [user]
+    );
+
+    return <Form.Group
+        className="m-3">
+        <Form.Label>
+            <Bookmarks
+                className="mx-2" />
+            Name
+        </Form.Label>
+        <Form.Control
+            type="text"
+            placeholder="Enter name"
+            onChange={changeName}
+            onBlur={saveName}
+            defaultValue={user === "undefined"
+                ? "undefined"
+                : user.name}
+            maxLength={50} />
+        {
+            nameError === "undefined"
+                ? <p
+                    className="text-muted">
+                    <Signpost
+                        className="mx-2" />
+                sprost.com/<b>{routeInput}</b>
+                </p>
+                : <p
+                    className="text-danger">
+                    {nameError}
+                </p>
+        }
+    </Form.Group>;
+
+};
+
+export default Name;
