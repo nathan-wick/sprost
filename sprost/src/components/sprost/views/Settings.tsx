@@ -13,25 +13,21 @@ const Settings = () => <>
             className="mx-2" />
             Settings
     </h1>
-    <Form
-        className="m-5 shadow rounded">
-        <Row
-            className="gx-0">
-            <Col
-                lg={6}
-                md={12}
-                className="text-center">
+    <Row
+        className="gx-0 justify-content-md-center">
+        <Col
+            lg={6}
+            md={9}
+            sm={12}>
+            <Form
+                className="m-5 p-3 shadow rounded">
                 <Portrait />
-            </Col>
-            <Col
-                lg={6}
-                md={12}>
                 <Name />
                 <Email />
                 <Theme />
-            </Col>
-        </Row>
-    </Form>
+            </Form>
+        </Col>
+    </Row>
 </>;
 
 export default Settings;

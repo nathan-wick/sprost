@@ -18,12 +18,12 @@ const Email = () => {
                 user.id
             ),
         [
-            emailInput,
-            setEmailInput
+            input,
+            setInput
         ] = useState<string>("undefined"),
         [
-            emailError,
-            setEmailError
+            error,
+            setError
         ] = useState<string>("undefined"),
         changeEmail = (event: { target: { value: string; }; }) => {
 
@@ -31,28 +31,28 @@ const Email = () => {
 
                 if (event.target.value.match(/^\S+@\S+\.\S+$/u)) {
 
-                    setEmailInput(event.target.value);
-                    setEmailError("undefined");
+                    setInput(event.target.value);
+                    setError("undefined");
 
                 } else {
 
-                    setEmailError("Please enter a valid email");
+                    setError("Please enter a valid email");
 
                 }
 
             } else {
 
-                setEmailError("Please enter an email");
+                setError("Please enter an email");
 
             }
 
         },
         saveEmail = async () => {
 
-            if (userReference !== "undefined" && emailError === "undefined") {
+            if (userReference !== "undefined" && error === "undefined") {
 
                 const userInputData: Partial<User> = {
-                    "email": emailInput
+                    "email": input
                 };
                 await updateDoc(
                     userReference,
@@ -68,7 +68,7 @@ const Email = () => {
 
             if (user !== "undefined") {
 
-                setEmailInput(user.email ?? "undefined");
+                setInput(user.email ?? "undefined");
 
             }
 
@@ -77,7 +77,7 @@ const Email = () => {
     );
 
     return <Form.Group
-        className="m-3">
+        className="my-4">
         <Form.Label>
             <Envelope
                 className="mx-2" />
@@ -93,10 +93,10 @@ const Email = () => {
                 : user.email}
             maxLength={50} />
         {
-            emailError !== "undefined" &&
+            error !== "undefined" &&
             <p
                 className="text-danger">
-                {emailError}
+                {error}
             </p>
         }
     </Form.Group>;

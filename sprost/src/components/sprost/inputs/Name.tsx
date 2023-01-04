@@ -26,8 +26,8 @@ const Name = () => {
             setRouteInput
         ] = useState<string>("undefined"),
         [
-            nameError,
-            setNameError
+            error,
+            setError
         ] = useState<string>("undefined"),
         findRoute = async (route: string, iteration: number) => {
 
@@ -90,17 +90,17 @@ const Name = () => {
                 if (event.target.value.match(/^[a-zA-Z\s]*$/gu)) {
 
                     setNameInput(event.target.value);
-                    setNameError("undefined");
+                    setError("undefined");
 
                 } else {
 
-                    setNameError("Please use only letters and spaces");
+                    setError("Please use only letters and spaces");
 
                 }
 
             } else {
 
-                setNameError("Please enter a name");
+                setError("Please enter a name");
 
             }
 
@@ -108,7 +108,7 @@ const Name = () => {
         saveName = async () => {
 
             if (user !== "undefined" && userReference !== "undefined" &&
-                nameError === "undefined" && nameInput !== "undefined") {
+                error === "undefined" && nameInput !== "undefined") {
 
                 const newRoute = await createRoute(nameInput),
                     publicUserReference = doc(
@@ -161,7 +161,7 @@ const Name = () => {
     );
 
     return <Form.Group
-        className="m-3">
+        className="my-4">
         <Form.Label>
             <Bookmarks
                 className="mx-2" />
@@ -177,7 +177,7 @@ const Name = () => {
                 : user.name}
             maxLength={50} />
         {
-            nameError === "undefined"
+            error === "undefined"
                 ? <p
                     className="text-muted">
                     <Signpost
@@ -186,7 +186,7 @@ const Name = () => {
                 </p>
                 : <p
                     className="text-danger">
-                    {nameError}
+                    {error}
                 </p>
         }
     </Form.Group>;

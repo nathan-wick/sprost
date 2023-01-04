@@ -18,8 +18,8 @@ const Theme = () => {
                 user.id
             ),
         [
-            themeInput,
-            setThemeInput
+            input,
+            setInput
         ] = useState<"light" | "dark">("light"),
         themeOptions = [
             {
@@ -36,11 +36,11 @@ const Theme = () => {
             switch (event.target.value) {
 
             case "dark":
-                setThemeInput("dark");
+                setInput("dark");
                 break;
             case "light":
             default:
-                setThemeInput("light");
+                setInput("light");
                 break;
 
             }
@@ -51,7 +51,7 @@ const Theme = () => {
             if (userReference !== "undefined") {
 
                 const userInputData: Partial<User> = {
-                    "theme": themeInput
+                    "theme": input
                 };
                 await updateDoc(
                     userReference,
@@ -67,7 +67,7 @@ const Theme = () => {
 
             if (user !== "undefined") {
 
-                setThemeInput(user.theme);
+                setInput(user.theme);
 
             }
 
@@ -76,7 +76,7 @@ const Theme = () => {
     );
 
     return <Form.Group
-        className="m-3">
+        className="my-4">
         <Form.Label>
             <Eye
                 className="mx-2" />
