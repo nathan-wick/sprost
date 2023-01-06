@@ -25,6 +25,7 @@ module.exports = {
         ],
         "max-lines": 0,
         "max-lines-per-function": 0,
+        "max-statements": 0,
         "no-magic-numbers": 0,
         "no-nested-ternary": 0,
         "no-ternary": 0,

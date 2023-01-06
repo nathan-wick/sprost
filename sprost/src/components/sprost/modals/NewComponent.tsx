@@ -1,10 +1,11 @@
 import {Button, Form, FormGroup, Modal} from "react-bootstrap";
 import {ColumnsGap, PlusCircle} from "react-bootstrap-icons";
-import React, {Dispatch, FC, SetStateAction, useState} from "react";
+import React, {Dispatch, FC, SetStateAction, useContext, useState} from "react";
 import {Component} from "../../../types/Component";
 import {Header} from "../../../types/components/Header";
 import {Paragraph} from "../../../types/components/Paragraph";
 import {Title} from "../../../types/components/Title";
+import {ToasterContext} from "../../../contexts/Toaster";
 import {View} from "../../../types/View";
 import createUniqueString from "../../../utilities/createUniqueString";
 
@@ -13,7 +14,8 @@ const NewComponent: FC<{
     setEditView: Dispatch<SetStateAction<View | "undefined">>,
 }> = ({editView, setEditView}) => {
 
-    const [
+    const toaster = useContext(ToasterContext),
+        [
             modal,
             setModal
         ] = useState<boolean>(false),
@@ -98,6 +100,15 @@ const NewComponent: FC<{
                 newView.isSaved = false;
                 newView.components.push(newComponent);
                 setEditView(newView);
+                if (toaster !== "undefined") {
+
+                    toaster.createToast(
+                        "success",
+                        "New Component",
+                        `Successfully created the ${typeInput} component.`
+                    );
+
+                }
 
             }
             hideModal();

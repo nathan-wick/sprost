@@ -6,12 +6,14 @@ import {App as AppType} from "../../../types/App";
 import {DatabaseContext} from "../../../contexts/Database";
 import EditApp from "../views/EditApp";
 import {NavigationContext} from "../Navigation";
+import {ToasterContext} from "../../../contexts/Toaster";
 import {UserContext} from "../../../contexts/User";
 
 const NewApp = () => {
 
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
+        toaster = useContext(ToasterContext),
         {setCurrentView} = useContext(NavigationContext),
         apps = user === "undefined"
             ? "undefined"
@@ -120,6 +122,15 @@ const NewApp = () => {
                     user,
                     {"merge": true}
                 );
+                if (toaster !== "undefined") {
+
+                    toaster.createToast(
+                        "success",
+                        "New App",
+                        `Successfully created the ${nameInput} app.`
+                    );
+
+                }
 
             }
             hideModal();

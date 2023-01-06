@@ -8,6 +8,7 @@ import Navigation from "./components/sprost/Navigation";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Storage from "./contexts/Storage";
+import Toaster from "./contexts/Toaster";
 import User from "./contexts/User";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
@@ -18,16 +19,18 @@ root.render(<React.StrictMode>
             <Storage>
                 <Authentication>
                     <User>
-                        <Router>
-                            <Routes>
-                                <Route
-                                    path="/"
-                                    element={<Navigation />}/>
-                                <Route
-                                    path=":userRoute/:appRoute"
-                                    element={<App />}/>
-                            </Routes>
-                        </Router>
+                        <Toaster>
+                            <Router>
+                                <Routes>
+                                    <Route
+                                        path="/"
+                                        element={<Navigation />}/>
+                                    <Route
+                                        path=":userRoute/:appRoute"
+                                        element={<App />}/>
+                                </Routes>
+                            </Router>
+                        </Toaster>
                     </User>
                 </Authentication>
             </Storage>

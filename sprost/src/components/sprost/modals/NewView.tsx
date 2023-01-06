@@ -3,6 +3,7 @@ import {Firestore, doc, setDoc} from "firebase/firestore";
 import {PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import React, {FC, useContext, useState} from "react";
 import {DatabaseContext} from "../../../contexts/Database";
+import {ToasterContext} from "../../../contexts/Toaster";
 import {UserContext} from "../../../contexts/User";
 import {View} from "../../../types/View";
 
@@ -10,6 +11,7 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
 
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
+        toaster = useContext(ToasterContext),
         app = user === "undefined"
             ? "undefined"
             : user.apps.find((userApp) => userApp.route === appRoute) ?? "undefined",
@@ -118,6 +120,15 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                     user,
                     {"merge": true}
                 );
+                if (toaster !== "undefined") {
+
+                    toaster.createToast(
+                        "success",
+                        "New View",
+                        `Successfully created the ${nameInput} view.`
+                    );
+
+                }
 
             }
             hideModal();

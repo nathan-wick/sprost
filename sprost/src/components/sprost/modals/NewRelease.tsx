@@ -4,6 +4,7 @@ import {Firestore, doc, setDoc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useState} from "react";
 import {App} from "../../../types/App";
 import {DatabaseContext} from "../../../contexts/Database";
+import {ToasterContext} from "../../../contexts/Toaster";
 import {User} from "../../../types/User";
 import {UserContext} from "../../../contexts/User";
 
@@ -16,6 +17,7 @@ const NewRelease: FC<{
         : structuredClone(app.version);
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
+        toaster = useContext(ToasterContext),
         [
             modal,
             setModal
@@ -142,6 +144,16 @@ const NewRelease: FC<{
                         publicUserReference,
                         newPublicUser
                     );
+                    if (toaster !== "undefined") {
+
+                        toaster.createToast(
+                            "success",
+                            "New Release",
+                            // eslint-disable-next-line max-len
+                            `Successfully released ${newApp.name} version ${newApp.version.major}.${newApp.version.minor}.${newApp.version.patch}.`
+                        );
+
+                    }
 
                 }
 
