@@ -164,7 +164,7 @@ const NewRelease: FC<{
 
     return <>
         <Button
-            className="w-50 shadow"
+            className="w-100"
             disabled={app !== "undefined" && app.views.length
                 ? app.views.length < 1
                 : true}
@@ -172,7 +172,7 @@ const NewRelease: FC<{
             onClick={showModal}>
             <RocketTakeoffFill
                 className="mx-2" />
-            Release
+            New Release
         </Button>
 
         <Modal
@@ -184,7 +184,7 @@ const NewRelease: FC<{
                 <Modal.Title>
                     <RocketTakeoffFill
                         className="mx-2" />
-                    Release
+                    New Release
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

@@ -107,7 +107,7 @@ export const NavigationContext = createContext<{
                                                     </NavDropdown.Item>)
                                             }
                                             {
-                                                apps !== "undefined" && apps.length &&
+                                                apps !== "undefined" && apps.length > 0 &&
                                                     <NavDropdown.Divider />
                                             }
                                             <NewApp />

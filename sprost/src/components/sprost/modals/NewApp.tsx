@@ -102,6 +102,7 @@ const NewApp = () => {
             if (user !== "undefined") {
 
                 const newApp: AppType = {
+                    "description": `${user.name}'s new app, ${String(nameInput)}.`,
                     "name": String(nameInput),
                     "route": String(nameRoute),
                     "version": {

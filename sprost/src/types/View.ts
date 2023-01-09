@@ -4,6 +4,6 @@ export declare interface View {
     isSaved: boolean,
     route: string,
     name: string,
-    type: "information",
+    type: "page" | "blog" | "modal",
     components: Component[],
 }

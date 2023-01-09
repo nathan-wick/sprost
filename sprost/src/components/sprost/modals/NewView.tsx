@@ -107,7 +107,7 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                     "isSaved": true,
                     "name": String(nameInput),
                     "route": String(nameRoute),
-                    "type": "information"
+                    "type": "page"
                 },
                     userReference = doc(
                         database as Firestore,
@@ -138,7 +138,7 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
     return <>
         <Button
             variant="primary"
-            className="w-50 shadow"
+            className="px-4 shadow"
             onClick={showModal}>
             <PlusCircle
                 className="mx-2" />

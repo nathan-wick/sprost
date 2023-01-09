@@ -1,7 +1,8 @@
-import {App as AppIcon, BoxSeam, ColumnsGap, InfoCircle, Pencil, Signpost, Tag, Window,
-    WindowStack} from "react-bootstrap-icons";
+import {App as AppIcon, BoxArrowUpRight, ColumnsGap, Pencil, Signpost, SignpostFill,
+    Tag, Window, WindowStack} from "react-bootstrap-icons";
 import {Button, Col, Row} from "react-bootstrap";
 import React, {FC, useContext} from "react";
+import AppDescription from "../inputs/AppDescription";
 import EditView from "./EditView";
 import {NavigationContext} from "../Navigation";
 import NewRelease from "../modals/NewRelease";
@@ -20,70 +21,67 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
             : app.views;
 
     return <>
+        <h1
+            className="mx-5 mt-5">
+            <AppIcon
+                className="mx-2" />
+            {app === "undefined"
+                ? "undefined"
+                : app.name}
+        </h1>
         <Row
-            className="gx-0 mx-5 mt-5">
+            className="gx-0 justify-content-md-center">
             <Col
-                lg={6}
-                md={4}
+                lg={8}
+                md={10}
                 sm={12}>
-                <h1>
-                    <AppIcon
-                        className="mx-2" />
-                    {app === "undefined"
-                        ? "undefined"
-                        : app.name}
-                </h1>
-            </Col>
-            <Col
-                className="text-end">
-                <NewRelease app={app} />
-            </Col>
-        </Row>
-        <Row
-            className="gx-0 p-3">
-            <Col
-                lg={4}
-                md={6}
-                sm={12} >
                 <div
-                    className="m-3 p-2 shadow rounded">
-                    <h3
-                        className="mb-3">
-                        <InfoCircle
-                            className="mx-2" />
-                        App Information
-                    </h3>
-                    <small>
-                        <Tag
-                            className="mx-2"/>
-                        Name: <b>{app === "undefined"
-                            ? "undefined"
-                            : app.name}</b>
-                    </small>
-                    <br />
-                    <small>
-                        <Signpost
-                            className="mx-2" />
-                        Route: sprost.com/{user === "undefined"
-                            ? "undefined"
-                            : user.route}/<b>{app === "undefined"
-                            ? "undefined"
-                            : app?.route}</b>
-                    </small>
-                    <br />
-                    <small>
-                        <BoxSeam
-                            className="mx-2" />
-                        Version: <b>{app === "undefined"
-                            ? "undefined"
-                            : app.version.major}.
-                        {app === "undefined"
-                            ? "undefined"
-                            : app.version.minor}.
-                        {app === "undefined"
-                            ? "undefined"
-                            : app.version.patch}</b>
-                    </small>
+                    className="m-5 p-2 shadow rounded">
+                    <Row
+                        className="gx-0">
+                        <Col
+                            md={4}
+                            sm={12}
+                            className="p-2">
+                            <Button
+                                className="w-100"
+                                variant="primary"
+                                disabled={
+                                    app !== "undefined" &&
+                                    app.version.major <= 0 &&
+                                    app.version.minor <= 0 &&
+                                    app.version.patch <= 0
+                                }>
+                                <BoxArrowUpRight
+                                    className="mx-2" />
+                                View Live
+                            </Button>
+                        </Col>
+                        <Col
+                            md={4}
+                            sm={12}
+                            className="p-2">
+                            <Button
+                                className="w-100"
+                                variant="primary">
+                                <SignpostFill
+                                    className="mx-2" />
+                                Edit Route
+                            </Button>
+                        </Col>
+                        <Col
+                            md={4}
+                            sm={12}
+                            className="p-2">
+                            <Col
+                                className="text-end">
+                                <NewRelease app={app} />
+                            </Col>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <AppDescription app={app} />
+                    </Row>
                 </div>
             </Col>
         </Row>
