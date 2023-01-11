@@ -1,13 +1,13 @@
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useEffect, useState} from "react";
-import {App} from "../../../types/App";
+import {App} from "../../../../types/App";
 import {Chat} from "react-bootstrap-icons";
-import {DatabaseContext} from "../../../contexts/Database";
+import {DatabaseContext} from "../../../../contexts/Database";
 import {Form} from "react-bootstrap";
-import {User} from "../../../types/User";
-import {UserContext} from "../../../contexts/User";
+import {User} from "../../../../types/User";
+import {UserContext} from "../../../../contexts/User";
 
-const AppDescription: FC<{ app: App | "undefined" }> = ({app}) => {
+const Description: FC<{ app: App | "undefined" }> = ({app}) => {
 
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
@@ -101,4 +101,4 @@ const AppDescription: FC<{ app: App | "undefined" }> = ({app}) => {
 
 };
 
-export default AppDescription;
+export default Description;

@@ -1,10 +1,10 @@
 import {Bookmarks, Signpost} from "react-bootstrap-icons";
 import {Firestore, deleteDoc, doc, getDoc, setDoc, updateDoc} from "firebase/firestore";
 import React, {useContext, useEffect, useState} from "react";
-import {DatabaseContext} from "../../../contexts/Database";
+import {DatabaseContext} from "../../../../contexts/Database";
 import {Form} from "react-bootstrap";
-import {User} from "../../../types/User";
-import {UserContext} from "../../../contexts/User";
+import {User} from "../../../../types/User";
+import {UserContext} from "../../../../contexts/User";
 
 const Name = () => {
 

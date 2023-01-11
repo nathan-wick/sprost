@@ -3,10 +3,10 @@ import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {useContext, useState} from "react";
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import {Camera} from "react-bootstrap-icons";
-import {DatabaseContext} from "../../../contexts/Database";
-import {StorageContext} from "../../../contexts/Storage";
-import {User} from "../../../types/User";
-import {UserContext} from "../../../contexts/User";
+import {DatabaseContext} from "../../../../contexts/Database";
+import {StorageContext} from "../../../../contexts/Storage";
+import {User} from "../../../../types/User";
+import {UserContext} from "../../../../contexts/User";
 
 const Portrait = () => {
 

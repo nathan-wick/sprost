@@ -1,10 +1,10 @@
 import {Col, Form, Row} from "react-bootstrap";
-import Email from "../inputs/Email";
+import Email from "../inputs/settings/Email";
 import {Gear} from "react-bootstrap-icons";
-import Name from "../inputs/Name";
-import Portrait from "../inputs/Portrait";
+import Name from "../inputs/settings/Name";
+import Portrait from "../inputs/settings/Portrait";
 import React from "react";
-import Theme from "../inputs/Theme";
+import Theme from "../inputs/settings/Theme";
 
 const Settings = () => <>
     <h1

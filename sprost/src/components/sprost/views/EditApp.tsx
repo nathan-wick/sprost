@@ -2,7 +2,7 @@ import {App as AppIcon, BoxArrowUpRight, ColumnsGap, Pencil, Signpost, SignpostF
     Tag, Window, WindowStack} from "react-bootstrap-icons";
 import {Button, Col, Row} from "react-bootstrap";
 import React, {FC, useContext} from "react";
-import AppDescription from "../inputs/AppDescription";
+import Description from "../inputs/app/Description";
 import EditView from "./EditView";
 import {NavigationContext} from "../Navigation";
 import NewRelease from "../modals/NewRelease";
@@ -54,7 +54,9 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                                 }>
                                 <BoxArrowUpRight
                                     className="mx-2" />
-                                View Live
+                                Open {app === "undefined"
+                                    ? "undefined"
+                                    : app.name}
                             </Button>
                         </Col>
                         <Col
@@ -80,7 +82,7 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                         </Col>
                     </Row>
                     <Row>
-                        <AppDescription app={app} />
+                        <Description app={app} />
                     </Row>
                 </div>
             </Col>
