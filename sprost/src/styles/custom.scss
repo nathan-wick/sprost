@@ -1,12 +1,3 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 // Initialize custom colors.
 $background: #f8f9fa;
 $foreground: #212529;
@@ -19,11 +10,54 @@ $danger: #dc3545;
 $body-bg: $background;
 $body-color: $foreground;
 $theme-colors: (
-  "primary": $primary,
-  "secondary": $secondary,
-  "success": $success,
-  "danger": $danger
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "danger": $danger
 );
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    object-fit: cover;
+}
+
+.align-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.overlay-container {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .4s ease;
+    background-color: $primary;
+}
+
+.overlay-container:hover .overlay {
+    opacity: 0.9;
+}
+
+
 
 // Import Bootstrap. This must always be at the bottom of the file.
 @import '~bootstrap/scss/bootstrap.scss';

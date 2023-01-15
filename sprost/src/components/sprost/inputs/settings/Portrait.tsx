@@ -1,10 +1,9 @@
 import {Col, Form, Row} from "react-bootstrap";
 import {Firestore, doc, updateDoc} from "firebase/firestore";
-import React, {useContext, useState} from "react";
-import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import React, {useContext, useEffect, useState} from "react";
 import {Camera} from "react-bootstrap-icons";
 import {DatabaseContext} from "../../../../contexts/Database";
-import {StorageContext} from "../../../../contexts/Storage";
+import ImageSelector from "../ImageSelector";
 import {User} from "../../../../types/User";
 import {UserContext} from "../../../../contexts/User";
 
@@ -12,101 +11,43 @@ const Portrait = () => {
 
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
-        userReference = user === "undefined"
-            ? "undefined"
-            : doc(
-                database as Firestore,
-                "users",
-                user.id
-            ),
-        storage = useContext(StorageContext),
         [
-            error,
-            setError
+            input,
+            setInput
         ] = useState<string>("undefined"),
-        [
-            progress,
-            setProgress
-        ] = useState<number>(100),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        savePortrait = (newPortrait: any) => {
+        saveInput = async () => {
 
-            const portraitStorageReference = user === "undefined" || storage === "undefined"
-                ? "undefined"
-                : ref(
-                    storage,
-                    `users/${user.id}/${newPortrait.name}`
+            if (user !== "undefined") {
+
+                const userReference = doc(
+                    database as Firestore,
+                    "users",
+                    user.id
+                    ),
+                    userInputData: Partial<User> = {
+                        "portrait": input
+                    };
+                await updateDoc(
+                    userReference,
+                    userInputData
                 );
-            if (portraitStorageReference !== "undefined") {
-
-                const uploadTask = uploadBytesResumable(
-                    portraitStorageReference,
-                    newPortrait
-                );
-                uploadTask.on(
-                    "state_changed",
-                    (snapshot) => {
-
-                        const uploadProgress =
-                            Math.round(snapshot.bytesTransferred / snapshot.totalBytes * 100);
-                        setProgress(uploadProgress);
-
-                    },
-                    (uploadError) => {
-
-                        setProgress(100);
-                        setError(`Failed to upload. ${uploadError.message}`);
-
-                    },
-                    () => {
-
-                        setProgress(100);
-                        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-
-                            if (downloadURL && userReference !== "undefined") {
-
-                                const userInputData: Partial<User> = {
-                                    "portrait": downloadURL
-                                };
-                                await updateDoc(
-                                    userReference,
-                                    userInputData
-                                );
-
-                            }
-
-                        });
-
-                    }
-                );
-
-            }
-
-        },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        changePortrait = (event: any) => {
-
-            const [newPortrait] = event.target.files;
-            if (newPortrait) {
-
-                if (newPortrait.size > 1048576) {
-
-                    setError("Portrait cannot be more than 1MB in size");
-
-                } else {
-
-                    savePortrait(newPortrait);
-                    setError("undefined");
-
-                }
-
-            } else {
-
-                setError("Please upload an image");
 
             }
 
         };
+
+    useEffect(
+        () => {
+
+            if (input !== "undefined") {
+
+                saveInput();
+
+            }
+
+        },
+        [input]
+    );
 
     return <Form.Group
         className="my-4">
@@ -128,31 +69,14 @@ const Portrait = () => {
                     width={80} />
             </Col>
             <Col>
-                <Form.Label>
+                <p>
                     <Camera
                         className="mx-2" />
                     Portrait
-                </Form.Label>
-                <Form.Control
-                    type="file"
-                    accept="image/*"
-                    onChange={changePortrait} />
+                </p>
+                <ImageSelector setInput={setInput} />
             </Col>
         </Row>
-        {
-            error !== "undefined" &&
-            <p
-                className="text-danger">
-                {error}
-            </p>
-        }
-        {
-            progress < 100 &&
-            <p
-                className="text-success">
-                Uploading... {progress}% complete
-            </p>
-        }
     </Form.Group>;
 
 };

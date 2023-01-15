@@ -2,8 +2,10 @@ import {App as AppIcon, BoxArrowUpRight, ColumnsGap, Pencil, Signpost, SignpostF
     Tag, Window, WindowStack} from "react-bootstrap-icons";
 import {Button, Col, Row} from "react-bootstrap";
 import React, {FC, useContext} from "react";
+import Cover from "../inputs/app/Cover";
 import Description from "../inputs/app/Description";
 import EditView from "./EditView";
+import Logo from "../inputs/app/Logo";
 import {NavigationContext} from "../Navigation";
 import NewRelease from "../modals/NewRelease";
 import NewView from "../modals/NewView";
@@ -81,7 +83,23 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                             </Col>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row
+                        className="gx-0">
+                        <Col
+                            md={6}
+                            sm={12}
+                            className="p-2">
+                            <Logo app={app} />
+                        </Col>
+                        <Col
+                            md={6}
+                            sm={12}
+                            className="p-2">
+                            <Cover app={app} />
+                        </Col>
+                    </Row>
+                    <Row
+                        className="gx-0">
                         <Description app={app} />
                     </Row>
                 </div>
