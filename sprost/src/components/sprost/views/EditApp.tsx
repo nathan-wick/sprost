@@ -25,8 +25,16 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
     return <>
         <h1
             className="mx-5 mt-5">
-            <AppIcon
-                className="mx-2" />
+            {
+                app !== "undefined" &&
+                    <img
+                        src={app.logo}
+                        height={40}
+                        width={40}
+                        className="mx-2 rounded"
+                        referrerPolicy="no-referrer"
+                        alt={`${app.name} logo`} />
+            }
             {app === "undefined"
                 ? "undefined"
                 : app.name}
@@ -100,7 +108,10 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                     </Row>
                     <Row
                         className="gx-0">
-                        <Description app={app} />
+                        <Col
+                            className="p-2">
+                            <Description app={app} />
+                        </Col>
                     </Row>
                 </div>
             </Col>

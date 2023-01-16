@@ -1,8 +1,8 @@
 import {Col, Form, Row} from "react-bootstrap";
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {useContext, useEffect, useState} from "react";
-import {Camera} from "react-bootstrap-icons";
 import {DatabaseContext} from "../../../../contexts/Database";
+import {Image} from "react-bootstrap-icons";
 import ImageSelector from "../ImageSelector";
 import {User} from "../../../../types/User";
 import {UserContext} from "../../../../contexts/User";
@@ -64,13 +64,13 @@ const Portrait = () => {
                         ? "undefined"
                         : user.name}'s portrait`}
                     referrerPolicy="no-referrer"
-                    className="border border-2 rounded-circle"
+                    className="rounded"
                     height={80}
                     width={80} />
             </Col>
             <Col>
                 <p>
-                    <Camera
+                    <Image
                         className="mx-2" />
                     Portrait
                 </p>

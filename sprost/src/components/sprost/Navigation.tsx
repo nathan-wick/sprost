@@ -1,6 +1,6 @@
-import {App as AppIcon, BarChart, BoxArrowRight, Gear, Grid, PersonCircle,
-    RocketTakeoffFill} from "react-bootstrap-icons";
 import {Auth, signOut} from "firebase/auth";
+import {BarChart, BoxArrowRight, Gear, Grid, PersonCircle,
+    RocketTakeoffFill} from "react-bootstrap-icons";
 import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {AuthenticationContext} from "../../contexts/Authentication";
@@ -56,7 +56,7 @@ export const NavigationContext = createContext<{
             <Navbar
                 sticky="top"
                 expand="lg"
-                className="bg-gradient shadow rounded">
+                className="bg-gradient bg-white shadow rounded">
                 <Container>
                     <Navbar.Brand
                         className="text-primary">
@@ -101,8 +101,13 @@ export const NavigationContext = createContext<{
                                                                 appRoute={app.route} />);
 
                                                         }}>
-                                                        <AppIcon
-                                                            className="mx-2"/>
+                                                        <img
+                                                            src={app.logo}
+                                                            height={20}
+                                                            width={20}
+                                                            className="mx-2 rounded"
+                                                            referrerPolicy="no-referrer"
+                                                            alt={`${app.name} logo`} />
                                                         {app.name}
                                                     </NavDropdown.Item>)
                                             }
@@ -127,7 +132,7 @@ export const NavigationContext = createContext<{
                                                     src={user.portrait}
                                                     height={20}
                                                     width={20}
-                                                    className="mx-2 border rounded-circle"
+                                                    className="mx-2 rounded"
                                                     referrerPolicy="no-referrer"
                                                     alt="Account Portrait" />
                                                 : <PersonCircle
