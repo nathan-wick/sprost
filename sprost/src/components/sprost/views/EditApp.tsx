@@ -1,4 +1,4 @@
-import {App as AppIcon, BoxArrowUpRight, ColumnsGap, Pencil, Signpost, SignpostFill,
+import {BoxArrowUpRight, ColumnsGap, Pencil, Signpost, SignpostFill,
     Tag, Window, WindowStack} from "react-bootstrap-icons";
 import {Button, Col, Row} from "react-bootstrap";
 import React, {FC, useContext} from "react";

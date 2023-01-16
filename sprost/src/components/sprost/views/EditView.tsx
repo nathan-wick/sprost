@@ -5,11 +5,9 @@ import {Firestore, doc, setDoc} from "firebase/firestore";
 import React, {FC, useContext, useState} from "react";
 import {DatabaseContext} from "../../../contexts/Database";
 import EditApp from "./EditApp";
-import Header from "../editors/Header";
+import Editor from "../Editor";
 import {NavigationContext} from "../Navigation";
 import NewComponent from "../modals/NewComponent";
-import Paragraph from "../editors/Paragraph";
-import Title from "../editors/Title";
 import {User} from "../../../types/User";
 import {UserContext} from "../../../contexts/User";
 import View from "../../generated/View";
@@ -83,7 +81,7 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
 
     return <>
         <Row
-            className="gx-0 m-5">
+            className="gx-0 my-5 mx-2">
             <Col
                 lg={6}
                 md={4}
@@ -105,14 +103,14 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                             ? "primary"
                             : editView.isSaved
                                 ? "primary"
-                                : "outline-danger"}
+                                : "danger"}
                         onClick={exit}>
                         <BoxArrowLeft
                             className="mx-2" />
                         Exit
                     </Button>
                     <Button
-                        variant={"outline-primary"}
+                        variant={"primary"}
                         onClick={() => setPreviewIsExpanded(!previewIsExpanded)}>
                         {
                             previewIsExpanded
@@ -124,11 +122,7 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                         Preview
                     </Button>
                     <Button
-                        variant={editView === "undefined"
-                            ? "outline-success"
-                            : editView.isSaved
-                                ? "outline-success"
-                                : "primary"}
+                        variant={"primary"}
                         // eslint-disable-next-line no-extra-parens
                         disabled={isSaving || (editView !== "undefined" && editView?.isSaved)}
                         onClick={saveUser}>
@@ -146,7 +140,7 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
             </Col>
         </Row>
         <Row
-            className="gx-0 m-5">
+            className="gx-0 my-5 mx-2">
             <Col
                 md={previewIsExpanded
                     ? 12
@@ -172,28 +166,12 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                     </Col>
                 </Row>
                 {
-                    editView !== "undefined" && editView.components.map((component, index) => <div
-                        key={index}>
-                        {(() => {
-
-                            switch (component.type.id) {
-
-                            case "header":
-                                return <Header componentId={component.id} editView={editView}
-                                    setEditView={setEditView} />;
-                            case "title":
-                                return <Title componentId={component.id} editView={editView}
-                                    setEditView={setEditView} />;
-                            case "paragraph":
-                                return <Paragraph componentId={component.id} editView={editView}
-                                    setEditView={setEditView} />;
-                            default:
-                                return <></>;
-
-                            }
-
-                        })()}
-                    </div>)
+                    editView !== "undefined" &&
+                        editView.components.map((component, index) => <Editor
+                            key={index}
+                            componentId={component.id}
+                            editView={editView}
+                            setEditView={setEditView}/>)
                 }
             </Col>
         </Row>
