@@ -1,11 +1,11 @@
 import React, {Dispatch, FC, SetStateAction, useState} from "react";
-import {AspectRatio} from "react-bootstrap-icons";
 import {Component} from "../../../../../types/Component";
 import {Form} from "react-bootstrap";
-import {Title} from "../../../../../types/components/Title";
+import {Header} from "../../../../../types/components/Header";
+import {ListNested} from "react-bootstrap-icons";
 import {View} from "../../../../../types/View";
 
-const TitleSize: FC<{
+const HeaderAlignment: FC<{
     componentId: string,
     editView: View,
     setEditView: Dispatch<SetStateAction<View | "undefined">>,
@@ -16,21 +16,21 @@ const TitleSize: FC<{
             input,
             setInput
         // eslint-disable-next-line no-extra-parens
-        ] = useState<"small" | "medium" | "large">((editComponent?.type as Title).size),
+        ] = useState<"left" | "center" | "right">((editComponent?.type as Header).alignment),
         onChange = (event: { target: { value: string } }) => {
 
-            let newInput: "small" | "medium" | "large" = "medium";
+            let newInput: "left" | "center" | "right" = "left";
             switch (event.target.value) {
 
-            case "large":
-                newInput = "large";
+            case "right":
+                newInput = "right";
                 break;
-            case "small":
-                newInput = "small";
+            case "center":
+                newInput = "center";
                 break;
-            case "medium":
+            case "left":
             default:
-                newInput = "medium";
+                newInput = "left";
                 break;
 
             }
@@ -39,8 +39,8 @@ const TitleSize: FC<{
         },
         onSubmit = () => {
 
-            const newTitle: Pick<Title, "size"> = {
-                "size": input
+            const newHeader: Pick<Header, "alignment"> = {
+                "alignment": input
             },
                 newView: View = structuredClone(editView);
             if (newView) {
@@ -50,8 +50,8 @@ const TitleSize: FC<{
                 if (newComponent) {
 
                     newComponent.type = {
-                        ...newComponent.type as Title,
-                        ...newTitle
+                        ...newComponent.type as Header,
+                        ...newHeader
                     };
                     newView.isSaved = false;
                     setEditView(newView);
@@ -61,37 +61,37 @@ const TitleSize: FC<{
             }
 
         },
-        sizeOptions = [
+        alignmentOptions = [
             {
-                "text": "Large",
-                "value": "large"
+                "text": "Left",
+                "value": "left"
             },
             {
-                "text": "Medium",
-                "value": "medium"
+                "text": "Center",
+                "value": "center"
             },
             {
-                "text": "Small",
-                "value": "small"
+                "text": "Right",
+                "value": "right"
             }
         ];
 
     return <>
         <p
             className="mt-4">
-            <AspectRatio
+            <ListNested
                 className="mx-2" />
-            Size
+            Alignment
         </p>
         <Form.Select
             onChange={onChange}
             onBlur={onSubmit}
             defaultValue={input}>
             {
-                sizeOptions.map((sizeOption) => <option
-                    key={sizeOption.value}
-                    value={sizeOption.value}>
-                    {sizeOption.text}
+                alignmentOptions.map((alignmentOption) => <option
+                    key={alignmentOption.value}
+                    value={alignmentOption.value}>
+                    {alignmentOption.text}
                 </option>)
             }
         </Form.Select>
@@ -99,4 +99,4 @@ const TitleSize: FC<{
 
 };
 
-export default TitleSize;
+export default HeaderAlignment;

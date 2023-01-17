@@ -2,10 +2,10 @@ import React, {Dispatch, FC, SetStateAction, useState} from "react";
 import {AspectRatio} from "react-bootstrap-icons";
 import {Component} from "../../../../../types/Component";
 import {Form} from "react-bootstrap";
-import {Title} from "../../../../../types/components/Title";
+import {Header} from "../../../../../types/components/Header";
 import {View} from "../../../../../types/View";
 
-const TitleSize: FC<{
+const HeaderSize: FC<{
     componentId: string,
     editView: View,
     setEditView: Dispatch<SetStateAction<View | "undefined">>,
@@ -16,7 +16,7 @@ const TitleSize: FC<{
             input,
             setInput
         // eslint-disable-next-line no-extra-parens
-        ] = useState<"small" | "medium" | "large">((editComponent?.type as Title).size),
+        ] = useState<"small" | "medium" | "large">((editComponent?.type as Header).size),
         onChange = (event: { target: { value: string } }) => {
 
             let newInput: "small" | "medium" | "large" = "medium";
@@ -39,7 +39,7 @@ const TitleSize: FC<{
         },
         onSubmit = () => {
 
-            const newTitle: Pick<Title, "size"> = {
+            const newHeader: Pick<Header, "size"> = {
                 "size": input
             },
                 newView: View = structuredClone(editView);
@@ -50,8 +50,8 @@ const TitleSize: FC<{
                 if (newComponent) {
 
                     newComponent.type = {
-                        ...newComponent.type as Title,
-                        ...newTitle
+                        ...newComponent.type as Header,
+                        ...newHeader
                     };
                     newView.isSaved = false;
                     setEditView(newView);
@@ -99,4 +99,4 @@ const TitleSize: FC<{
 
 };
 
-export default TitleSize;
+export default HeaderSize;

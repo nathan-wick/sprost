@@ -2,7 +2,11 @@ import {ArrowDown, ArrowUp, CardHeading, CardImage, CardText, ThreeDots,
     Trash} from "react-bootstrap-icons";
 import {Button, ButtonGroup, Col, Row} from "react-bootstrap";
 import React, {Dispatch, FC, SetStateAction, useState} from "react";
+import HeaderAlignment from "./inputs/components/header/HeaderAlignment";
+import HeaderBackground from "./inputs/components/header/HeaderBackground";
+import HeaderImage from "./inputs/components/header/HeaderImage";
 import HeaderMessage from "./inputs/components/header/HeaderMessage";
+import HeaderSize from "./inputs/components/header/HeaderSize";
 import ParagraphMessage from "./inputs/components/paragraph/ParagraphMessage";
 import TitleMessage from "./inputs/components/title/TitleMessage";
 import TitleSize from "./inputs/components/title/TitleSize";
@@ -37,7 +41,21 @@ const Editor: FC<{
             <HeaderMessage key={1} componentId={componentId} editView={editView}
                 setEditView={setEditView} />
         ];
-        advancedInputs = [];
+        advancedInputs = [
+            <HeaderSize key={1} componentId={componentId} editView={editView}
+                setEditView={setEditView} />,
+            <HeaderAlignment key={2} componentId={componentId} editView={editView}
+                setEditView={setEditView} />,
+            <HeaderBackground key={3} componentId={componentId} editView={editView}
+                setEditView={setEditView} />,
+            <>
+                {
+                    editComponent.type.background === "image" &&
+                        <HeaderImage key={4} componentId={componentId} editView={editView}
+                            setEditView={setEditView} />
+                }
+            </>
+        ];
         break;
     case "title":
         title = <>

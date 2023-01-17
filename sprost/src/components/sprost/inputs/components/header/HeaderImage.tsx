@@ -1,11 +1,11 @@
-import React, {Dispatch, FC, SetStateAction, useState} from "react";
-import {Chat} from "react-bootstrap-icons";
+import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
 import {Component} from "../../../../../types/Component";
-import {Form} from "react-bootstrap";
-import {Title} from "../../../../../types/components/Title";
+import {Header} from "../../../../../types/components/Header";
+import {Image} from "react-bootstrap-icons";
+import ImageSelector from "../../ImageSelector";
 import {View} from "../../../../../types/View";
 
-const TitleMessage: FC<{
+const HeaderImage: FC<{
     componentId: string,
     editView: View,
     setEditView: Dispatch<SetStateAction<View | "undefined">>,
@@ -15,18 +15,11 @@ const TitleMessage: FC<{
         [
             input,
             setInput
-        ] = useState<string | undefined>(editComponent?.type.message),
-        onChange = (event: { target: {
-            value: React.SetStateAction<string | undefined>;
-        }; }) => {
-
-            setInput(event.target.value);
-
-        },
+        ] = useState<string>(editComponent?.type.message ?? "undefined"),
         onSubmit = () => {
 
-            const newMessage: Pick<Title, "message"> = {
-                "message": String(input)
+            const newImage: Pick<Header, "image"> = {
+                "image": input
             },
                 newView: View = structuredClone(editView);
             if (newView) {
@@ -36,8 +29,8 @@ const TitleMessage: FC<{
                 if (newComponent) {
 
                     newComponent.type = {
-                        ...newComponent.type as Title,
-                        ...newMessage
+                        ...newComponent.type as Header,
+                        ...newImage
                     };
                     newView.isSaved = false;
                     setEditView(newView);
@@ -48,21 +41,25 @@ const TitleMessage: FC<{
 
         };
 
+    useEffect(
+        () => {
+
+            onSubmit();
+
+        },
+        [input]
+    );
+
     return <>
         <p
             className="mt-4">
-            <Chat
+            <Image
                 className="mx-2"/>
-            Message
+            Image
         </p>
-        <Form.Control
-            type="text"
-            onChange={onChange}
-            onBlur={onSubmit}
-            defaultValue={input}
-            maxLength={50} />
+        <ImageSelector setInput={setInput}/>
     </>;
 
 };
 
-export default TitleMessage;
+export default HeaderImage;

@@ -28,8 +28,12 @@ const NewComponent: FC<{
             setIsLoading
         ] = useState<boolean>(false),
         defaultHeader: Header = {
+            "alignment": "left",
+            "background": "color",
             "id": "header",
-            "message": "New Header"
+            "image": "undefined",
+            "message": "New Header",
+            "size": "medium"
         },
         defaultTitle: Title = {
             "id": "title",

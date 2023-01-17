@@ -50,7 +50,7 @@ const HeaderMessage: FC<{
 
     return <>
         <p
-            className="mt-2">
+            className="mt-4">
             <Chat
                 className="mx-2"/>
             Message

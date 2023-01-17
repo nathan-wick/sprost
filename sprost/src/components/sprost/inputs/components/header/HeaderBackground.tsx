@@ -1,11 +1,11 @@
 import React, {Dispatch, FC, SetStateAction, useState} from "react";
-import {AspectRatio} from "react-bootstrap-icons";
 import {Component} from "../../../../../types/Component";
 import {Form} from "react-bootstrap";
-import {Title} from "../../../../../types/components/Title";
+import {Header} from "../../../../../types/components/Header";
+import {Tree} from "react-bootstrap-icons";
 import {View} from "../../../../../types/View";
 
-const TitleSize: FC<{
+const HeaderBackground: FC<{
     componentId: string,
     editView: View,
     setEditView: Dispatch<SetStateAction<View | "undefined">>,
@@ -16,21 +16,18 @@ const TitleSize: FC<{
             input,
             setInput
         // eslint-disable-next-line no-extra-parens
-        ] = useState<"small" | "medium" | "large">((editComponent?.type as Title).size),
+        ] = useState<"color" | "image">((editComponent?.type as Header).background),
         onChange = (event: { target: { value: string } }) => {
 
-            let newInput: "small" | "medium" | "large" = "medium";
+            let newInput: "color" | "image" = "color";
             switch (event.target.value) {
 
-            case "large":
-                newInput = "large";
+            case "image":
+                newInput = "image";
                 break;
-            case "small":
-                newInput = "small";
-                break;
-            case "medium":
+            case "color":
             default:
-                newInput = "medium";
+                newInput = "color";
                 break;
 
             }
@@ -39,8 +36,8 @@ const TitleSize: FC<{
         },
         onSubmit = () => {
 
-            const newTitle: Pick<Title, "size"> = {
-                "size": input
+            const newHeader: Pick<Header, "background"> = {
+                "background": input
             },
                 newView: View = structuredClone(editView);
             if (newView) {
@@ -50,8 +47,8 @@ const TitleSize: FC<{
                 if (newComponent) {
 
                     newComponent.type = {
-                        ...newComponent.type as Title,
-                        ...newTitle
+                        ...newComponent.type as Header,
+                        ...newHeader
                     };
                     newView.isSaved = false;
                     setEditView(newView);
@@ -61,37 +58,33 @@ const TitleSize: FC<{
             }
 
         },
-        sizeOptions = [
+        backgroundOptions = [
             {
-                "text": "Large",
-                "value": "large"
+                "text": "Color",
+                "value": "color"
             },
             {
-                "text": "Medium",
-                "value": "medium"
-            },
-            {
-                "text": "Small",
-                "value": "small"
+                "text": "Image",
+                "value": "image"
             }
         ];
 
     return <>
         <p
             className="mt-4">
-            <AspectRatio
+            <Tree
                 className="mx-2" />
-            Size
+            Background
         </p>
         <Form.Select
             onChange={onChange}
             onBlur={onSubmit}
             defaultValue={input}>
             {
-                sizeOptions.map((sizeOption) => <option
-                    key={sizeOption.value}
-                    value={sizeOption.value}>
-                    {sizeOption.text}
+                backgroundOptions.map((backgroundOption) => <option
+                    key={backgroundOption.value}
+                    value={backgroundOption.value}>
+                    {backgroundOption.text}
                 </option>)
             }
         </Form.Select>
@@ -99,4 +92,4 @@ const TitleSize: FC<{
 
 };
 
-export default TitleSize;
+export default HeaderBackground;
