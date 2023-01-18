@@ -90,7 +90,7 @@ const Theme = () => {
                 : user.theme}>
             {
                 themeOptions.map((themeOption) => <option
-                    key={themeOption.value}
+                    key={`user-theme-option-${themeOption.value}`}
                     value={themeOption.value}>
                     {themeOption.text}
                 </option>)

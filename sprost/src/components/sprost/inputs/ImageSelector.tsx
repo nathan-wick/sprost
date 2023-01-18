@@ -175,7 +175,7 @@ const ImageSelector: FC<{
                             className="gx-0">
                             {
                                 userImages.map((userImage) => <Col
-                                    key={userImage}
+                                    key={`${userImage}-selectable-image`}
                                     className="overlay-container"
                                     lg={3}
                                     md={4}

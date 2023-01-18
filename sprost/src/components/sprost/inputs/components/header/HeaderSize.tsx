@@ -89,7 +89,7 @@ const HeaderSize: FC<{
             defaultValue={input}>
             {
                 sizeOptions.map((sizeOption) => <option
-                    key={sizeOption.value}
+                    key={`${componentId}-header-size-option-${sizeOption.value}`}
                     value={sizeOption.value}>
                     {sizeOption.text}
                 </option>)

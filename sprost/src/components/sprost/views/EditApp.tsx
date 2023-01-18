@@ -150,7 +150,7 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
             className="gx-0 p-3">
             {
                 views !== "undefined" && views?.map((view) => <Col
-                    key={view.route}
+                    key={`${appRoute}-app-view-${view.route}`}
                     lg={4}
                     md={6}
                     sm={12}>

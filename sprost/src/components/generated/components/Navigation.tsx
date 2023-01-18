@@ -30,7 +30,7 @@ const Navigation: FC<{app: AppType}> = ({app}) => {
                     className="me-auto">
                     {
                         app.views.map((view) => <Nav.Link
-                            key={view.route}>
+                            key={`${view.route}-view-navigation-link`}>
                             <Window
                                 className="mx-2" />
                             {view.name}
@@ -44,14 +44,14 @@ const Navigation: FC<{app: AppType}> = ({app}) => {
                             title={[
                                 user?.portrait
                                     ? <img
-                                        key={1}
+                                        key="user-portrait-image"
                                         src={user.portrait}
                                         height={20} width={20}
                                         className="mx-2 border rounded-circle"
                                         referrerPolicy="no-referrer"
                                         alt="Account Portrait" />
                                     : <PersonCircle
-                                        key={2}
+                                        key="user-portrait-icon"
                                         className="mx-2" />,
                                 "Account"
                             ]}

@@ -167,8 +167,8 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
                 </Row>
                 {
                     editView !== "undefined" &&
-                        editView.components.map((component, index) => <Editor
-                            key={index}
+                        editView.components.map((component) => <Editor
+                            key={`${component.id}-editor`}
                             componentId={component.id}
                             editView={editView}
                             setEditView={setEditView}/>)

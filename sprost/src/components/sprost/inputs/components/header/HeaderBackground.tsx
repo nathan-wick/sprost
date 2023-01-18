@@ -82,7 +82,7 @@ const HeaderBackground: FC<{
             defaultValue={input}>
             {
                 backgroundOptions.map((backgroundOption) => <option
-                    key={backgroundOption.value}
+                    key={`${componentId}-header-background-option-${backgroundOption.value}`}
                     value={backgroundOption.value}>
                     {backgroundOption.text}
                 </option>)

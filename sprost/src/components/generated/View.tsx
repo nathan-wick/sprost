@@ -14,16 +14,16 @@ const View: FC<{view: ViewType}> = ({view}) => <>
 
             case "header":
                 return <Header
-                    key={component.id}
+                    key={`${component.id}-component`}
                     component={component.type}/>;
             case "title":
                 return <Title
-                    key={component.id}
+                    key={`${component.id}-component`}
                     component={component.type}/>;
             case "paragraph":
             default:
                 return <Paragraph
-                    key={component.id}
+                    key={`${component.id}-component`}
                     component={component.type}/>;
 
             }

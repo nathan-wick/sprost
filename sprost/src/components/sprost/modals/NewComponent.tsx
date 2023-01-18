@@ -154,7 +154,7 @@ const NewComponent: FC<{
                             value={typeInput}>
                             {
                                 typeOptions.map((typeOption) => <option
-                                    key={typeOption.text}
+                                    key={`component-type-option-${typeOption.value}`}
                                     value={typeOption.value}>
                                     {typeOption.text}
                                 </option>)

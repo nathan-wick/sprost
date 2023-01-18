@@ -89,7 +89,7 @@ const HeaderAlignment: FC<{
             defaultValue={input}>
             {
                 alignmentOptions.map((alignmentOption) => <option
-                    key={alignmentOption.value}
+                    key={`${componentId}-header-alignment-option-${alignmentOption.value}`}
                     value={alignmentOption.value}>
                     {alignmentOption.text}
                 </option>)

@@ -86,7 +86,7 @@ export const NavigationContext = createContext<{
                                         <NavDropdown
                                             title={[
                                                 <Grid
-                                                    key={1}
+                                                    key="apps-navigation-dropdown"
                                                     className="mx-2" />,
                                                 "Apps"
                                             ]}
@@ -94,7 +94,7 @@ export const NavigationContext = createContext<{
                                             {
                                                 apps !== "undefined" &&
                                                     apps.map((app) => <NavDropdown.Item
-                                                        key={app.route}
+                                                        key={`${app.route}-app-navigation-link`}
                                                         onClick={() => {
 
                                                             setCurrentView(<EditApp
@@ -128,7 +128,7 @@ export const NavigationContext = createContext<{
                                         title={[
                                             user?.portrait
                                                 ? <img
-                                                    key={1}
+                                                    key="user-portrait-image"
                                                     src={user.portrait}
                                                     height={20}
                                                     width={20}
@@ -136,7 +136,7 @@ export const NavigationContext = createContext<{
                                                     referrerPolicy="no-referrer"
                                                     alt="Account Portrait" />
                                                 : <PersonCircle
-                                                    key={2}
+                                                    key="user-portrait-icon"
                                                     className="mx-2" />,
                                             "Account"
                                         ]}

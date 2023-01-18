@@ -200,7 +200,7 @@ const NewRelease: FC<{
                             value={releaseType}>
                             {
                                 releaseTypeOptions.map((releaseTypeOption) => <option
-                                    key={releaseTypeOption.text}
+                                    key={`release-type-option-${releaseTypeOption.value}`}
                                     value={releaseTypeOption.value}>
                                     {releaseTypeOption.text}
                                 </option>)

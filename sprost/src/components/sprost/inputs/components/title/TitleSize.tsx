@@ -89,7 +89,7 @@ const TitleSize: FC<{
             defaultValue={input}>
             {
                 sizeOptions.map((sizeOption) => <option
-                    key={sizeOption.value}
+                    key={`${componentId}-title-size-option-${sizeOption.value}`}
                     value={sizeOption.value}>
                     {sizeOption.text}
                 </option>)
