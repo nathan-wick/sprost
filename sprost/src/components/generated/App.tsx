@@ -24,40 +24,40 @@ const App: FC<{
             : currentApp?.views[0],
         database = useContext(DatabaseContext),
         params = useParams(),
-        user = useContext(UserContext);
+        user = useContext(UserContext),
+        getCurrentApp = async () => {
+
+            if (propsAppRoute && user !== "undefined") {
+
+                setCurrentApp(user.apps.find((userApp) => userApp.route === propsAppRoute));
+
+            } else {
+
+                const paramsAppRoute = params.appRoute,
+                    paramsUserRoute = params.userRoute;
+
+                if (paramsUserRoute && paramsAppRoute) {
+
+                    const appOwnerReference = doc(
+                                database as Firestore,
+                                "public",
+                                paramsUserRoute
+                        ),
+                        appOwnerSnapshot = await getDoc(appOwnerReference),
+                        paramsUserApps = appOwnerSnapshot.data()?.apps;
+                    setCurrentApp(paramsUserApps.find((userApp: {
+                        route: string | undefined;
+                    }) => userApp.route === paramsAppRoute));
+
+                }
+
+            }
+
+        };
 
     useEffect(
         () => {
 
-            const getCurrentApp = async () => {
-
-                if (propsAppRoute && user !== "undefined") {
-
-                    setCurrentApp(user.apps.find((userApp) => userApp.route === propsAppRoute));
-
-                } else {
-
-                    const paramsAppRoute = params.appRoute,
-                        paramsUserRoute = params.userRoute;
-
-                    if (paramsUserRoute && paramsAppRoute) {
-
-                        const appOwnerReference = doc(
-                                    database as Firestore,
-                                    "public",
-                                    paramsUserRoute
-                            ),
-                            appOwnerSnapshot = await getDoc(appOwnerReference),
-                            paramsUserApps = appOwnerSnapshot.data()?.apps;
-                        setCurrentApp(paramsUserApps.find((userApp: {
-                            route: string | undefined;
-                        }) => userApp.route === paramsAppRoute));
-
-                    }
-
-                }
-
-            };
             getCurrentApp();
 
         },

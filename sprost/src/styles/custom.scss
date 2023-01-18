@@ -57,7 +57,25 @@ img {
     opacity: 0.9;
 }
 
+.parallax {
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
 
+.minimum-height-large {
+    min-height: 80vh;
+}
+
+.minimum-height-medium {
+    min-height: 40vh;
+}
+
+.minimum-height-small {
+    min-height: 20vh;
+}
 
 // Import Bootstrap. This must always be at the bottom of the file.
 @import '~bootstrap/scss/bootstrap.scss';

@@ -15,7 +15,8 @@ const HeaderImage: FC<{
         [
             input,
             setInput
-        ] = useState<string>(editComponent?.type.message ?? "undefined"),
+        // eslint-disable-next-line no-extra-parens
+        ] = useState<string>((editComponent?.type as Header).image ?? "undefined"),
         onSubmit = () => {
 
             const newImage: Pick<Header, "image"> = {
@@ -44,7 +45,12 @@ const HeaderImage: FC<{
     useEffect(
         () => {
 
-            onSubmit();
+            // eslint-disable-next-line no-extra-parens
+            if ((editComponent?.type as Header).image !== input) {
+
+                onSubmit();
+
+            }
 
         },
         [input]

@@ -20,7 +20,19 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
             : user.apps.find((userApp) => userApp.route === appRoute) ?? "undefined",
         views = app === "undefined"
             ? "undefined"
-            : app.views;
+            : app.views,
+        openApp = () => {
+
+            if (user !== "undefined" && app !== "undefined") {
+
+                window.open(
+                    `http://localhost:3000/${user.route}/${app.route}`,
+                    "_blank"
+                );
+
+            }
+
+        };
 
     return <>
         <h1
@@ -61,7 +73,8 @@ const EditApp: FC<{ appRoute: string }> = ({appRoute}) => {
                                     app.version.major <= 0 &&
                                     app.version.minor <= 0 &&
                                     app.version.patch <= 0
-                                }>
+                                }
+                                onClick={openApp}>
                                 <BoxArrowUpRight
                                     className="mx-2" />
                                 Open {app === "undefined"

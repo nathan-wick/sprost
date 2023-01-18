@@ -38,21 +38,21 @@ const Editor: FC<{
             Header
         </>;
         inputs = [
-            <HeaderMessage key={1} componentId={componentId} editView={editView}
-                setEditView={setEditView} />
+            <HeaderMessage key={`${componentId}-message`} componentId={componentId}
+                editView={editView} setEditView={setEditView} />
         ];
         advancedInputs = [
-            <HeaderSize key={1} componentId={componentId} editView={editView}
+            <HeaderSize key={`${componentId}-size`} componentId={componentId} editView={editView}
                 setEditView={setEditView} />,
-            <HeaderAlignment key={2} componentId={componentId} editView={editView}
-                setEditView={setEditView} />,
-            <HeaderBackground key={3} componentId={componentId} editView={editView}
-                setEditView={setEditView} />,
+            <HeaderAlignment key={`${componentId}-alignment`} componentId={componentId}
+                editView={editView} setEditView={setEditView} />,
+            <HeaderBackground key={`${componentId}-background`} componentId={componentId}
+                editView={editView} setEditView={setEditView} />,
             <>
                 {
                     editComponent.type.background === "image" &&
-                        <HeaderImage key={4} componentId={componentId} editView={editView}
-                            setEditView={setEditView} />
+                        <HeaderImage key={`${componentId}-image`} componentId={componentId}
+                            editView={editView} setEditView={setEditView} />
                 }
             </>
         ];
@@ -64,11 +64,11 @@ const Editor: FC<{
             Title
         </>;
         inputs = [
-            <TitleMessage key={1} componentId={componentId} editView={editView}
-                setEditView={setEditView} />
+            <TitleMessage key={`${componentId}-message`} componentId={componentId}
+                editView={editView} setEditView={setEditView} />
         ];
         advancedInputs = [
-            <TitleSize key={1} componentId={componentId} editView={editView}
+            <TitleSize key={`${componentId}-size`} componentId={componentId} editView={editView}
                 setEditView={setEditView} />
         ];
         break;
@@ -80,8 +80,8 @@ const Editor: FC<{
             Paragraph
         </>;
         inputs = [
-            <ParagraphMessage key={1} componentId={componentId} editView={editView}
-                setEditView={setEditView} />
+            <ParagraphMessage key={`${componentId}-message`} componentId={componentId}
+                editView={editView} setEditView={setEditView} />
         ];
         advancedInputs = [];
 
