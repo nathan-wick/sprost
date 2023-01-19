@@ -1,3 +1,4 @@
+import {Col, Row} from "react-bootstrap";
 import React, {FC} from "react";
 import {Title as TitleType} from "../../../types/components/Title";
 
@@ -25,7 +26,14 @@ const Title: FC<{component: TitleType}> = ({component}) => {
 
     }
 
-    return titleComponent;
+    return <Row
+        className="gx-0 d-flex justify-content-md-center p-4">
+        <Col
+            md={6}
+            sm={12}>
+            {titleComponent}
+        </Col>
+    </Row>;
 
 };
 

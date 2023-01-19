@@ -48,13 +48,14 @@ const Editor: FC<{
                 editView={editView} setEditView={setEditView} />,
             <HeaderBackground key={`${componentId}-background`} componentId={componentId}
                 editView={editView} setEditView={setEditView} />,
-            <>
+            <div
+                key={`${componentId}-image`}>
                 {
                     editComponent.type.background === "image" &&
-                        <HeaderImage key={`${componentId}-image`} componentId={componentId}
+                        <HeaderImage componentId={componentId}
                             editView={editView} setEditView={setEditView} />
                 }
-            </>
+            </div>
         ];
         break;
     case "title":
