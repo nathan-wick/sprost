@@ -1,5 +1,5 @@
 import {BoxSeam, RocketTakeoffFill} from "react-bootstrap-icons";
-import {Button, Form, FormGroup, Modal} from "react-bootstrap";
+import {Button, Form, FormGroup, Modal, Nav} from "react-bootstrap";
 import {Firestore, doc, setDoc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useState} from "react";
 import {App} from "../../../types/App";
@@ -163,17 +163,12 @@ const NewRelease: FC<{
         };
 
     return <>
-        <Button
-            className="w-100"
-            disabled={app !== "undefined" && app.views.length
-                ? app.views.length < 1
-                : true}
-            variant="primary"
+        <Nav.Link
             onClick={showModal}>
             <RocketTakeoffFill
                 className="mx-2" />
-            New Release
-        </Button>
+            Release
+        </Nav.Link>
 
         <Modal
             show={modal}

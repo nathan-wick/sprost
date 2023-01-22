@@ -2,9 +2,9 @@ import {Button, Form, FormGroup, Modal, NavDropdown} from "react-bootstrap";
 import {Firestore, doc, setDoc} from "firebase/firestore";
 import {PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import React, {useContext, useState} from "react";
+import App from "../App";
 import {App as AppType} from "../../../types/App";
 import {DatabaseContext} from "../../../contexts/Database";
-import EditApp from "../views/EditApp";
 import {NavigationContext} from "../Navigation";
 import {ToasterContext} from "../../../contexts/Toaster";
 import {UserContext} from "../../../contexts/User";
@@ -137,7 +137,7 @@ const NewApp = () => {
 
             }
             hideModal();
-            setCurrentView(<EditApp appRoute={String(nameRoute)} />);
+            setCurrentView(<App appRoute={String(nameRoute)} />);
 
         };
 

@@ -3,15 +3,15 @@ import {ArrowsAngleContract, ArrowsAngleExpand, BoxArrowLeft, DeviceSsd,
 import {Button, ButtonGroup, Col, Row} from "react-bootstrap";
 import {Firestore, doc, setDoc} from "firebase/firestore";
 import React, {FC, useContext, useState} from "react";
-import {DatabaseContext} from "../../../contexts/Database";
-import EditApp from "./EditApp";
-import Editor from "../Editor";
-import {NavigationContext} from "../Navigation";
-import NewComponent from "../modals/NewComponent";
-import {User} from "../../../types/User";
-import {UserContext} from "../../../contexts/User";
-import View from "../../generated/View";
-import {View as ViewType} from "../../../types/View";
+import App from "./App";
+import {DatabaseContext} from "./../../contexts/Database";
+import Editor from "./Editor";
+import {NavigationContext} from "./Navigation";
+import NewComponent from "./modals/NewComponent";
+import {User} from "./../../types/User";
+import {UserContext} from "./../../contexts/User";
+import View from "./../shared/View";
+import {View as ViewType} from "./../../types/View";
 
 const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRoute}) => {
 
@@ -38,7 +38,7 @@ const EditView: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRout
         ] = useState<boolean>(false),
         exit = () => {
 
-            setCurrentView(<EditApp appRoute={String(appRoute)} />);
+            setCurrentView(<App appRoute={String(appRoute)} />);
 
         },
         saveUser = async () => {

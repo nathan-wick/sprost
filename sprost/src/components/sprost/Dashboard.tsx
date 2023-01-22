@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import {Button} from "react-bootstrap";
-import {ToasterContext} from "../../../contexts/Toaster";
+import {ToasterContext} from "../../contexts/Toaster";
 
 const Dashboard = () => {
 

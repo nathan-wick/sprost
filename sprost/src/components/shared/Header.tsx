@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {Header as HeaderType} from "../../../types/components/Header";
+import {Header as HeaderType} from "../../types/components/Header";
 
 const Header: FC<{component: HeaderType}> = ({component}) => <div
     className={`d-flex align-items-center p-4
@@ -15,12 +15,15 @@ const Header: FC<{component: HeaderType}> = ({component}) => <div
         ? {"backgroundImage": `url(${component.image})`}
         : {}
     }>
-    <h1>
-        <span
-            className="p-2 bg-white rounded">
-            {component.message}
-        </span>
-    </h1>
+    {
+        component.message &&
+            <h1>
+                <span
+                    className="p-2 bg-white rounded">
+                    {component.message}
+                </span>
+            </h1>
+    }
 </div>;
 
 export default Header;

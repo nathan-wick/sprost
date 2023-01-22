@@ -1,6 +1,6 @@
 import {Col, Row} from "react-bootstrap";
 import React, {FC} from "react";
-import {Title as TitleType} from "../../../types/components/Title";
+import {Title as TitleType} from "../../types/components/Title";
 
 const Title: FC<{component: TitleType}> = ({component}) => {
 

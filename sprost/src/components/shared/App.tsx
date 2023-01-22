@@ -3,7 +3,7 @@ import {Firestore, doc, getDoc} from "firebase/firestore";
 import React, {FC, useContext, useEffect, useState} from "react";
 import {App as AppType} from "../../types/App";
 import {DatabaseContext} from "../../contexts/Database";
-import Navigation from "./components/Navigation";
+import Navigation from "./Navigation";
 import {UserContext} from "../../contexts/User";
 import View from "./View";
 import {useParams} from "react-router-dom";

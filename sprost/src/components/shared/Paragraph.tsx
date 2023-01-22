@@ -2,7 +2,7 @@ import {Col, Row} from "react-bootstrap";
 import React, {FC} from "react";
 import {
     Paragraph as ParagraphType
-} from "../../../types/components/Paragraph";
+} from "../../types/components/Paragraph";
 
 const Paragraph: FC<{component: ParagraphType}> = ({component}) => <Row
     className="gx-0 d-flex justify-content-md-center p-4">

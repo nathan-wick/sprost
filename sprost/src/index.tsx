@@ -1,6 +1,6 @@
 import "./styles/custom.scss";
 import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
-import App from "./components/generated/App";
+import App from "./components/shared/App";
 import Authentication from "./contexts/Authentication";
 import Database from "./contexts/Database";
 import Firebase from "./contexts/Firebase";

@@ -3,12 +3,12 @@ import {BarChart, BoxArrowRight, Gear, Grid, PersonCircle,
     RocketTakeoffFill} from "react-bootstrap-icons";
 import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import React, {createContext, useContext, useEffect, useState} from "react";
+import App from "./App";
 import {AuthenticationContext} from "../../contexts/Authentication";
-import Dashboard from "./views/Dashboard";
-import EditApp from "./views/EditApp";
-import Landing from "./views/Landing";
+import Dashboard from "./Dashboard";
+import Landing from "./Landing";
 import NewApp from "./modals/NewApp";
-import Settings from "./views/Settings";
+import Settings from "./Settings";
 import SignIn from "./modals/SignIn";
 import {UserContext} from "../../contexts/User";
 
@@ -65,9 +65,9 @@ export const NavigationContext = createContext<{
                         Sprost
                     </Navbar.Brand>
                     <Navbar.Toggle
-                        aria-controls="basic-navbar-nav" />
+                        aria-controls="sprost-navbar-nav" />
                     <Navbar.Collapse
-                        id="basic-navbar-nav">
+                        id="sprost-navbar-nav">
                         <Nav
                             className="me-auto">
                             {
@@ -97,7 +97,7 @@ export const NavigationContext = createContext<{
                                                         key={`${app.route}-app-navigation-link`}
                                                         onClick={() => {
 
-                                                            setCurrentView(<EditApp
+                                                            setCurrentView(<App
                                                                 appRoute={app.route} />);
 
                                                         }}>
