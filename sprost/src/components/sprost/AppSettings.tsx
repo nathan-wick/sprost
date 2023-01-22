@@ -16,6 +16,13 @@ const AppSettings: FC<{ app: App }> = ({app}) => <Row
             <Row
                 className="gx-0">
                 <Col
+                    className="p-2">
+                    <Description app={app} />
+                </Col>
+            </Row>
+            <Row
+                className="gx-0">
+                <Col
                     md={6}
                     sm={12}
                     className="p-2">
@@ -26,13 +33,6 @@ const AppSettings: FC<{ app: App }> = ({app}) => <Row
                     sm={12}
                     className="p-2">
                     <Cover app={app} />
-                </Col>
-            </Row>
-            <Row
-                className="gx-0">
-                <Col
-                    className="p-2">
-                    <Description app={app} />
                 </Col>
             </Row>
         </div>

@@ -46,8 +46,7 @@ const App: FC<{ appRoute: string }> = ({appRoute}) => {
         <Navbar
             expand="lg">
             <Container>
-                <Navbar.Brand
-                    href="#home">
+                <Navbar.Brand>
                     {
                         app !== "undefined" &&
                             <img
