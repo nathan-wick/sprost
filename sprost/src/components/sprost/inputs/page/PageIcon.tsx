@@ -47,6 +47,16 @@ const PageIcon: FC<{
                 className="mx-2"/>
             Icon
         </p>
+        <div
+            className="text-center">
+            <img
+                src={input}
+                alt={`${editView.name} icon`}
+                referrerPolicy="no-referrer"
+                className="rounded mb-2"
+                height={200}
+                width={200} />
+        </div>
         <ImageSelector setInput={setInput}/>
     </>;
 

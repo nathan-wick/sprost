@@ -47,6 +47,16 @@ const PageCover: FC<{
                 className="mx-2"/>
             Cover
         </p>
+        <div
+            className="text-center">
+            <img
+                src={input}
+                alt={`${editView.name} cover`}
+                referrerPolicy="no-referrer"
+                className="rounded mb-2"
+                height={200}
+                width="100%" />
+        </div>
         <ImageSelector setInput={setInput}/>
     </>;
 
