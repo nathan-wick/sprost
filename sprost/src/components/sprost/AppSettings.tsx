@@ -1,9 +1,8 @@
 import {Col, Row} from "react-bootstrap";
 import React, {FC} from "react";
 import {App} from "../../types/App";
-import Cover from "./inputs/app/Cover";
-import Description from "./inputs/app/Description";
-import Logo from "./inputs/app/Logo";
+import AppCover from "./inputs/app/AppCover";
+import AppLogo from "./inputs/app/AppLogo";
 
 const AppSettings: FC<{ app: App }> = ({app}) => <Row
     className="gx-0 justify-content-md-center">
@@ -16,23 +15,16 @@ const AppSettings: FC<{ app: App }> = ({app}) => <Row
             <Row
                 className="gx-0">
                 <Col
-                    className="p-2">
-                    <Description app={app} />
-                </Col>
-            </Row>
-            <Row
-                className="gx-0">
-                <Col
                     md={6}
                     sm={12}
                     className="p-2">
-                    <Logo app={app} />
+                    <AppLogo app={app} />
                 </Col>
                 <Col
                     md={6}
                     sm={12}
                     className="p-2">
-                    <Cover app={app} />
+                    <AppCover app={app} />
                 </Col>
             </Row>
         </div>

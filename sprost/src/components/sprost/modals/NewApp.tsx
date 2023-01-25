@@ -105,7 +105,6 @@ const NewApp = () => {
 
                 const newApp: AppType = {
                     "cover": DefaultCover,
-                    "description": `${user.name}'s new app, ${String(nameInput)}.`,
                     "logo": DefaultLogo,
                     "name": String(nameInput),
                     "route": String(nameRoute),

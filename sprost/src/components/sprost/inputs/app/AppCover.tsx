@@ -7,7 +7,7 @@ import ImageSelector from "../ImageSelector";
 import {User} from "../../../../types/User";
 import {UserContext} from "../../../../contexts/User";
 
-const Cover: FC<{ app: App | "undefined" }> = ({app}) => {
+const AppCover: FC<{ app: App | "undefined" }> = ({app}) => {
 
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
@@ -81,4 +81,4 @@ const Cover: FC<{ app: App | "undefined" }> = ({app}) => {
 
 };
 
-export default Cover;
+export default AppCover;
