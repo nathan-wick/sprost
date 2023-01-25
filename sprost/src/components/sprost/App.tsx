@@ -40,8 +40,10 @@ const App: FC<{ appRoute: string }> = ({appRoute}) => {
             "image": app === "undefined"
                 ? app
                 : app.cover,
-            "message": "",
-            "size": "small"
+            "message": app === "undefined"
+                ? app
+                : app.name,
+            "size": "medium"
         }} />
         <Navbar
             expand="lg">

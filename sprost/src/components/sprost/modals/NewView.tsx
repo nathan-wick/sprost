@@ -3,6 +3,8 @@ import {Firestore, doc, setDoc} from "firebase/firestore";
 import {PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import React, {FC, useContext, useState} from "react";
 import {DatabaseContext} from "../../../contexts/Database";
+import DefaultCover from "../../../assets/images/defaults/cover.jpeg";
+import DefaultLogo from "../../../assets/images/defaults/logo.svg";
 import {ToasterContext} from "../../../contexts/Toaster";
 import {UserContext} from "../../../contexts/User";
 import {View} from "../../../types/View";
@@ -100,10 +102,13 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
 
             setIsLoading(true);
             event.preventDefault();
-            if (user !== "undefined") {
+            if (user !== "undefined" && app !== "undefined") {
 
                 const newView: View = {
                     "components": [],
+                    "cover": DefaultCover,
+                    "description": `${app.name}'s new view, ${String(nameInput)}.`,
+                    "icon": DefaultLogo,
                     "isSaved": true,
                     "name": String(nameInput),
                     "route": String(nameRoute),

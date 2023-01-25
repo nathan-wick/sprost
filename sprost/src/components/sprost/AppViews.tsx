@@ -3,7 +3,7 @@ import {ColumnsGap, Pencil, Signpost,
     Tag, Window, WindowStack} from "react-bootstrap-icons";
 import React, {FC, useContext} from "react";
 import {App} from "../../types/App";
-import EditView from "./EditView";
+import EditView from "./View";
 import {NavigationContext} from "./Navigation";
 import NewView from "./modals/NewView";
 import {UserContext} from "../../contexts/User";
