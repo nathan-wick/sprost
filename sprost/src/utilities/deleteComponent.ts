@@ -1,25 +1,14 @@
-import {View} from "../types/View";
+import {Component} from "../types/Component";
 
-const deleteComponent = (view: View | undefined, componentId: string) => {
+const deleteComponent = (components: Component[], component: Component) => {
 
-    const newView: View = structuredClone(view);
-    if (newView) {
-
-        const component =
-            newView.components.find((viewComponent) => viewComponent.id === componentId);
-        if (component) {
-
-            const componentIndex = newView.components.indexOf(component);
-            newView.components.splice(
-                componentIndex,
-                1
-            );
-            newView.isSaved = false;
-
-        }
-
-    }
-    return newView;
+    const newComponents = structuredClone(components),
+        componentIndex = newComponents.indexOf(component);
+    newComponents.splice(
+        componentIndex,
+        1
+    );
+    return newComponents;
 
 };
 

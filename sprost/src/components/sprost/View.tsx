@@ -1,24 +1,19 @@
-import {ArrowsAngleContract, ArrowsAngleExpand, BoxArrowLeft, DeviceSsd,
-    Window} from "react-bootstrap-icons";
-import {Button, ButtonGroup, Col, Row} from "react-bootstrap";
+import {ArrowsAngleContract, ArrowsAngleExpand, ColumnsGap, Window} from "react-bootstrap-icons";
+import {Col, Container, Nav, Navbar, Row} from "react-bootstrap";
 import {Firestore, doc, setDoc} from "firebase/firestore";
-import React, {FC, useContext, useState} from "react";
-import App from "./App";
+import React, {FC, useContext, useEffect, useState} from "react";
 import {DatabaseContext} from "../../contexts/Database";
-import Editor from "./Editor";
-import {NavigationContext} from "./Navigation";
-import NewComponent from "./modals/NewComponent";
-import PageSettings from "./PageSettings";
 import SharedView from "../shared/View";
 import {User} from "../../types/User";
 import {UserContext} from "../../contexts/User";
+import ViewComponents from "./ViewComponents";
+import ViewSettings from "./ViewSettings";
 import {View as ViewType} from "../../types/View";
 
 const View: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRoute}) => {
 
     const database = useContext(DatabaseContext),
         user = useContext(UserContext),
-        {setCurrentView} = useContext(NavigationContext),
         app = user === "undefined"
             ? "undefined"
             : user.apps.find((userApp) => userApp.route === appRoute) ?? "undefined",
@@ -30,21 +25,19 @@ const View: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRoute}) 
             setEditView
         ] = useState<ViewType | "undefined">(structuredClone(savedView)),
         [
-            isSaving,
-            setIsSaving
-        ] = useState<boolean>(false),
-        [
             previewIsExpanded,
             setPreviewIsExpanded
         ] = useState<boolean>(false),
-        exit = () => {
-
-            setCurrentView(<App appRoute={String(appRoute)} />);
-
-        },
+        [
+            currentView,
+            setCurrentView
+        ] = useState<JSX.Element>(editView === "undefined"
+            ? <></>
+            : <ViewSettings
+                editView={editView}
+                setEditView={setEditView} />),
         saveUser = async () => {
 
-            setIsSaving(true);
             if (user !== "undefined") {
 
                 const newView: ViewType = structuredClone(editView),
@@ -76,113 +69,121 @@ const View: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRoute}) 
                 }
 
             }
-            setIsSaving(false);
 
         };
 
-    return <>
-        <Row
-            className="gx-0 my-5 mx-2">
-            <Col
-                lg={6}
-                md={4}
-                sm={12}>
-                <h1>
-                    <Window
-                        className="mx-2" />
-                    {editView === "undefined"
-                        ? ""
-                        : editView.name}
-                </h1>
-            </Col>
-            <Col
-                className="p-2">
-                <ButtonGroup
-                    className="w-100 shadow">
-                    <Button
-                        variant={editView === "undefined"
-                            ? "primary"
-                            : editView.isSaved
-                                ? "primary"
-                                : "danger"}
-                        onClick={exit}>
-                        <BoxArrowLeft
-                            className="mx-2" />
-                        Exit
-                    </Button>
-                    <Button
-                        variant={"primary"}
-                        onClick={() => setPreviewIsExpanded(!previewIsExpanded)}>
-                        {
-                            previewIsExpanded
-                                ? <ArrowsAngleContract
-                                    className="mx-2" />
-                                : <ArrowsAngleExpand
-                                    className="mx-2" />
-                        }
-                        Preview
-                    </Button>
-                    <Button
-                        variant={"primary"}
-                        // eslint-disable-next-line no-extra-parens
-                        disabled={isSaving || (editView !== "undefined" && editView?.isSaved)}
-                        onClick={saveUser}>
-                        <DeviceSsd
-                            className="mx-2" />
-                        {isSaving
-                            ? "Saving..."
-                            : editView === "undefined"
-                                ? "saved"
-                                : editView.isSaved
-                                    ? "saved"
-                                    : "save"}
-                    </Button>
-                </ButtonGroup>
-            </Col>
-        </Row>
-        <Row
-            className="gx-0 my-5 mx-2">
-            <Col
-                md={previewIsExpanded
-                    ? 12
-                    : 6}
-                sm={12}
-                className={previewIsExpanded
-                    ? ""
-                    : "d-none d-lg-block"}>
-                <div
-                    className="m-2 mb-4 rounded shadow">
-                    {
-                        editView !== "undefined" &&
-                            <SharedView
-                                view={editView} />
-                    }
-                </div>
-            </Col>
-            {
-                editView !== "undefined" &&
-                    <Col>
-                        {
-                            editView.type === "page" &&
-                                <PageSettings editView={editView} setEditView={setEditView} />
-                        }
-                        <Row
-                            className="gx-0">
-                            <Col
-                                className="p-2">
-                                <NewComponent editView={editView} setEditView={setEditView} />
-                            </Col>
-                        </Row>
-                        {
-                            editView.components.map((component) => <Editor
-                                key={`${component.id}-editor`}
-                                componentId={component.id}
-                                editView={editView}
-                                setEditView={setEditView}/>)
-                        }
-                    </Col>
+    useEffect(
+        // eslint-disable-next-line consistent-return
+        () => {
+
+            if (editView !== "undefined" && editView.isSaved === false) {
+
+                return () => {
+
+                    saveUser();
+
+                };
+
             }
-        </Row>
+
+        },
+        [editView]
+    );
+
+    return <>
+        {
+            editView !== "undefined" &&
+                <>
+                    <Navbar
+                        expand="lg">
+                        <Container>
+                            <Navbar.Brand>
+                                <img
+                                    src={editView.icon}
+                                    height={20}
+                                    width={20}
+                                    className="mx-2 rounded"
+                                    referrerPolicy="no-referrer"
+                                    alt={`${editView.name} icon`} />
+                                {editView.name}
+                            </Navbar.Brand>
+                            <Navbar.Toggle
+                                aria-controls="app-navbar-nav" />
+                            <Navbar.Collapse
+                                id="app-navbar-nav">
+                                <Nav
+                                    className="me-auto">
+                                    <Nav.Link
+                                        onClick={() => {
+
+                                            setPreviewIsExpanded(false);
+                                            setCurrentView(app === "undefined"
+                                                ? <></>
+                                                : <ViewSettings
+                                                    editView={editView}
+                                                    setEditView={setEditView} />);
+
+                                        }}>
+                                        <Window
+                                            className="mx-2" />
+                                    View
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        onClick={() => {
+
+                                            setPreviewIsExpanded(false);
+                                            setCurrentView(app === "undefined"
+                                                ? <></>
+                                                : <ViewComponents
+                                                    editView={editView}
+                                                    setEditView={setEditView} />);
+
+                                        }}>
+                                        <ColumnsGap
+                                            className="mx-2" />
+                                    Components
+                                    </Nav.Link>
+                                </Nav>
+                                <Nav>
+                                    <Nav.Link
+                                        onClick={() => setPreviewIsExpanded(!previewIsExpanded)}>
+                                        {
+                                            previewIsExpanded
+                                                ? <ArrowsAngleContract
+                                                    className="mx-2" />
+                                                : <ArrowsAngleExpand
+                                                    className="mx-2" />
+                                        }
+                                    Preview
+                                    </Nav.Link>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Container>
+                    </Navbar>
+                    <Row
+                        className="gx-0 m-2">
+                        <Col>
+                            {
+                                !previewIsExpanded && currentView
+                            }
+                        </Col>
+                        <Col
+                            md={previewIsExpanded
+                                ? 12
+                                : 6}
+                            sm={12}
+                            className={previewIsExpanded
+                                ? ""
+                                : "d-none d-lg-block"}>
+                            <div
+                                className="m-2 mb-4 rounded shadow">
+                                <SharedView
+                                    view={editView} />
+                            </div>
+                        </Col>
+                    </Row>
+                </>
+        }
     </>;
 
 };

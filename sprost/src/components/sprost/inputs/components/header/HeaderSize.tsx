@@ -3,16 +3,13 @@ import {AspectRatio} from "react-bootstrap-icons";
 import {Component} from "../../../../../types/Component";
 import {Form} from "react-bootstrap";
 import {Header} from "../../../../../types/components/Header";
-import {View} from "../../../../../types/View";
 
 const HeaderSize: FC<{
-    componentId: string,
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({componentId, editView, setEditView}) => {
+    editComponent: Component,
+    setEditComponent: Dispatch<SetStateAction<Component | undefined>>,
+}> = ({editComponent, setEditComponent}) => {
 
-    const editComponent = editView?.components.find((component) => component.id === componentId),
-        [
+    const [
             input,
             setInput
         // eslint-disable-next-line no-extra-parens
@@ -39,26 +36,10 @@ const HeaderSize: FC<{
         },
         onSubmit = () => {
 
-            const newHeader: Pick<Header, "size"> = {
-                "size": input
-            },
-                newView: View = structuredClone(editView);
-            if (newView) {
-
-                const newComponent: Component | undefined = newView.components.find((component: {
-                        id: string; }) => component.id === componentId);
-                if (newComponent) {
-
-                    newComponent.type = {
-                        ...newComponent.type as Header,
-                        ...newHeader
-                    };
-                    newView.isSaved = false;
-                    setEditView(newView);
-
-                }
-
-            }
+            const newEditComponent: Component = structuredClone(editComponent);
+            // eslint-disable-next-line no-extra-parens
+            (newEditComponent.type as Header).size = input;
+            setEditComponent(newEditComponent);
 
         },
         sizeOptions = [
@@ -89,7 +70,7 @@ const HeaderSize: FC<{
             defaultValue={input}>
             {
                 sizeOptions.map((sizeOption) => <option
-                    key={`${componentId}-header-size-option-${sizeOption.value}`}
+                    key={`${editComponent.id}-header-size-option-${sizeOption.value}`}
                     value={sizeOption.value}>
                     {sizeOption.text}
                 </option>)

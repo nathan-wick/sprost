@@ -6,13 +6,13 @@ import {Header} from "../../../types/components/Header";
 import {Paragraph} from "../../../types/components/Paragraph";
 import {Title} from "../../../types/components/Title";
 import {ToasterContext} from "../../../contexts/Toaster";
-import {View} from "../../../types/View";
 import createUniqueString from "../../../utilities/createUniqueString";
+import setComponent from "../../../utilities/setComponent";
 
 const NewComponent: FC<{
-    editView: View | "undefined",
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({editView, setEditView}) => {
+    editViewComponents: Component[],
+    setEditViewComponents: Dispatch<SetStateAction<Component[]>>,
+}> = ({editViewComponents, setEditViewComponents}) => {
 
     const toaster = useContext(ToasterContext),
         [
@@ -76,43 +76,38 @@ const NewComponent: FC<{
 
             setIsLoading(true);
             event.preventDefault();
-            if (editView) {
+            let componentType: Header | Title | Paragraph = defaultParagraph;
+            switch (typeInput) {
 
-                let componentType: Header | Title | Paragraph = defaultParagraph;
-                switch (typeInput) {
+            case "header":
+                componentType = defaultHeader;
+                break;
+            case "title":
+                componentType = defaultTitle;
+                break;
+            case "paragraph":
+            default:
+                componentType = defaultParagraph;
+                break;
 
-                case "header":
-                    componentType = defaultHeader;
-                    break;
-                case "title":
-                    componentType = defaultTitle;
-                    break;
-                case "paragraph":
-                default:
-                    componentType = defaultParagraph;
-                    break;
+            }
+            const uniqueId = createUniqueString(editViewComponents.map(({id}) => id)),
+                newComponent: Component = {
+                    "id": uniqueId,
+                    "type": componentType
+                },
+                newEditViewComponents = setComponent(
+                    editViewComponents,
+                    newComponent
+                );
+            setEditViewComponents(newEditViewComponents);
+            if (toaster !== "undefined") {
 
-                }
-                const uniqueId = editView === "undefined"
-                        ? "undefined"
-                        : createUniqueString(editView.components.map(({id}) => id)),
-                    newComponent: Component = {
-                        "id": uniqueId,
-                        "type": componentType
-                    },
-                    newView = structuredClone(editView);
-                newView.isSaved = false;
-                newView.components.push(newComponent);
-                setEditView(newView);
-                if (toaster !== "undefined") {
-
-                    toaster.createToast(
-                        "success",
-                        "New Component",
-                        `Successfully created the ${typeInput} component.`
-                    );
-
-                }
+                toaster.createToast(
+                    "success",
+                    "New Component",
+                    `Successfully created the ${typeInput} component.`
+                );
 
             }
             hideModal();

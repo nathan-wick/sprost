@@ -82,7 +82,7 @@ const App: FC<{ appRoute: string }> = ({appRoute}) => {
                         <Nav.Link
                             onClick={() => setCurrentView(app === "undefined"
                                 ? <></>
-                                : <AppViews app={app} />)}>
+                                : <AppViews app={app} setCurrentView={setCurrentView} />)}>
                             <WindowStack
                                 className="mx-2" />
                             Views

@@ -3,16 +3,13 @@ import {Chat} from "react-bootstrap-icons";
 import {Component} from "../../../../../types/Component";
 import {Form} from "react-bootstrap";
 import {Paragraph} from "../../../../../types/components/Paragraph";
-import {View} from "../../../../../types/View";
 
 const ParagraphMessage: FC<{
-    componentId: string,
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({componentId, editView, setEditView}) => {
+    editComponent: Component,
+    setEditComponent: Dispatch<SetStateAction<Component | undefined>>,
+}> = ({editComponent, setEditComponent}) => {
 
-    const editComponent = editView?.components.find((component) => component.id === componentId),
-        [
+    const [
             input,
             setInput
         ] = useState<string | undefined>(editComponent?.type.message),
@@ -25,26 +22,10 @@ const ParagraphMessage: FC<{
         },
         onSubmit = () => {
 
-            const newMessage: Pick<Paragraph, "message"> = {
-                "message": String(input)
-            },
-                newView: View = structuredClone(editView);
-            if (newView) {
-
-                const newComponent: Component | undefined = newView.components.find((component: {
-                        id: string; }) => component.id === componentId);
-                if (newComponent) {
-
-                    newComponent.type = {
-                        ...newComponent.type as Paragraph,
-                        ...newMessage
-                    };
-                    newView.isSaved = false;
-                    setEditView(newView);
-
-                }
-
-            }
+            const newEditComponent: Component = structuredClone(editComponent);
+            // eslint-disable-next-line no-extra-parens
+            (newEditComponent.type as Paragraph).message = String(input);
+            setEditComponent(newEditComponent);
 
         };
 

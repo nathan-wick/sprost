@@ -1,17 +1,18 @@
 import {Button, Col, Row} from "react-bootstrap";
 import {ColumnsGap, Pencil, Signpost,
     Tag, Window, WindowStack} from "react-bootstrap-icons";
-import React, {FC, useContext} from "react";
+import React, {Dispatch, FC, SetStateAction, useContext} from "react";
 import {App} from "../../types/App";
 import EditView from "./View";
-import {NavigationContext} from "./Navigation";
 import NewView from "./modals/NewView";
 import {UserContext} from "../../contexts/User";
 
-const AppViews: FC<{ app: App }> = ({app}) => {
+const AppViews: FC<{
+    app: App,
+    setCurrentView: Dispatch<SetStateAction<JSX.Element>>
+}> = ({app, setCurrentView}) => {
 
     const user = useContext(UserContext),
-        {setCurrentView} = useContext(NavigationContext),
         {views} = app;
 
     return <>

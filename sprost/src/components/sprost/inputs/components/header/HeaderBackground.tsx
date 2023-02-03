@@ -3,16 +3,13 @@ import {Component} from "../../../../../types/Component";
 import {Form} from "react-bootstrap";
 import {Header} from "../../../../../types/components/Header";
 import {Tree} from "react-bootstrap-icons";
-import {View} from "../../../../../types/View";
 
 const HeaderBackground: FC<{
-    componentId: string,
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({componentId, editView, setEditView}) => {
+    editComponent: Component,
+    setEditComponent: Dispatch<SetStateAction<Component | undefined>>,
+}> = ({editComponent, setEditComponent}) => {
 
-    const editComponent = editView?.components.find((component) => component.id === componentId),
-        [
+    const [
             input,
             setInput
         // eslint-disable-next-line no-extra-parens
@@ -36,26 +33,10 @@ const HeaderBackground: FC<{
         },
         onSubmit = () => {
 
-            const newHeader: Pick<Header, "background"> = {
-                "background": input
-            },
-                newView: View = structuredClone(editView);
-            if (newView) {
-
-                const newComponent: Component | undefined = newView.components.find((component: {
-                        id: string; }) => component.id === componentId);
-                if (newComponent) {
-
-                    newComponent.type = {
-                        ...newComponent.type as Header,
-                        ...newHeader
-                    };
-                    newView.isSaved = false;
-                    setEditView(newView);
-
-                }
-
-            }
+            const newEditComponent: Component = structuredClone(editComponent);
+            // eslint-disable-next-line no-extra-parens
+            (newEditComponent.type as Header).background = input;
+            setEditComponent(newEditComponent);
 
         },
         backgroundOptions = [
@@ -82,7 +63,7 @@ const HeaderBackground: FC<{
             defaultValue={input}>
             {
                 backgroundOptions.map((backgroundOption) => <option
-                    key={`${componentId}-header-background-option-${backgroundOption.value}`}
+                    key={`${editComponent.id}-header-background-option-${backgroundOption.value}`}
                     value={backgroundOption.value}>
                     {backgroundOption.text}
                 </option>)

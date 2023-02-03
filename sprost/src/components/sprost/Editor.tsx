@@ -1,7 +1,8 @@
 import {ArrowDown, ArrowUp, CardHeading, CardImage, CardText, ThreeDots,
     Trash} from "react-bootstrap-icons";
 import {Button, ButtonGroup, Col, Row} from "react-bootstrap";
-import React, {Dispatch, FC, SetStateAction, useState} from "react";
+import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
+import {Component} from "../../types/Component";
 import HeaderAlignment from "./inputs/components/header/HeaderAlignment";
 import HeaderBackground from "./inputs/components/header/HeaderBackground";
 import HeaderImage from "./inputs/components/header/HeaderImage";
@@ -10,83 +11,116 @@ import HeaderSize from "./inputs/components/header/HeaderSize";
 import ParagraphMessage from "./inputs/components/paragraph/ParagraphMessage";
 import TitleMessage from "./inputs/components/title/TitleMessage";
 import TitleSize from "./inputs/components/title/TitleSize";
-import {View} from "../../types/View";
 import deleteComponent from "../../utilities/deleteComponent";
 import moveComponent from "../../utilities/moveComponent";
+import setComponent from "../../utilities/setComponent";
 
 const Editor: FC<{
     componentId: string,
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({componentId, editView, setEditView}) => {
+    editViewComponents: Component[],
+    setEditViewComponents: Dispatch<SetStateAction<Component[]>>,
+}> = ({componentId, editViewComponents, setEditViewComponents}) => {
 
-    const editComponent = editView?.components.find((component) => component.id === componentId),
+    const [
+            editComponent,
+            setEditComponent
+        ] = useState<Component | undefined>(editViewComponents.find((component) => component.id ===
+            componentId)),
         [
             showAdvancedInputs,
             setShowAdvancedInputs
-        ] = useState<boolean>(false);
-    let title = <></>,
-        inputs: JSX.Element[] = [],
-        advancedInputs: JSX.Element[] = [];
+        ] = useState<boolean>(false),
+        [
+            title,
+            setTitle
+        ] = useState<JSX.Element>(<></>),
+        [
+            inputs,
+            setInputs
+        ] = useState<JSX.Element[]>([]),
+        [
+            advancedInputs,
+            setAdvancedInputs
+        ] = useState<JSX.Element[]>([]);
 
-    switch (editComponent?.type.id) {
+    useEffect(
+        () => {
 
-    case "header":
-        title = <>
-            <CardImage
-                className="mx-2"/>
-            Header
-        </>;
-        inputs = [
-            <HeaderMessage key={`${componentId}-message`} componentId={componentId}
-                editView={editView} setEditView={setEditView} />
-        ];
-        advancedInputs = [
-            <HeaderSize key={`${componentId}-size`} componentId={componentId} editView={editView}
-                setEditView={setEditView} />,
-            <HeaderAlignment key={`${componentId}-alignment`} componentId={componentId}
-                editView={editView} setEditView={setEditView} />,
-            <HeaderBackground key={`${componentId}-background`} componentId={componentId}
-                editView={editView} setEditView={setEditView} />,
-            <div
-                key={`${componentId}-image`}>
-                {
-                    editComponent.type.background === "image" &&
-                        <HeaderImage componentId={componentId}
-                            editView={editView} setEditView={setEditView} />
+            switch (editComponent?.type.id) {
+
+            case "header":
+                setTitle(<>
+                    <CardImage
+                        className="mx-2"/>
+                    Header
+                </>);
+                setInputs([
+                    <HeaderMessage key={`${componentId}-message`} editComponent={editComponent}
+                        setEditComponent={setEditComponent} />
+                ]);
+                setAdvancedInputs([
+                    <HeaderSize key={`${componentId}-size`} editComponent={editComponent}
+                        setEditComponent={setEditComponent} />,
+                    <HeaderAlignment key={`${componentId}-alignment`} editComponent={editComponent}
+                        setEditComponent={setEditComponent} />,
+                    <HeaderBackground key={`${componentId}-background`}
+                        editComponent={editComponent} setEditComponent={setEditComponent} />,
+                    <div
+                        key={`${componentId}-image`}>
+                        {
+                            editComponent.type.background === "image" &&
+                                <HeaderImage editComponent={editComponent}
+                                    setEditComponent={setEditComponent} />
+                        }
+                    </div>
+                ]);
+                break;
+            case "title":
+                setTitle(<>
+                    <CardHeading
+                        className="mx-2"/>
+                    Title
+                </>);
+                setInputs([
+                    <TitleMessage key={`${componentId}-message`} editComponent={editComponent}
+                        setEditComponent={setEditComponent} />
+                ]);
+                setAdvancedInputs([
+                    <TitleSize key={`${componentId}-size`} editComponent={editComponent}
+                        setEditComponent={setEditComponent} />
+                ]);
+                break;
+            case "paragraph":
+            default:
+                if (editComponent) {
+
+                    setTitle(<>
+                        <CardText
+                            className="mx-2"/>
+                        Paragraph
+                    </>);
+                    setInputs([
+                        <ParagraphMessage key={`${componentId}-message`}
+                            editComponent={editComponent} setEditComponent={setEditComponent} />
+                    ]);
+
                 }
-            </div>
-        ];
-        break;
-    case "title":
-        title = <>
-            <CardHeading
-                className="mx-2"/>
-            Title
-        </>;
-        inputs = [
-            <TitleMessage key={`${componentId}-message`} componentId={componentId}
-                editView={editView} setEditView={setEditView} />
-        ];
-        advancedInputs = [
-            <TitleSize key={`${componentId}-size`} componentId={componentId} editView={editView}
-                setEditView={setEditView} />
-        ];
-        break;
-    case "paragraph":
-    default:
-        title = <>
-            <CardText
-                className="mx-2"/>
-            Paragraph
-        </>;
-        inputs = [
-            <ParagraphMessage key={`${componentId}-message`} componentId={componentId}
-                editView={editView} setEditView={setEditView} />
-        ];
-        advancedInputs = [];
 
-    }
+            }
+            if (editComponent && editComponent !==
+                editViewComponents.find((component) => component.id === componentId)) {
+
+                const newEditViewComponents: Component[] = setComponent(
+                    editViewComponents,
+                    editComponent
+                );
+                setEditViewComponents(newEditViewComponents);
+
+            }
+
+        },
+        [editComponent]
+    );
 
     return <div
         className="mx-2 mt-4 p-2 rounded shadow">
@@ -99,58 +133,61 @@ const Editor: FC<{
                     {title}
                 </h3>
             </Col>
-            <Col
-                className="text-end">
-                {
-                    advancedInputs.length > 0 && <Button
-                        variant="primary"
-                        className="mx-1"
-                        onClick={() => setShowAdvancedInputs(!showAdvancedInputs)}>
-                        <ThreeDots
-                            className="mx-2"/>
-                    </Button>
-                }
-                <ButtonGroup
-                    className="mx-1">
-                    <Button
-                        variant="primary"
-                        onClick={() => setEditView(moveComponent(
-                            editView,
-                            componentId,
-                            "up"
-                        ))}
-                        disabled={editComponent
-                            ? editView?.components.indexOf(editComponent) === 0
-                            : true}>
-                        <ArrowUp
-                            className="mx-2"/>
-                    </Button>
-                    <Button
-                        variant="primary"
-                        onClick={() => setEditView(moveComponent(
-                            editView,
-                            componentId,
-                            "down"
-                        ))}
-                        disabled={editComponent && editView
-                            ? editView.components.indexOf(editComponent) ===
-                                (editView.components.length ??= 1) - 1
-                            : true}>
-                        <ArrowDown
-                            className="mx-2"/>
-                    </Button>
-                </ButtonGroup>
-                <Button
-                    variant="danger"
-                    className="mx-1"
-                    onClick={() => setEditView(deleteComponent(
-                        editView,
-                        componentId
-                    ))}>
-                    <Trash
-                        className="mx-2"/>
-                </Button>
-            </Col>
+            {
+                editComponent &&
+                    <Col
+                        className="text-end">
+                        {
+                            advancedInputs.length > 0 && <Button
+                                variant="outline-primary"
+                                className="mx-1"
+                                onClick={() => setShowAdvancedInputs(!showAdvancedInputs)}>
+                                <ThreeDots
+                                    className="mx-2"/>
+                            </Button>
+                        }
+                        <ButtonGroup
+                            className="mx-1">
+                            {
+                                editViewComponents.indexOf(editComponent) !== 0 &&
+                                    <Button
+                                        variant="outline-primary"
+                                        onClick={() => setEditViewComponents(moveComponent(
+                                            editViewComponents,
+                                            editComponent,
+                                            "up"
+                                        ))}>
+                                        <ArrowUp
+                                            className="mx-2"/>
+                                    </Button>
+                            }
+                            {
+                                editViewComponents.indexOf(editComponent) !==
+                                    (editViewComponents.length ??= 1) - 1 &&
+                                    <Button
+                                        variant="outline-primary"
+                                        onClick={() => setEditViewComponents(moveComponent(
+                                            editViewComponents,
+                                            editComponent,
+                                            "down"
+                                        ))}>
+                                        <ArrowDown
+                                            className="mx-2"/>
+                                    </Button>
+                            }
+                        </ButtonGroup>
+                        <Button
+                            variant="outline-danger"
+                            className="mx-1"
+                            onClick={() => setEditViewComponents(deleteComponent(
+                                editViewComponents,
+                                editComponent
+                            ))}>
+                            <Trash
+                                className="mx-2"/>
+                        </Button>
+                    </Col>
+            }
         </Row>
         {inputs}
         {

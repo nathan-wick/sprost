@@ -3,16 +3,13 @@ import {Component} from "../../../../../types/Component";
 import {Form} from "react-bootstrap";
 import {Header} from "../../../../../types/components/Header";
 import {ListNested} from "react-bootstrap-icons";
-import {View} from "../../../../../types/View";
 
 const HeaderAlignment: FC<{
-    componentId: string,
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({componentId, editView, setEditView}) => {
+    editComponent: Component,
+    setEditComponent: Dispatch<SetStateAction<Component | undefined>>,
+}> = ({editComponent, setEditComponent}) => {
 
-    const editComponent = editView?.components.find((component) => component.id === componentId),
-        [
+    const [
             input,
             setInput
         // eslint-disable-next-line no-extra-parens
@@ -39,26 +36,10 @@ const HeaderAlignment: FC<{
         },
         onSubmit = () => {
 
-            const newHeader: Pick<Header, "alignment"> = {
-                "alignment": input
-            },
-                newView: View = structuredClone(editView);
-            if (newView) {
-
-                const newComponent: Component | undefined = newView.components.find((component: {
-                        id: string; }) => component.id === componentId);
-                if (newComponent) {
-
-                    newComponent.type = {
-                        ...newComponent.type as Header,
-                        ...newHeader
-                    };
-                    newView.isSaved = false;
-                    setEditView(newView);
-
-                }
-
-            }
+            const newEditComponent: Component = structuredClone(editComponent);
+            // eslint-disable-next-line no-extra-parens
+            (newEditComponent.type as Header).alignment = input;
+            setEditComponent(newEditComponent);
 
         },
         alignmentOptions = [
@@ -89,7 +70,7 @@ const HeaderAlignment: FC<{
             defaultValue={input}>
             {
                 alignmentOptions.map((alignmentOption) => <option
-                    key={`${componentId}-header-alignment-option-${alignmentOption.value}`}
+                    key={`${editComponent.id}-header-alignment-option-${alignmentOption.value}`}
                     value={alignmentOption.value}>
                     {alignmentOption.text}
                 </option>)

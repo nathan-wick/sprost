@@ -3,42 +3,23 @@ import {Component} from "../../../../../types/Component";
 import {Header} from "../../../../../types/components/Header";
 import {Image} from "react-bootstrap-icons";
 import ImageSelector from "../../ImageSelector";
-import {View} from "../../../../../types/View";
 
 const HeaderImage: FC<{
-    componentId: string,
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({componentId, editView, setEditView}) => {
+    editComponent: Component,
+    setEditComponent: Dispatch<SetStateAction<Component | undefined>>,
+}> = ({editComponent, setEditComponent}) => {
 
-    const editComponent = editView?.components.find((component) => component.id === componentId),
-        [
+    const [
             input,
             setInput
         // eslint-disable-next-line no-extra-parens
         ] = useState<string>((editComponent?.type as Header).image ?? "undefined"),
         onSubmit = () => {
 
-            const newImage: Pick<Header, "image"> = {
-                "image": input
-            },
-                newView: View = structuredClone(editView);
-            if (newView) {
-
-                const newComponent: Component | undefined = newView.components.find((component: {
-                        id: string; }) => component.id === componentId);
-                if (newComponent) {
-
-                    newComponent.type = {
-                        ...newComponent.type as Header,
-                        ...newImage
-                    };
-                    newView.isSaved = false;
-                    setEditView(newView);
-
-                }
-
-            }
+            const newEditComponent: Component = structuredClone(editComponent);
+            // eslint-disable-next-line no-extra-parens
+            (newEditComponent.type as Header).image = input;
+            setEditComponent(newEditComponent);
 
         };
 

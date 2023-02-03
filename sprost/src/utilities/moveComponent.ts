@@ -1,32 +1,21 @@
-import {View} from "../types/View";
+import {Component} from "../types/Component";
 
-const moveComponent = (view: View | undefined, componentId: string, direction: "up" | "down") => {
+const moveComponent = (components: Component[], component: Component, direction: "up" | "down") => {
 
-    const newView: View = structuredClone(view);
-    if (newView) {
-
-        const component =
-            newView.components.find((viewComponent) => viewComponent.id === componentId);
-        if (component) {
-
-            const currentComponentIndex = newView.components.indexOf(component),
-                desiredComponentIndex = direction === "up"
-                    ? currentComponentIndex - 1
-                    : currentComponentIndex + 1;
-            newView.components.splice(
-                desiredComponentIndex,
-                0,
-                newView.components.splice(
-                    currentComponentIndex,
-                    1
-                )[0]
-            );
-            newView.isSaved = false;
-
-        }
-
-    }
-    return newView;
+    const newComponents = structuredClone(components),
+        currentComponentIndex = components.indexOf(component),
+        desiredComponentIndex = direction === "up"
+            ? currentComponentIndex - 1
+            : currentComponentIndex + 1;
+    newComponents.splice(
+        desiredComponentIndex,
+        0,
+        newComponents.splice(
+            currentComponentIndex,
+            1
+        )[0]
+    );
+    return newComponents;
 
 };
 
