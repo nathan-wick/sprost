@@ -43,7 +43,7 @@ const App: FC<{ appRoute: string }> = ({appRoute}) => {
             "message": app === "undefined"
                 ? app
                 : app.name,
-            "size": "medium"
+            "size": "small"
         }} />
         <Navbar
             expand="lg">

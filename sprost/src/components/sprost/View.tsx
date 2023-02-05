@@ -36,9 +36,9 @@ const View: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRoute}) 
             : <ViewSettings
                 editView={editView}
                 setEditView={setEditView} />),
-        saveUser = async () => {
+        saveChanges = async () => {
 
-            if (user !== "undefined") {
+            if (user !== "undefined" && editView !== "undefined" && editView.isSaved === false) {
 
                 const newView: ViewType = structuredClone(editView),
                     newUser: User = structuredClone(user),
@@ -73,18 +73,9 @@ const View: FC<{appRoute: string, viewRoute: string}> = ({appRoute, viewRoute}) 
         };
 
     useEffect(
-        // eslint-disable-next-line consistent-return
         () => {
 
-            if (editView !== "undefined" && editView.isSaved === false) {
-
-                return () => {
-
-                    saveUser();
-
-                };
-
-            }
+            saveChanges();
 
         },
         [editView]

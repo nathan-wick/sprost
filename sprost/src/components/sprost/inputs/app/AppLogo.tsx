@@ -1,54 +1,31 @@
-import {Firestore, doc, updateDoc} from "firebase/firestore";
-import React, {FC, useContext, useEffect, useState} from "react";
+import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
 import {App} from "../../../../types/App";
-import {DatabaseContext} from "../../../../contexts/Database";
 import {Image} from "react-bootstrap-icons";
 import ImageSelector from "../ImageSelector";
-import {User} from "../../../../types/User";
-import {UserContext} from "../../../../contexts/User";
 
-const AppLogo: FC<{ app: App | "undefined" }> = ({app}) => {
+const AppLogo: FC<{
+    editApp: App,
+    setEditApp: Dispatch<SetStateAction<App>>,
+}> = ({editApp, setEditApp}) => {
 
-    const database = useContext(DatabaseContext),
-        user = useContext(UserContext),
-        [
+    const [
             input,
             setInput
-        ] = useState<string>("undefined"),
-        saveInput = async () => {
+        ] = useState<string>(editApp.logo ?? "undefined"),
+        onSubmit = () => {
 
-            if (user !== "undefined" && app !== "undefined") {
-
-                const userReference = doc(
-                        database as Firestore,
-                        "users",
-                        user.id
-                    ),
-                    newApps: App[] = structuredClone(user.apps),
-                    newApp = newApps.find((currentApp) => currentApp.route === app.route);
-                if (newApp) {
-
-                    newApp.logo = input;
-                    const userInputData: Partial<User> = {
-                        "apps": newApps
-                    };
-                    await updateDoc(
-                        userReference,
-                        userInputData
-                    );
-
-                }
-
-            }
+            const newEditApp: App = structuredClone(editApp);
+            newEditApp.logo = input;
+            setEditApp(newEditApp);
 
         };
 
     useEffect(
         () => {
 
-            if (input !== "undefined") {
+            if (editApp.logo !== input) {
 
-                saveInput();
+                onSubmit();
 
             }
 
@@ -65,12 +42,8 @@ const AppLogo: FC<{ app: App | "undefined" }> = ({app}) => {
         <div
             className="text-center">
             <img
-                src={app === "undefined"
-                    ? "undefined"
-                    : app.logo}
-                alt={`${app === "undefined"
-                    ? "undefined"
-                    : app.name} logo`}
+                src={editApp.logo}
+                alt={`${editApp.name} logo`}
                 referrerPolicy="no-referrer"
                 className="rounded mb-2"
                 height={200}

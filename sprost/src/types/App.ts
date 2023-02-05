@@ -1,3 +1,4 @@
+import {Link} from "./Link";
 import {View} from "./View";
 
 export declare interface App {
@@ -11,4 +12,5 @@ export declare interface App {
         patch: number,
     },
     views: View[],
+    navigation: Link[],
 }

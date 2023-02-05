@@ -107,6 +107,7 @@ const NewApp = () => {
                     "cover": DefaultCover,
                     "logo": DefaultLogo,
                     "name": String(nameInput),
+                    "navigation": [],
                     "route": String(nameRoute),
                     "version": {
                         "major": 0,
