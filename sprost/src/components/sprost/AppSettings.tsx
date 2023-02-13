@@ -1,15 +1,15 @@
 import {Button, Col, Row} from "react-bootstrap";
+import {Compass, Gear, Link45deg, PlusCircle} from "react-bootstrap-icons";
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useEffect, useState} from "react";
 import {App} from "../../types/App";
 import AppCover from "./inputs/app/AppCover";
 import AppLogo from "./inputs/app/AppLogo";
 import {DatabaseContext} from "../../contexts/Database";
-import Header from "../shared/Header";
 import {Link} from "../../types/Link";
-import NavigationHeaderBackground from "../../assets/images/compass.jpeg";
-import {PlusCircle} from "react-bootstrap-icons";
-import SettingsHeaderBackground from "../../assets/images/controller.jpeg";
+import NavigationLinkDestination from "./inputs/navigation/NavigationLinkDestination";
+import NavigationLinkName from "./inputs/navigation/NavigationLinkName";
+import NavigationLinkType from "./inputs/navigation/NavigationLinkType";
 import {User} from "../../types/User";
 import {UserContext} from "../../contexts/User";
 
@@ -84,15 +84,12 @@ const AppSettings: FC<{ app: App }> = ({app}) => {
             lg={8}
             md={10}
             sm={12}>
-            <Header
-                component={{
-                    "alignment": "left",
-                    "background": "image",
-                    "id": "header",
-                    "image": SettingsHeaderBackground,
-                    "message": "Settings",
-                    "size": "small"
-                }}/>
+            <h1
+                className="mt-4">
+                <Gear
+                    className="mx-2" />
+                Settings
+            </h1>
             <Row
                 className="gx-0">
                 <Col
@@ -114,15 +111,12 @@ const AppSettings: FC<{ app: App }> = ({app}) => {
                     </div>
                 </Col>
             </Row>
-            <Header
-                component={{
-                    "alignment": "left",
-                    "background": "image",
-                    "id": "header",
-                    "image": NavigationHeaderBackground,
-                    "message": "Navigation",
-                    "size": "small"
-                }}/>
+            <h1
+                className="mt-4">
+                <Compass
+                    className="mx-2" />
+                Navigation
+            </h1>
             <Row
                 className="gx-0 m-4 shadow rounded">
                 <Col>
@@ -136,15 +130,34 @@ const AppSettings: FC<{ app: App }> = ({app}) => {
                 </Col>
             </Row>
             <Row
-                className="gx-0 m-4 p-2 shadow rounded">
-                <Col
-                    className="p-2">
+                className="gx-0">
+                <Col>
                     <>
                         {
-                            editApp.navigation.map((currentNavigation, index) => <p
-                                key={index}>
-                                {currentNavigation.name}
-                            </p>)
+                            editApp.navigation.map((currentNavigation, index) => <div
+                                key={index}
+                                className="m-4 p-2 shadow rounded">
+                                <h3>
+                                    <Link45deg
+                                        className="mx-2" />
+                                    {currentNavigation.name}
+                                </h3>
+                                <NavigationLinkType
+                                    editApp={editApp}
+                                    setEditApp={setEditApp}
+                                    index={index}/>
+                                {
+                                    currentNavigation.type === "external" &&
+                                        <NavigationLinkName
+                                            editApp={editApp}
+                                            setEditApp={setEditApp}
+                                            index={index}/>
+                                }
+                                <NavigationLinkDestination
+                                    editApp={editApp}
+                                    setEditApp={setEditApp}
+                                    index={index}/>
+                            </div>)
                         }
                     </>
                 </Col>
