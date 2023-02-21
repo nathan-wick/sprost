@@ -12,7 +12,7 @@ import ParagraphMessage from "./inputs/components/paragraph/ParagraphMessage";
 import TitleMessage from "./inputs/components/title/TitleMessage";
 import TitleSize from "./inputs/components/title/TitleSize";
 import deleteElement from "../../utilities/deleteElement";
-import moveComponent from "../../utilities/moveComponent";
+import moveElement from "../../utilities/moveElement";
 import setComponent from "../../utilities/setComponent";
 
 const Editor: FC<{
@@ -152,11 +152,17 @@ const Editor: FC<{
                                 editViewComponents.indexOf(editComponent) !== 0 &&
                                     <Button
                                         variant="outline-primary"
-                                        onClick={() => setEditViewComponents(moveComponent(
-                                            editViewComponents,
-                                            editComponent,
-                                            "up"
-                                        ))}>
+                                        onClick={() => {
+
+                                            const newEditViewComponents =
+                                                structuredClone(editViewComponents);
+                                            setEditViewComponents(moveElement(
+                                                newEditViewComponents,
+                                                newEditViewComponents.indexOf(editComponent),
+                                                "up"
+                                            ));
+
+                                        }}>
                                         <ArrowUp
                                             className="mx-2"/>
                                     </Button>
@@ -166,11 +172,17 @@ const Editor: FC<{
                                     (editViewComponents.length ??= 1) - 1 &&
                                     <Button
                                         variant="outline-primary"
-                                        onClick={() => setEditViewComponents(moveComponent(
-                                            editViewComponents,
-                                            editComponent,
-                                            "down"
-                                        ))}>
+                                        onClick={() => {
+
+                                            const newEditViewComponents =
+                                                structuredClone(editViewComponents);
+                                            setEditViewComponents(moveElement(
+                                                newEditViewComponents,
+                                                newEditViewComponents.indexOf(editComponent),
+                                                "down"
+                                            ));
+
+                                        }}>
                                         <ArrowDown
                                             className="mx-2"/>
                                     </Button>
@@ -179,10 +191,15 @@ const Editor: FC<{
                         <Button
                             variant="outline-danger"
                             className="mx-1"
-                            onClick={() => setEditViewComponents(deleteElement(
-                                editViewComponents,
-                                editViewComponents.indexOf(editComponent)
-                            ))}>
+                            onClick={() => {
+
+                                const newEditViewComponents = structuredClone(editViewComponents);
+                                setEditViewComponents(deleteElement(
+                                    newEditViewComponents,
+                                    newEditViewComponents.indexOf(editComponent)
+                                ));
+
+                            }}>
                             <Trash
                                 className="mx-2"/>
                         </Button>

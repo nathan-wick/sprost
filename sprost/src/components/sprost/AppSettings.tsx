@@ -1,5 +1,6 @@
-import {Brush, Compass, Link45deg, PlusCircle, Trash} from "react-bootstrap-icons";
-import {Button, Col, Row} from "react-bootstrap";
+import {ArrowDown, ArrowUp, Brush, Compass, Link45deg, PlusCircle,
+    Trash} from "react-bootstrap-icons";
+import {Button, ButtonGroup, Col, Row} from "react-bootstrap";
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useEffect, useState} from "react";
 import {App} from "../../types/App";
@@ -13,6 +14,7 @@ import NavigationLinkType from "./inputs/navigation/NavigationLinkType";
 import {User} from "../../types/User";
 import {UserContext} from "../../contexts/User";
 import deleteElement from "../../utilities/deleteElement";
+import moveElement from "../../utilities/moveElement";
 
 const AppSettings: FC<{ app: App }> = ({app}) => {
 
@@ -149,6 +151,50 @@ const AppSettings: FC<{ app: App }> = ({app}) => {
                                     </Col>
                                     <Col
                                         className="text-end">
+                                        <ButtonGroup
+                                            className="mx-1">
+                                            {
+                                                index !== 0 &&
+                                                    <Button
+                                                        variant="outline-primary"
+                                                        onClick={() => {
+
+                                                            const newEditApp =
+                                                                structuredClone(editApp);
+                                                            newEditApp.navigation = moveElement(
+                                                                newEditApp.navigation,
+                                                                index,
+                                                                "up"
+                                                            );
+                                                            setEditApp(newEditApp);
+
+                                                        }}>
+                                                        <ArrowUp
+                                                            className="mx-2"/>
+                                                    </Button>
+                                            }
+                                            {
+                                                index !==
+                                                    (editApp.navigation.length ??= 1) - 1 &&
+                                                    <Button
+                                                        variant="outline-primary"
+                                                        onClick={() => {
+
+                                                            const newEditApp =
+                                                                structuredClone(editApp);
+                                                            newEditApp.navigation = moveElement(
+                                                                newEditApp.navigation,
+                                                                index,
+                                                                "down"
+                                                            );
+                                                            setEditApp(newEditApp);
+
+                                                        }}>
+                                                        <ArrowDown
+                                                            className="mx-2"/>
+                                                    </Button>
+                                            }
+                                        </ButtonGroup>
                                         <Button
                                             variant="outline-danger"
                                             className="mx-1"
