@@ -11,7 +11,7 @@ import HeaderSize from "./inputs/components/header/HeaderSize";
 import ParagraphMessage from "./inputs/components/paragraph/ParagraphMessage";
 import TitleMessage from "./inputs/components/title/TitleMessage";
 import TitleSize from "./inputs/components/title/TitleSize";
-import deleteComponent from "../../utilities/deleteComponent";
+import deleteElement from "../../utilities/deleteElement";
 import moveComponent from "../../utilities/moveComponent";
 import setComponent from "../../utilities/setComponent";
 
@@ -179,9 +179,9 @@ const Editor: FC<{
                         <Button
                             variant="outline-danger"
                             className="mx-1"
-                            onClick={() => setEditViewComponents(deleteComponent(
+                            onClick={() => setEditViewComponents(deleteElement(
                                 editViewComponents,
-                                editComponent
+                                editViewComponents.indexOf(editComponent)
                             ))}>
                             <Trash
                                 className="mx-2"/>

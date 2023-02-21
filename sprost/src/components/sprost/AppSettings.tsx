@@ -1,5 +1,5 @@
+import {Brush, Compass, Link45deg, PlusCircle, Trash} from "react-bootstrap-icons";
 import {Button, Col, Row} from "react-bootstrap";
-import {Compass, Gear, Link45deg, PlusCircle} from "react-bootstrap-icons";
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useEffect, useState} from "react";
 import {App} from "../../types/App";
@@ -12,6 +12,7 @@ import NavigationLinkName from "./inputs/navigation/NavigationLinkName";
 import NavigationLinkType from "./inputs/navigation/NavigationLinkType";
 import {User} from "../../types/User";
 import {UserContext} from "../../contexts/User";
+import deleteElement from "../../utilities/deleteElement";
 
 const AppSettings: FC<{ app: App }> = ({app}) => {
 
@@ -86,9 +87,9 @@ const AppSettings: FC<{ app: App }> = ({app}) => {
             sm={12}>
             <h1
                 className="mt-4">
-                <Gear
+                <Brush
                     className="mx-2" />
-                Settings
+                Appearance
             </h1>
             <Row
                 className="gx-0">
@@ -137,11 +138,35 @@ const AppSettings: FC<{ app: App }> = ({app}) => {
                             editApp.navigation.map((currentNavigation, index) => <div
                                 key={index}
                                 className="m-4 p-2 shadow rounded">
-                                <h3>
-                                    <Link45deg
-                                        className="mx-2" />
-                                    {currentNavigation.name}
-                                </h3>
+                                <Row
+                                    className="gx-0">
+                                    <Col>
+                                        <h3>
+                                            <Link45deg
+                                                className="mx-2" />
+                                            {currentNavigation.name}
+                                        </h3>
+                                    </Col>
+                                    <Col
+                                        className="text-end">
+                                        <Button
+                                            variant="outline-danger"
+                                            className="mx-1"
+                                            onClick={() => {
+
+                                                const newEditApp = structuredClone(editApp);
+                                                newEditApp.navigation = deleteElement(
+                                                    newEditApp.navigation,
+                                                    index
+                                                );
+                                                setEditApp(newEditApp);
+
+                                            }}>
+                                            <Trash
+                                                className="mx-2"/>
+                                        </Button>
+                                    </Col>
+                                </Row>
                                 <NavigationLinkType
                                     editApp={editApp}
                                     setEditApp={setEditApp}
