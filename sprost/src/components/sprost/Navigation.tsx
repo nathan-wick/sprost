@@ -58,8 +58,7 @@ export const NavigationContext = createContext<{
                 expand="lg"
                 className="bg-gradient bg-white shadow rounded">
                 <Container>
-                    <Navbar.Brand
-                        className="text-primary">
+                    <Navbar.Brand>
                         <RocketTakeoffFill
                             className="mx-2" />
                         Sprost

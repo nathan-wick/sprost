@@ -1,25 +1,36 @@
+import {Auth, signOut} from "firebase/auth";
 import {
-    App as AppIcon, BoxArrowRight, Gear, PersonCircle, Window
+    BoxArrowRight, BoxArrowUpRight, PersonCircle
 } from "react-bootstrap-icons";
 import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import React, {FC, useContext} from "react";
-import {App as AppType} from "../../types/App";
+import {App} from "../../types/App";
+import {AuthenticationContext} from "../../contexts/Authentication";
 import SignIn from "../sprost/modals/SignIn";
 import {UserContext} from "../../contexts/User";
+import {View} from "../../types/View";
 
-const Navigation: FC<{app: AppType}> = ({app}) => {
+const Navigation: FC<{
+    app: App,
+    setCurrentView: React.Dispatch<React.SetStateAction<View | undefined>>,
+}> = ({app, setCurrentView}) => {
 
-    const user = useContext(UserContext);
+    const authentication = useContext(AuthenticationContext),
+        user = useContext(UserContext);
+
     return <Navbar
-        bg="white"
-        variant="light"
+        sticky="top"
         expand="lg"
-        className="bg-gradient shadow rounded">
+        className="bg-gradient bg-white shadow rounded">
         <Container>
-            <Navbar.Brand
-                className="text-primary">
-                <AppIcon
-                    className="mx-2" />
+            <Navbar.Brand>
+                <img
+                    src={app.logo}
+                    height={20}
+                    width={20}
+                    className="mx-2 rounded"
+                    referrerPolicy="no-referrer"
+                    alt={`${app.name} logo`} />
                 {app.name}
             </Navbar.Brand>
             <Navbar.Toggle
@@ -29,45 +40,72 @@ const Navigation: FC<{app: AppType}> = ({app}) => {
                 <Nav
                     className="me-auto">
                     {
-                        app.views.map((view) => <Nav.Link
-                            key={`${view.route}-view-navigation-link`}>
-                            <Window
-                                className="mx-2" />
-                            {view.name}
+                        app.navigation.map((link, index) => <Nav.Link
+                            key={index}
+                            onClick={() => {
+
+                                if (link.type === "internal") {
+
+                                    setCurrentView(app.views.find((view) => view.route ===
+                                            link.destination));
+
+                                } else {
+
+                                    window.open(link.destination);
+
+                                }
+
+                            }}>
+                            {
+                                link.type === "internal"
+                                    ? <img
+                                        src={app.views.find((view) => view.route ===
+                                            link.destination)?.icon}
+                                        height={20}
+                                        width={20}
+                                        className="mx-2 rounded"
+                                        referrerPolicy="no-referrer"
+                                        alt={`${link.name} icon`} />
+                                    : <BoxArrowUpRight
+                                        className="mx-2"/>
+                            }
+                            {link.name}
                         </Nav.Link>)
                     }
                 </Nav>
                 <Nav>
-                    {user === "undefined"
-                        ? <SignIn />
-                        : <NavDropdown
-                            title={[
-                                user?.portrait
-                                    ? <img
-                                        key="user-portrait-image"
-                                        src={user.portrait}
-                                        height={20} width={20}
-                                        className="mx-2 border rounded-circle"
-                                        referrerPolicy="no-referrer"
-                                        alt="Account Portrait" />
-                                    : <PersonCircle
-                                        key="user-portrait-icon"
-                                        className="mx-2" />,
-                                "Account"
-                            ]}
-                            id="basic-nav-dropdown">
-                            <NavDropdown.Item>
-                                <Gear
-                                    className="mx-2" />
-                            Settings
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item>
-                                <BoxArrowRight
-                                    className="mx-2" />
-                            Sign Out
-                            </NavDropdown.Item>
-                        </NavDropdown>}
+                    {
+                        user === "undefined"
+                            ? <SignIn />
+                            : <NavDropdown
+                                title={[
+                                    user?.portrait
+                                        ? <img
+                                            key="user-portrait-image"
+                                            src={user.portrait}
+                                            height={20}
+                                            width={20}
+                                            className="mx-2 rounded"
+                                            referrerPolicy="no-referrer"
+                                            alt="Account Portrait" />
+                                        : <PersonCircle
+                                            key="user-portrait-icon"
+                                            className="mx-2" />,
+                                    "Account"
+                                ]}
+                                id="basic-nav-dropdown">
+                                <NavDropdown.Item
+                                    onClick={() => {
+
+                                        signOut(authentication as Auth);
+
+                                    }}>
+                                    <BoxArrowRight
+                                        className="mx-2" />
+                                    Sign Out
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                    }
                 </Nav>
             </Navbar.Collapse>
         </Container>

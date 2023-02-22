@@ -6,6 +6,7 @@ import {DatabaseContext} from "../../contexts/Database";
 import Navigation from "./Navigation";
 import {UserContext} from "../../contexts/User";
 import View from "./View";
+import {View as ViewType} from "../../types/View";
 import {useParams} from "react-router-dom";
 
 const App: FC<{
@@ -17,11 +18,10 @@ const App: FC<{
             currentApp,
             setCurrentApp
         ] = useState<AppType | undefined>(),
-        currentView = propsViewRoute
-            ? currentApp?.views[
-                currentApp.views.findIndex((view) => view.route === propsViewRoute)
-            ]
-            : currentApp?.views[0],
+        [
+            currentView,
+            setCurrentView
+        ] = useState<ViewType | undefined>(),
         database = useContext(DatabaseContext),
         params = useParams(),
         user = useContext(UserContext),
@@ -53,6 +53,25 @@ const App: FC<{
 
             }
 
+        },
+        getCurrentView = () => {
+
+            if (currentApp) {
+
+                if (propsViewRoute) {
+
+                    setCurrentView(currentApp.views[
+                        currentApp.views.findIndex((view) => view.route === propsViewRoute)
+                    ]);
+
+                } else {
+
+                    setCurrentView(currentApp.views[0]);
+
+                }
+
+            }
+
         };
 
     useEffect(
@@ -64,11 +83,21 @@ const App: FC<{
         []
     );
 
+    useEffect(
+        () => {
+
+            getCurrentView();
+
+        },
+        [currentApp]
+    );
+
     return <>{
         currentApp && currentView
             ? <>
                 <Navigation
-                    app={currentApp} />
+                    app={currentApp}
+                    setCurrentView={setCurrentView} />
                 <View
                     view={currentView} />
             </>
