@@ -5,7 +5,7 @@ import {Tag} from "react-bootstrap-icons";
 
 const NavigationLinkName: FC<{
     editApp: App,
-    setEditApp: Dispatch<SetStateAction<App>>,
+    setEditApp: Dispatch<SetStateAction<App | undefined>>,
     index: number,
 }> = ({editApp, setEditApp, index}) => {
 

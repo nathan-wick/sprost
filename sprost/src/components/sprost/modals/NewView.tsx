@@ -143,7 +143,7 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
     return <>
         <Button
             variant="primary"
-            className="px-4 shadow"
+            className="px-4 w-100 shadow"
             onClick={showModal}>
             <PlusCircle
                 className="mx-2" />

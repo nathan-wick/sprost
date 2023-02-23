@@ -5,7 +5,7 @@ import {Link45deg} from "react-bootstrap-icons";
 
 const NavigationLinkType: FC<{
     editApp: App,
-    setEditApp: Dispatch<SetStateAction<App>>,
+    setEditApp: Dispatch<SetStateAction<App | undefined>>,
     index: number,
 }> = ({editApp, setEditApp, index}) => {
 

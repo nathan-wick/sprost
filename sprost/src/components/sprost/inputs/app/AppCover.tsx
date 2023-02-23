@@ -5,7 +5,7 @@ import ImageSelector from "../ImageSelector";
 
 const AppCover: FC<{
     editApp: App,
-    setEditApp: Dispatch<SetStateAction<App>>,
+    setEditApp: Dispatch<SetStateAction<App | undefined>>,
 }> = ({editApp, setEditApp}) => {
 
     const [

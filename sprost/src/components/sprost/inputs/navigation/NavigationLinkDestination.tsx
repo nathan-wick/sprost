@@ -5,7 +5,7 @@ import {PinMap} from "react-bootstrap-icons";
 
 const NavigationLinkDestination: FC<{
     editApp: App,
-    setEditApp: Dispatch<SetStateAction<App>>,
+    setEditApp: Dispatch<SetStateAction<App | undefined>>,
     index: number,
 }> = ({editApp, setEditApp, index}) => {
 
