@@ -4,23 +4,23 @@ import ImageSelector from "../ImageSelector";
 import {View} from "../../../../types/View";
 
 const PageIcon: FC<{
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({editView, setEditView}) => {
+    view: View,
+    setView: Dispatch<SetStateAction<View | undefined>>,
+}> = ({view, setView}) => {
 
     const [
             input,
             setInput
         // eslint-disable-next-line no-extra-parens
-        ] = useState<string>(editView.icon),
+        ] = useState<string>(view.icon),
         onSubmit = () => {
 
-            const newView: View = structuredClone(editView);
+            const newView: View = structuredClone(view);
             if (newView) {
 
                 newView.icon = input;
                 newView.isSaved = false;
-                setEditView(newView);
+                setView(newView);
 
             }
 
@@ -30,7 +30,7 @@ const PageIcon: FC<{
         () => {
 
             // eslint-disable-next-line no-extra-parens
-            if (editView.icon !== input) {
+            if (view.icon !== input) {
 
                 onSubmit();
 
@@ -51,7 +51,7 @@ const PageIcon: FC<{
             className="text-center">
             <img
                 src={input}
-                alt={`${editView.name} icon`}
+                alt={`${view.name} icon`}
                 referrerPolicy="no-referrer"
                 className="rounded mb-2"
                 height={200}

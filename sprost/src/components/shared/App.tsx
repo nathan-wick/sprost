@@ -4,32 +4,30 @@ import React, {FC, useContext, useEffect, useState} from "react";
 import {App as AppType} from "../../types/App";
 import {DatabaseContext} from "../../contexts/Database";
 import Navigation from "./Navigation";
-import {UserContext} from "../../contexts/User";
 import View from "./View";
 import {View as ViewType} from "../../types/View";
 import {useParams} from "react-router-dom";
 
 const App: FC<{
-    propsAppRoute?: string,
-    propsViewRoute?: string
-}> = ({propsAppRoute, propsViewRoute}) => {
+    propsApp?: AppType,
+    propsView?: ViewType
+}> = ({propsApp, propsView}) => {
 
     const [
-            currentApp,
-            setCurrentApp
+            app,
+            setApp
         ] = useState<AppType | undefined>(),
         [
-            currentView,
-            setCurrentView
+            view,
+            setView
         ] = useState<ViewType | undefined>(),
         database = useContext(DatabaseContext),
         params = useParams(),
-        user = useContext(UserContext),
-        getCurrentApp = async () => {
+        getApp = async () => {
 
-            if (propsAppRoute && user !== "undefined") {
+            if (propsApp) {
 
-                setCurrentApp(user.apps.find((userApp) => userApp.route === propsAppRoute));
+                setApp(propsApp);
 
             } else {
 
@@ -45,7 +43,7 @@ const App: FC<{
                         ),
                         appOwnerSnapshot = await getDoc(appOwnerReference),
                         paramsUserApps = appOwnerSnapshot.data()?.apps;
-                    setCurrentApp(paramsUserApps.find((userApp: {
+                    setApp(paramsUserApps.find((userApp: {
                         route: string | undefined;
                     }) => userApp.route === paramsAppRoute));
 
@@ -54,19 +52,17 @@ const App: FC<{
             }
 
         },
-        getCurrentView = () => {
+        getView = () => {
 
-            if (currentApp) {
+            if (app) {
 
-                if (propsViewRoute) {
+                if (propsView) {
 
-                    setCurrentView(currentApp.views[
-                        currentApp.views.findIndex((view) => view.route === propsViewRoute)
-                    ]);
+                    setView(propsView);
 
                 } else {
 
-                    setCurrentView(currentApp.views[0]);
+                    setView(app.views[0]);
 
                 }
 
@@ -77,7 +73,7 @@ const App: FC<{
     useEffect(
         () => {
 
-            getCurrentApp();
+            getApp();
 
         },
         []
@@ -86,23 +82,25 @@ const App: FC<{
     useEffect(
         () => {
 
-            getCurrentView();
+            getView();
 
         },
-        [currentApp]
+        [app]
     );
 
-    return <>{
-        currentApp && currentView
-            ? <>
-                <Navigation
-                    app={currentApp}
-                    setCurrentView={setCurrentView} />
-                <View
-                    view={currentView} />
-            </>
-            : <>Loading...</>
-    }</>;
+    return <>
+        {
+            app && view
+                ? <>
+                    <Navigation
+                        app={app}
+                        setCurrentView={setView} />
+                    <View
+                        view={view} />
+                </>
+                : <>Loading...</>
+        }
+    </>;
 
 };
 

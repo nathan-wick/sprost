@@ -4,23 +4,23 @@ import ImageSelector from "../ImageSelector";
 import {View} from "../../../../types/View";
 
 const PageCover: FC<{
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({editView, setEditView}) => {
+    view: View,
+    setView: Dispatch<SetStateAction<View | undefined>>,
+}> = ({view, setView}) => {
 
     const [
             input,
             setInput
         // eslint-disable-next-line no-extra-parens
-        ] = useState<string>(editView.cover),
+        ] = useState<string>(view.cover),
         onSubmit = () => {
 
-            const newView: View = structuredClone(editView);
+            const newView: View = structuredClone(view);
             if (newView) {
 
                 newView.cover = input;
                 newView.isSaved = false;
-                setEditView(newView);
+                setView(newView);
 
             }
 
@@ -30,7 +30,7 @@ const PageCover: FC<{
         () => {
 
             // eslint-disable-next-line no-extra-parens
-            if (editView.cover !== input) {
+            if (view.cover !== input) {
 
                 onSubmit();
 
@@ -51,7 +51,7 @@ const PageCover: FC<{
             className="text-center">
             <img
                 src={input}
-                alt={`${editView.name} cover`}
+                alt={`${view.name} cover`}
                 referrerPolicy="no-referrer"
                 className="rounded mb-2"
                 height={200}

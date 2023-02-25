@@ -29,6 +29,7 @@ module.exports = {
         "no-magic-numbers": 0,
         "no-nested-ternary": 0,
         "no-ternary": 0,
+        "no-undefined": 0,
         "sort-vars": 0
     }
 };

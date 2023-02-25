@@ -4,14 +4,14 @@ import {Form} from "react-bootstrap";
 import {View} from "../../../../types/View";
 
 const PageDescription: FC<{
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>,
-}> = ({editView, setEditView}) => {
+    view: View,
+    setView: Dispatch<SetStateAction<View | undefined>>,
+}> = ({view, setView}) => {
 
     const [
             input,
             setInput
-        ] = useState<string | undefined>(editView.description),
+        ] = useState<string | undefined>(view.description),
         onChange = (event: { target: {
             value: React.SetStateAction<string | undefined>;
         }; }) => {
@@ -21,12 +21,12 @@ const PageDescription: FC<{
         },
         onSubmit = () => {
 
-            const newView: View = structuredClone(editView);
+            const newView: View = structuredClone(view);
             if (newView) {
 
                 newView.description = String(input);
                 newView.isSaved = false;
-                setEditView(newView);
+                setView(newView);
 
             }
 

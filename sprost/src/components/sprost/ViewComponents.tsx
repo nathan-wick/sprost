@@ -6,29 +6,31 @@ import NewComponent from "./modals/NewComponent";
 import {View} from "../../types/View";
 
 const ViewComponents: FC<{
-    editView: View,
-    setEditView: Dispatch<SetStateAction<View | "undefined">>
-}> = ({editView, setEditView}) => {
+    view: View,
+    setView: Dispatch<SetStateAction<View | undefined>>
+}> = ({view, setView}) => {
 
+    // eslint-disable-next-line no-warning-comments
+    // TODO Improve this by renaming vars and removing isSaved
     const [
-        editViewComponents,
-        setEditViewComponents
-    ] = useState<Component[]>(editView.components);
+        viewComponents,
+        setViewComponents
+    ] = useState<Component[]>(view.components);
 
     useEffect(
         () => {
 
-            if (editViewComponents !== editView.components) {
+            if (viewComponents !== view.components) {
 
-                const newEditView: View = structuredClone(editView);
-                newEditView.components = editViewComponents;
+                const newEditView: View = structuredClone(view);
+                newEditView.components = viewComponents;
                 newEditView.isSaved = false;
-                setEditView(newEditView);
+                setView(newEditView);
 
             }
 
         },
-        [editViewComponents]
+        [viewComponents]
     );
 
     return <>
@@ -36,16 +38,16 @@ const ViewComponents: FC<{
             className="gx-0">
             <Col
                 className="p-2">
-                <NewComponent editViewComponents={editViewComponents}
-                    setEditViewComponents={setEditViewComponents} />
+                <NewComponent editViewComponents={viewComponents}
+                    setEditViewComponents={setViewComponents} />
             </Col>
         </Row>
         {
-            editViewComponents.map((component) => <Editor
+            viewComponents.map((component) => <Editor
                 key={`${component.id}-editor`}
                 componentId={component.id}
-                editViewComponents={editViewComponents}
-                setEditViewComponents={setEditViewComponents}/>)
+                editViewComponents={viewComponents}
+                setEditViewComponents={setViewComponents}/>)
         }
     </>;
 
