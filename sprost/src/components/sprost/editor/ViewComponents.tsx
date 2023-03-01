@@ -33,7 +33,8 @@ const ViewComponents: FC<{
         [viewComponents]
     );
 
-    return <>
+    return <div
+        className="m-4">
         <Row
             className="gx-0">
             <Col
@@ -49,7 +50,7 @@ const ViewComponents: FC<{
                 editViewComponents={viewComponents}
                 setEditViewComponents={setViewComponents}/>)
         }
-    </>;
+    </div>;
 
 };
 

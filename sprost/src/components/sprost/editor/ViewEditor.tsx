@@ -21,7 +21,7 @@ const ViewEditor: FC<{
                 Settings
             </h1>
             <div
-                className="m-2 p-2 rounded shadow">
+                className="m-4 p-2 rounded shadow">
                 {
                     view.type === "page" && <>
                         <PageSettings

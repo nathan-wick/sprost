@@ -1,5 +1,5 @@
-import {ArrowDown, ArrowUp, Brush, ColumnsGap, Compass, Link45deg, Pencil, PlusCircle, Signpost,
-    Tag, Trash, Window, WindowStack} from "react-bootstrap-icons";
+import {ArrowDown, ArrowUp, Brush, Compass, Link45deg, Pencil, PlusCircle, Signpost, Tag, Trash,
+    Window, WindowStack} from "react-bootstrap-icons";
 import {Button, ButtonGroup, Col, Row} from "react-bootstrap";
 import React, {FC} from "react";
 import {App} from "../../../types/App";
@@ -108,12 +108,6 @@ const AppEditor: FC<{
                                     : user.route}/{app?.route}/<b>
                                     {appView.route}</b>
                             </small>
-                            <br />
-                            <small>
-                                <ColumnsGap
-                                    className="mx-2" />
-                                Type: <b>{appView.type}</b>
-                            </small>
                             <Row
                                 className="mt-4 gx-0">
                                 <Col
@@ -133,131 +127,135 @@ const AppEditor: FC<{
                     </Col>)
                 }
             </Row>
-            <h1
-                ref={navigationRef}
-                className="mt-4">
-                <Compass
-                    className="mx-2" />
-                Navigation
-            </h1>
-            <Row
-                className="gx-0 m-4 shadow rounded">
-                <Col>
-                    <Button
-                        className="w-100"
-                        onClick={newNavigationLink}>
-                        <PlusCircle
-                            className="mx-2"/>
-                        New Link
-                    </Button>
-                </Col>
-            </Row>
-            <Row
-                className="gx-0">
-                <Col>
-                    <>
-                        {
-                            app?.navigation.map((currentNavigation, index) => <div
-                                key={index}
-                                className="m-4 p-2 shadow rounded">
-                                <Row
-                                    className="gx-0">
-                                    <Col>
-                                        <h3>
-                                            <Link45deg
-                                                className="mx-2" />
-                                            {currentNavigation.name}
-                                        </h3>
-                                    </Col>
-                                    <Col
-                                        className="text-end">
-                                        <ButtonGroup
-                                            className="mx-1">
-                                            {
-                                                index !== 0 &&
-                                                    <Button
-                                                        variant="outline-primary"
-                                                        onClick={() => {
-
-                                                            const newApp =
-                                                            structuredClone(app);
-                                                            newApp.navigation =
-                                                                moveElement(
-                                                                    newApp.
-                                                                        navigation,
-                                                                    index,
-                                                                    "up"
-                                                                );
-                                                            setApp(newApp);
-
-                                                        }}>
-                                                        <ArrowUp
-                                                            className="mx-2"/>
-                                                    </Button>
-                                            }
-                                            {
-                                                index !==
-                                                    (app.navigation.length ??=
-                                                        1) - 1 &&
-                                                    <Button
-                                                        variant="outline-primary"
-                                                        onClick={() => {
-
-                                                            const newApp =
-                                                            structuredClone(app);
-                                                            newApp.navigation =
-                                                                moveElement(
-                                                                    newApp.
-                                                                        navigation,
-                                                                    index,
-                                                                    "down"
-                                                                );
-                                                            setApp(newApp);
-
-                                                        }}>
-                                                        <ArrowDown
-                                                            className="mx-2"/>
-                                                    </Button>
-                                            }
-                                        </ButtonGroup>
-                                        <Button
-                                            variant="outline-danger"
-                                            className="mx-1"
-                                            onClick={() => {
-
-                                                const newApp = structuredClone(app);
-                                                newApp.navigation = deleteElement(
-                                                    newApp.navigation,
-                                                    index
-                                                );
-                                                setApp(newApp);
-
-                                            }}>
-                                            <Trash
-                                                className="mx-2"/>
-                                        </Button>
-                                    </Col>
-                                </Row>
-                                <NavigationLinkType
-                                    editApp={app}
-                                    setEditApp={setApp}
-                                    index={index}/>
+            {
+                app && app.views.length > 0 && <>
+                    <h1
+                        ref={navigationRef}
+                        className="mt-4">
+                        <Compass
+                            className="mx-2" />
+                        Navigation
+                    </h1>
+                    <Row
+                        className="gx-0 m-4 shadow rounded">
+                        <Col>
+                            <Button
+                                className="w-100"
+                                onClick={newNavigationLink}>
+                                <PlusCircle
+                                    className="mx-2"/>
+                                New Link
+                            </Button>
+                        </Col>
+                    </Row>
+                    <Row
+                        className="gx-0">
+                        <Col>
+                            <>
                                 {
-                                    currentNavigation.type === "external" &&
-                                        <NavigationLinkName
+                                    app?.navigation.map((currentNavigation, index) => <div
+                                        key={index}
+                                        className="m-4 p-2 shadow rounded">
+                                        <Row
+                                            className="gx-0">
+                                            <Col>
+                                                <h3>
+                                                    <Link45deg
+                                                        className="mx-2" />
+                                                    {currentNavigation.name}
+                                                </h3>
+                                            </Col>
+                                            <Col
+                                                className="text-end">
+                                                <ButtonGroup
+                                                    className="mx-1">
+                                                    {
+                                                        index !== 0 &&
+                                                            <Button
+                                                                variant="outline-primary"
+                                                                onClick={() => {
+
+                                                                    const newApp =
+                                                                    structuredClone(app);
+                                                                    newApp.navigation =
+                                                                        moveElement(
+                                                                            newApp.
+                                                                                navigation,
+                                                                            index,
+                                                                            "up"
+                                                                        );
+                                                                    setApp(newApp);
+
+                                                                }}>
+                                                                <ArrowUp
+                                                                    className="mx-2"/>
+                                                            </Button>
+                                                    }
+                                                    {
+                                                        index !==
+                                                            (app.navigation.length ??=
+                                                                1) - 1 &&
+                                                            <Button
+                                                                variant="outline-primary"
+                                                                onClick={() => {
+
+                                                                    const newApp =
+                                                                    structuredClone(app);
+                                                                    newApp.navigation =
+                                                                        moveElement(
+                                                                            newApp.
+                                                                                navigation,
+                                                                            index,
+                                                                            "down"
+                                                                        );
+                                                                    setApp(newApp);
+
+                                                                }}>
+                                                                <ArrowDown
+                                                                    className="mx-2"/>
+                                                            </Button>
+                                                    }
+                                                </ButtonGroup>
+                                                <Button
+                                                    variant="outline-danger"
+                                                    className="mx-1"
+                                                    onClick={() => {
+
+                                                        const newApp = structuredClone(app);
+                                                        newApp.navigation = deleteElement(
+                                                            newApp.navigation,
+                                                            index
+                                                        );
+                                                        setApp(newApp);
+
+                                                    }}>
+                                                    <Trash
+                                                        className="mx-2"/>
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                        <NavigationLinkType
                                             editApp={app}
                                             setEditApp={setApp}
                                             index={index}/>
+                                        {
+                                            currentNavigation.type === "external" &&
+                                                <NavigationLinkName
+                                                    editApp={app}
+                                                    setEditApp={setApp}
+                                                    index={index}/>
+                                        }
+                                        <NavigationLinkDestination
+                                            editApp={app}
+                                            setEditApp={setApp}
+                                            index={index}/>
+                                    </div>)
                                 }
-                                <NavigationLinkDestination
-                                    editApp={app}
-                                    setEditApp={setApp}
-                                    index={index}/>
-                            </div>)
-                        }
-                    </>
-                </Col>
-            </Row>
+                            </>
+                        </Col>
+                    </Row>
+                </>
+            }
         </>
     }
 </>;

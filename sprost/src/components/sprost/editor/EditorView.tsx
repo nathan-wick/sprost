@@ -1,11 +1,9 @@
-/* eslint-disable complexity */
 import {Col, Row} from "react-bootstrap";
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useEffect, useRef, useState} from "react";
 import AppEditor from "./AppEditor";
 import {App as AppType} from "../../../types/App";
 import {DatabaseContext} from "../../../contexts/Database";
-import Header from "../../shared/Header";
 import {Link} from "../../../types/Link";
 import Navigation from "./Navigation";
 import Preview from "./Preview";
@@ -190,18 +188,6 @@ const EditorView: FC<{ appRoute: string }> = ({appRoute}) => {
     );
 
     return <>
-        <Header component={{
-            "alignment": "left",
-            "background": "image",
-            "id": "header",
-            "image": view
-                ? view.cover
-                : app?.cover ?? "",
-            "message": view
-                ? view.name
-                : app?.name ?? "",
-            "size": "large"
-        }} />
         <Navigation
             app={app}
             view={view}

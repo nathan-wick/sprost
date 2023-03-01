@@ -37,8 +37,8 @@ const NavigationLinkType: FC<{
 
                 } else {
 
-                    newEditApp.navigation[index].name = "Google";
-                    newEditApp.navigation[index].destination = "https://www.google.com/";
+                    newEditApp.navigation[index].name = "Example";
+                    newEditApp.navigation[index].destination = "https://www.example.com/";
 
                 }
                 setEditApp(newEditApp);
