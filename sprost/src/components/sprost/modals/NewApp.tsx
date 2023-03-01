@@ -2,7 +2,7 @@ import {Button, Form, FormGroup, Modal, NavDropdown} from "react-bootstrap";
 import {Firestore, doc, setDoc} from "firebase/firestore";
 import {PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import React, {useContext, useState} from "react";
-import App from "../App";
+import App from "../editor/EditorView";
 import {App as AppType} from "../../../types/App";
 import {DatabaseContext} from "../../../contexts/Database";
 import DefaultCover from "../../../assets/images/defaults/cover.jpeg";

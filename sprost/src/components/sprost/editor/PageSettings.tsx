@@ -1,9 +1,9 @@
 import {Col, Row} from "react-bootstrap";
 import React, {Dispatch, FC, SetStateAction} from "react";
-import PageCover from "./inputs/page/PageCover";
-import PageDescription from "./inputs/page/PageDescription";
-import PageIcon from "./inputs/page/PageIcon";
-import {View} from "../../types/View";
+import PageCover from "../inputs/page/PageCover";
+import PageDescription from "../inputs/page/PageDescription";
+import PageIcon from "../inputs/page/PageIcon";
+import {View} from "../../../types/View";
 
 const PageSettings: FC<{
     view: View,

@@ -6,7 +6,7 @@ import Portrait from "./inputs/settings/Portrait";
 import React from "react";
 import Theme from "./inputs/settings/Theme";
 
-const Settings = () => <>
+const SettingsView = () => <>
     <h1
         className="mx-5 mt-5">
         <Gear
@@ -30,4 +30,4 @@ const Settings = () => <>
     </Row>
 </>;
 
-export default Settings;
+export default SettingsView;

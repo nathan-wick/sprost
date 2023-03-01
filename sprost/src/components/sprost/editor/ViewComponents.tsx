@@ -1,9 +1,9 @@
 import {Col, Row} from "react-bootstrap";
 import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
-import {Component} from "../../types/Component";
-import Editor from "./Editor";
-import NewComponent from "./modals/NewComponent";
-import {View} from "../../types/View";
+import {Component} from "../../../types/Component";
+import ComponentEditor from "./ComponentEditor";
+import NewComponent from "../modals/NewComponent";
+import {View} from "../../../types/View";
 
 const ViewComponents: FC<{
     view: View,
@@ -43,7 +43,7 @@ const ViewComponents: FC<{
             </Col>
         </Row>
         {
-            viewComponents.map((component) => <Editor
+            viewComponents.map((component) => <ComponentEditor
                 key={`${component.id}-editor`}
                 componentId={component.id}
                 editViewComponents={viewComponents}

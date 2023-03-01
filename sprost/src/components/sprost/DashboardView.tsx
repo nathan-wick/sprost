@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {Button} from "react-bootstrap";
 import {ToasterContext} from "../../contexts/Toaster";
 
-const Dashboard = () => {
+const DashboardView = () => {
 
     const toaster = useContext(ToasterContext);
 
@@ -28,4 +28,4 @@ const Dashboard = () => {
 
 };
 
-export default Dashboard;
+export default DashboardView;

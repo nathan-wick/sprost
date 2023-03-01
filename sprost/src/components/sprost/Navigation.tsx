@@ -3,12 +3,12 @@ import {BarChart, BoxArrowRight, Gear, Grid, PersonCircle,
     RocketTakeoffFill} from "react-bootstrap-icons";
 import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import React, {createContext, useContext, useEffect, useState} from "react";
-import App from "./App";
+import App from "./editor/EditorView";
 import {AuthenticationContext} from "../../contexts/Authentication";
-import Dashboard from "./Dashboard";
-import Landing from "./Landing";
+import Dashboard from "./DashboardView";
+import Landing from "./LandingView";
 import NewApp from "./modals/NewApp";
-import Settings from "./Settings";
+import Settings from "./SettingsView";
 import SignIn from "./modals/SignIn";
 import {UserContext} from "../../contexts/User";
 

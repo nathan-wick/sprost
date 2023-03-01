@@ -2,20 +2,20 @@ import {ArrowDown, ArrowUp, CardHeading, CardImage, CardText, ThreeDots,
     Trash} from "react-bootstrap-icons";
 import {Button, ButtonGroup, Col, Row} from "react-bootstrap";
 import React, {Dispatch, FC, SetStateAction, useEffect, useState} from "react";
-import {Component} from "../../types/Component";
-import HeaderAlignment from "./inputs/components/header/HeaderAlignment";
-import HeaderBackground from "./inputs/components/header/HeaderBackground";
-import HeaderImage from "./inputs/components/header/HeaderImage";
-import HeaderMessage from "./inputs/components/header/HeaderMessage";
-import HeaderSize from "./inputs/components/header/HeaderSize";
-import ParagraphMessage from "./inputs/components/paragraph/ParagraphMessage";
-import TitleMessage from "./inputs/components/title/TitleMessage";
-import TitleSize from "./inputs/components/title/TitleSize";
-import deleteElement from "../../utilities/deleteElement";
-import moveElement from "../../utilities/moveElement";
-import setComponent from "../../utilities/setComponent";
+import {Component} from "../../../types/Component";
+import HeaderAlignment from "./../inputs/components/header/HeaderAlignment";
+import HeaderBackground from "./../inputs/components/header/HeaderBackground";
+import HeaderImage from "./../inputs/components/header/HeaderImage";
+import HeaderMessage from "./../inputs/components/header/HeaderMessage";
+import HeaderSize from "./../inputs/components/header/HeaderSize";
+import ParagraphMessage from "./../inputs/components/paragraph/ParagraphMessage";
+import TitleMessage from "./../inputs/components/title/TitleMessage";
+import TitleSize from "./../inputs/components/title/TitleSize";
+import deleteElement from "../../../utilities/deleteElement";
+import moveElement from "../../../utilities/moveElement";
+import setComponent from "../../../utilities/setComponent";
 
-const Editor: FC<{
+const ComponentEditor: FC<{
     componentId: string,
     editViewComponents: Component[],
     setEditViewComponents: Dispatch<SetStateAction<Component[]>>,
@@ -214,4 +214,4 @@ const Editor: FC<{
 
 };
 
-export default Editor;
+export default ComponentEditor;
