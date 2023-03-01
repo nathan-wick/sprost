@@ -20,7 +20,8 @@ const Preview: FC<{
                 Preview
             </h1>
             <div
-                className="m-2 rounded shadow h-50 overflow-scroll">
+                className="m-2 rounded shadow overflow-scroll"
+                style={{"maxHeight": 750}}>
                 <SharedApp
                     propsApp={app}
                     propsView={view}/>

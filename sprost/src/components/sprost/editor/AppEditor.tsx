@@ -79,7 +79,7 @@ const AppEditor: FC<{
                 </Col>
             </Row>
             <Row
-                className="gx-0 p-3">
+                className="gx-0">
                 {
                     app?.views.map((appView) => <Col
                         key={`${app.route}-app-view-${appView.route}`}
@@ -87,9 +87,9 @@ const AppEditor: FC<{
                         md={6}
                         sm={12}>
                         <div
-                            className="m-3 p-2 shadow rounded">
+                            className="m-4 p-2 shadow rounded">
                             <h3
-                                className="mb-3">
+                                className="mb-4">
                                 <Window
                                     className="mx-2" />
                                 {appView.name}
