@@ -1,4 +1,4 @@
-import {Button, Form, FormGroup, Modal, NavDropdown} from "react-bootstrap";
+import {Button, Form, FormGroup, Modal} from "react-bootstrap";
 import {Firestore, doc, setDoc} from "firebase/firestore";
 import {PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import React, {useContext, useState} from "react";
@@ -144,12 +144,14 @@ const NewApp = () => {
         };
 
     return <>
-        <NavDropdown.Item
+        <Button
+            variant="primary"
+            className="px-4 w-100 shadow"
             onClick={showModal}>
             <PlusCircle
                 className="mx-2" />
             New App
-        </NavDropdown.Item>
+        </Button>
 
         <Modal
             show={modal}

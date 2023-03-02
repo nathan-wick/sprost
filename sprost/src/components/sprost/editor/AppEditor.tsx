@@ -1,5 +1,5 @@
 import {ArrowDown, ArrowUp, Brush, Compass, Link45deg, Pencil, PlusCircle, Signpost, Tag, Trash,
-    Window, WindowStack} from "react-bootstrap-icons";
+    WindowStack} from "react-bootstrap-icons";
 import {Button, ButtonGroup, Col, Row} from "react-bootstrap";
 import React, {FC} from "react";
 import {App} from "../../../types/App";
@@ -90,8 +90,13 @@ const AppEditor: FC<{
                             className="m-4 p-2 shadow rounded">
                             <h3
                                 className="mb-4">
-                                <Window
-                                    className="mx-2" />
+                                <img
+                                    src={appView.icon}
+                                    height={40}
+                                    width={40}
+                                    className="mx-2 rounded"
+                                    referrerPolicy="no-referrer"
+                                    alt={`${appView.name} icon`} />
                                 {appView.name}
                             </h3>
                             <small>

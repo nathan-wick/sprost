@@ -3,11 +3,9 @@ import {BarChart, BoxArrowRight, Gear, Grid, PersonCircle,
     RocketTakeoffFill} from "react-bootstrap-icons";
 import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import React, {createContext, useContext, useEffect, useState} from "react";
-import App from "./editor/EditorView";
 import {AuthenticationContext} from "../../contexts/Authentication";
 import Dashboard from "./DashboardView";
 import Landing from "./LandingView";
-import NewApp from "./modals/NewApp";
 import Settings from "./SettingsView";
 import SignIn from "./modals/SignIn";
 import {UserContext} from "../../contexts/User";
@@ -25,9 +23,6 @@ export const NavigationContext = createContext<{
 
         const authentication = useContext(AuthenticationContext),
             user = useContext(UserContext),
-            apps = user === "undefined"
-                ? "undefined"
-                : user.apps,
             [
                 currentView,
                 setCurrentView
@@ -83,40 +78,16 @@ export const NavigationContext = createContext<{
                                                     className="mx-2" />
                                                 Dashboard
                                             </Nav.Link>
-                                            <NavDropdown
-                                                title={[
-                                                    <Grid
-                                                        key="apps-navigation-dropdown"
-                                                        className="mx-2" />,
-                                                    "Apps"
-                                                ]}
-                                                id="basic-nav-dropdown">
-                                                {
-                                                    apps !== "undefined" &&
-                                                        apps.map((app) => <NavDropdown.Item
-                                                            key={`${app.route}-app-navigation-link`}
-                                                            onClick={() => {
+                                            <Nav.Link
+                                                onClick={() => {
 
-                                                                setCurrentView(<App
-                                                                    appRoute={app.route} />);
+                                                    setCurrentView(<Dashboard />);
 
-                                                            }}>
-                                                            <img
-                                                                src={app.logo}
-                                                                height={20}
-                                                                width={20}
-                                                                className="mx-2 rounded"
-                                                                referrerPolicy="no-referrer"
-                                                                alt={`${app.name} logo`} />
-                                                            {app.name}
-                                                        </NavDropdown.Item>)
-                                                }
-                                                {
-                                                    apps !== "undefined" && apps.length > 0 &&
-                                                        <NavDropdown.Divider />
-                                                }
-                                                <NewApp />
-                                            </NavDropdown>
+                                                }}>
+                                                <Grid
+                                                    className="mx-2" />
+                                                Apps
+                                            </Nav.Link>
                                         </>
                                 }
                             </Nav>
@@ -138,7 +109,7 @@ export const NavigationContext = createContext<{
                                                     : <PersonCircle
                                                         key="user-portrait-icon"
                                                         className="mx-2" />,
-                                                "Account"
+                                                user.name
                                             ]}
                                             id="basic-nav-dropdown">
                                             <NavDropdown.Item
