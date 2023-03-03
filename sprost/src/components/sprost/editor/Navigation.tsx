@@ -4,7 +4,7 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import React, {FC, useContext} from "react";
 import {App} from "../../../types/App";
 import Dashboard from "../DashboardView";
-import {NavigationContext} from "../Navigation";
+import {NavigationContext} from "../../../contexts/Navigation";
 import NewRelease from "../modals/NewRelease";
 import {View} from "../../../types/View";
 

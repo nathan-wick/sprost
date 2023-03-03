@@ -4,7 +4,7 @@ import App from "./components/shared/App";
 import Authentication from "./contexts/Authentication";
 import Database from "./contexts/Database";
 import Firebase from "./contexts/Firebase";
-import Navigation from "./components/sprost/Navigation";
+import Navigation from "./contexts/Navigation";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Storage from "./contexts/Storage";

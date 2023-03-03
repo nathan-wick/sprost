@@ -7,7 +7,7 @@ import {App as AppType} from "../../../types/App";
 import {DatabaseContext} from "../../../contexts/Database";
 import DefaultCover from "../../../assets/images/defaults/cover.jpeg";
 import DefaultLogo from "../../../assets/images/defaults/logo.svg";
-import {NavigationContext} from "../Navigation";
+import {NavigationContext} from "../../../contexts/Navigation";
 import {ToasterContext} from "../../../contexts/Toaster";
 import {UserContext} from "../../../contexts/User";
 
