@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
-import Dashboard from "../components/sprost/DashboardView";
+import Dashboard from "../components/sprost/dashboard/DashboardView";
 import Landing from "../components/sprost/LandingView";
 import {UserContext} from "./User";
 

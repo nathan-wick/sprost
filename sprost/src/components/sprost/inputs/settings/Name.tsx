@@ -182,7 +182,7 @@ const Name = () => {
                     className="text-muted">
                     <Signpost
                         className="mx-2" />
-                sprost.com/<b>{routeInput}</b>
+                sprost.com/{routeInput}
                 </p>
                 : <p
                     className="text-danger">
