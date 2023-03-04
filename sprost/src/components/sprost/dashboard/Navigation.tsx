@@ -3,6 +3,7 @@ import {BarChart, BoxArrowRight, Gear, Grid} from "react-bootstrap-icons";
 import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import React, {FC, useContext} from "react";
 import {AuthenticationContext} from "../../../contexts/Authentication";
+import Logo from "../../../assets/images/defaults/logo.svg";
 import {UserContext} from "../../../contexts/User";
 
 const Navigation: FC<{
@@ -20,6 +21,13 @@ const Navigation: FC<{
         className="bg-gradient bg-white shadow rounded">
         <Container>
             <Navbar.Brand>
+                <img
+                    src={Logo}
+                    height={20}
+                    width={20}
+                    className="mx-2 rounded"
+                    referrerPolicy="no-referrer"
+                    alt="Sprost Logo" />
                 Sprost
             </Navbar.Brand>
             <Navbar.Toggle

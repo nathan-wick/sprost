@@ -5,7 +5,6 @@ import AppleIcon from "../../../assets/images/icons/apple.svg";
 import {AuthenticationContext} from "../../../contexts/Authentication";
 import GoogleIcon from "../../../assets/images/icons/google.svg";
 import MicrosoftIcon from "../../../assets/images/icons/microsoft.svg";
-import {PersonCircle} from "react-bootstrap-icons";
 
 const SignIn = () => {
 
@@ -57,12 +56,10 @@ const SignIn = () => {
     return <>
         <Button
             variant="primary"
-            size="sm"
+            size="lg"
             disabled={modal}
             onClick={showModal}>
-            <PersonCircle
-                className="mx-2" />
-                Sign In
+            Get Started
         </Button>
 
         <Modal show={modal} onHide={hideModal}>
