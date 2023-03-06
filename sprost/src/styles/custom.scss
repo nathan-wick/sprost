@@ -5,6 +5,9 @@ $primary: #2997ff;
 $secondary: #6c757d;
 $success: #90a959;
 $danger: #bf4342;
+$orange: #fd7e14;
+$teal: #20c997;
+$purple: #6f42c1;
 
 // Override Bootstrap's colors with custom colors.
 $body-bg: $background;
@@ -87,4 +90,7 @@ img {
     secondary: $secondary;
     success: $success;
     danger: $danger;
+    orange: $orange;
+    teal: $teal;
+    purple: $purple;
 }

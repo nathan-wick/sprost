@@ -56,7 +56,8 @@ const SignIn = () => {
             variant="primary"
             size="lg"
             disabled={modal}
-            onClick={showModal}>
+            onClick={showModal}
+            className="bg-gradient text-white shadow">
             Get Started
         </Button>
 
