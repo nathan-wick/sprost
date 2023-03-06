@@ -2,6 +2,9 @@ import React, {useCallback} from "react";
 import type {Engine} from "tsparticles-engine";
 import Particles from "react-particles";
 import SignIn from "./modals/SignIn";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import colors from "../../styles/custom.scss";
 import {loadFull} from "tsparticles";
 
 const LandingView = () => {
@@ -24,7 +27,7 @@ const LandingView = () => {
                 options={{
                     "background": {
                         "color": {
-                            "value": "#f8f9fa"
+                            "value": colors.background
                         }
                     },
                     "detectRetina": true,
@@ -51,7 +54,7 @@ const LandingView = () => {
                                 }
                             },
                             "push": {
-                                "quantity": 4
+                                "quantity": 3
                             }
                         }
                     },
@@ -60,10 +63,10 @@ const LandingView = () => {
                             "enable": false
                         },
                         "color": {
-                            "value": "#2997ff"
+                            "value": colors.primary
                         },
                         "links": {
-                            "color": "#2997ff",
+                            "color": colors.primary,
                             "distance": 140,
                             "enable": true,
                             "opacity": 0.4,
@@ -101,16 +104,29 @@ const LandingView = () => {
                     }
                 }} />
             <div
-                className="position-absolute">
-                <h1>
-                    Sprost
-                </h1>
-                <p>
-                    <i>
-                        Welcome to Sprost. The quick, easy, and free web app creation tool.
-                    </i>
-                </p>
-                <SignIn />
+                className="position-absolute vw-100">
+                <div
+                    className="d-flex align-items-center justify-content-center
+                        minimum-height-large p-4">
+                    <div
+                        className="text-center">
+                        <h1>
+                            <span
+                                className="p-2 rounded"
+                                style={{"backgroundColor": colors.background}}>
+                                Sprost
+                            </span>
+                        </h1>
+                        <p>
+                            <span
+                                className="p-2 rounded fst-italic"
+                                style={{"backgroundColor": colors.background}}>
+                                Welcome to Sprost. The ultimate web app creation tool.
+                            </span>
+                        </p>
+                        <SignIn />
+                    </div>
+                </div>
             </div>
         </div>
     </>;

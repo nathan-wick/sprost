@@ -1,10 +1,8 @@
 import {Auth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {Button, Modal} from "react-bootstrap";
 import React, {useContext, useState} from "react";
-import AppleIcon from "../../../assets/images/icons/apple.svg";
 import {AuthenticationContext} from "../../../contexts/Authentication";
 import GoogleIcon from "../../../assets/images/icons/google.svg";
-import MicrosoftIcon from "../../../assets/images/icons/microsoft.svg";
 
 const SignIn = () => {
 
@@ -83,34 +81,6 @@ const SignIn = () => {
                             width="30"
                             height="30" />
                             Google
-                    </Button>
-                    <Button
-                        className="my-2"
-                        variant="outline-primary"
-                        size="lg"
-                        disabled={true}
-                        onClick={() => signInWith("Apple")}>
-                        <img
-                            src={AppleIcon}
-                            alt="Apple"
-                            className="mx-2"
-                            width="30"
-                            height="30" />
-                            Apple
-                    </Button>
-                    <Button
-                        className="my-2"
-                        variant="outline-primary"
-                        size="lg"
-                        disabled={true}
-                        onClick={() => signInWith("Microsoft")}>
-                        <img
-                            src={MicrosoftIcon}
-                            alt="Microsoft"
-                            className="mx-2"
-                            width="30"
-                            height="30" />
-                            Microsoft
                     </Button>
                 </div>
             </Modal.Body>
