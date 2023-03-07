@@ -123,14 +123,14 @@ const LandingView = () => {
                             <span
                                 className="p-2 rounded fst-italic"
                                 style={{"backgroundColor": colors.background}}>
-                                The ultimate web app creation tool.
+                                Bring your app idea to life!
                             </span>
                         </p>
                         <SignIn />
                     </div>
                 </div>
                 <div
-                    className="rounded"
+                    className="rounded shadow"
                     style={{"backgroundColor": colors.background}}>
                     <Row
                         className="gx-0">

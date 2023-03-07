@@ -1,13 +1,19 @@
 // Initialize custom colors.
-$background: #f8f9fa;
-$foreground: #212529;
-$primary: #2997ff;
-$secondary: #6c757d;
-$success: #90a959;
-$danger: #bf4342;
+$white: #ffffff;
+$black: #000000;
+$gray: #6c757d;
+$red: #bf4342;
 $orange: #fd7e14;
 $teal: #20c997;
+$blue: #2997ff;
 $purple: #6f42c1;
+
+$background: $white;
+$foreground: $black;
+$primary: $blue;
+$secondary: $gray;
+$success: $teal;
+$danger: $red;
 
 // Override Bootstrap's colors with custom colors.
 $body-bg: $background;
@@ -84,13 +90,18 @@ img {
 @import '~bootstrap/scss/bootstrap.scss';
 
 :export {
+    white: $white;
+    black: $black;
+    gray: $gray;
+    red: $red;
+    orange: $orange;
+    teal: $teal;
+    blue: $blue;
+    purple: $purple;
     background: $background;
     foreground: $foreground;
     primary: $primary;
     secondary: $secondary;
     success: $success;
     danger: $danger;
-    orange: $orange;
-    teal: $teal;
-    purple: $purple;
 }
