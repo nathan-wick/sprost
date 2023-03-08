@@ -26,7 +26,13 @@ root.render(<React.StrictMode>
                                         path="/"
                                         element={<Navigation />}/>
                                     <Route
+                                        path=":userRoute"
+                                        element={<Navigation />}/>
+                                    <Route
                                         path=":userRoute/:appRoute"
+                                        element={<App />}/>
+                                    <Route
+                                        path=":userRoute/:appRoute/:viewRoute"
                                         element={<App />}/>
                                 </Routes>
                             </Router>
