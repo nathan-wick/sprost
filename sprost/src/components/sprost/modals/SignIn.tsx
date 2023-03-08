@@ -2,7 +2,6 @@ import {Auth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {Button, Modal} from "react-bootstrap";
 import React, {useContext, useState} from "react";
 import {AuthenticationContext} from "../../../contexts/Authentication";
-import GoogleIcon from "../../../assets/images/icons/google.svg";
 
 const SignIn = () => {
 
@@ -62,7 +61,7 @@ const SignIn = () => {
         </Button>
 
         <Modal show={modal} onHide={hideModal}>
-            <Modal.Header closeButton>
+            <Modal.Header>
                 <Modal.Title>
                     Sign In With
                 </Modal.Title>
@@ -70,17 +69,11 @@ const SignIn = () => {
             <Modal.Body>
                 <div className="d-grid gap-2">
                     <Button
-                        className="my-2"
-                        variant="outline-primary"
+                        className="my-2 bg-gradient text-white shadow"
+                        variant="primary"
                         size="lg"
                         disabled={signingIn}
                         onClick={() => signInWith("Google")}>
-                        <img
-                            src={GoogleIcon}
-                            alt="Google"
-                            className="mx-2"
-                            width="30"
-                            height="30" />
                             Google
                     </Button>
                 </div>

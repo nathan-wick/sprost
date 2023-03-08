@@ -146,7 +146,7 @@ const NewApp = () => {
     return <>
         <Button
             variant="primary"
-            className="px-4 w-100 shadow"
+            className="mx-2 bg-gradient text-white shadow"
             onClick={showModal}>
             <PlusCircle
                 className="mx-2" />
@@ -207,13 +207,13 @@ const NewApp = () => {
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    variant="outline-secondary"
+                    variant="secondary bg-gradient text-white shadow"
                     className="m-2"
                     onClick={hideModal}>
                     Cancel
                 </Button>
                 <Button
-                    variant="primary"
+                    variant="primary bg-gradient text-white shadow"
                     className="m-2"
                     disabled={nameInput === "undefined" || nameError !== "undefined" || isLoading}
                     onClick={onSubmit}>

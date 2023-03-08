@@ -14,16 +14,18 @@ const Apps: FC<{
         {setCurrentView} = useContext(NavigationContext);
 
     return <>
-        <h1
-            ref={appsRef}
-            className="mt-4">
-            <Grid
-                className="mx-2" />
-            Apps
-        </h1>
         <Row
-            className="gx-0 m-4">
+            className="gx-0 mt-4">
             <Col>
+                <h1
+                    ref={appsRef}>
+                    <Grid
+                        className="mx-2" />
+                    Apps
+                </h1>
+            </Col>
+            <Col
+                className="text-end">
                 <NewApp />
             </Col>
         </Row>
@@ -65,7 +67,7 @@ const Apps: FC<{
                                 sm={12}
                                 className="p-1">
                                 <Button
-                                    className="w-100"
+                                    className="w-100 bg-gradient text-white shadow"
                                     variant="primary"
                                     onClick={() => setCurrentView(<EditorView
                                         appRoute={app.route} />)}>

@@ -1,4 +1,3 @@
-import {Col, Form, Row} from "react-bootstrap";
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {useContext, useEffect, useState} from "react";
 import {DatabaseContext} from "../../../../contexts/Database";
@@ -49,35 +48,30 @@ const Portrait = () => {
         [input]
     );
 
-    return <Form.Group
+    return <div
         className="my-4">
-        <Row
-            className="gx-0">
-            <Col
-                md="auto"
-                className="text-center px-3">
-                <img
-                    src={user === "undefined"
-                        ? "undefined"
-                        : user.portrait}
-                    alt={`${user === "undefined"
-                        ? "undefined"
-                        : user.name}'s portrait`}
-                    referrerPolicy="no-referrer"
-                    className="rounded"
-                    height={80}
-                    width={80} />
-            </Col>
-            <Col>
-                <p>
-                    <Image
-                        className="mx-2" />
-                    Portrait
-                </p>
-                <ImageSelector setInput={setInput} />
-            </Col>
-        </Row>
-    </Form.Group>;
+        <p>
+            <Image
+                className="mx-2" />
+            Portrait
+        </p>
+        <div
+            className="w-100 text-center">
+            <img
+                src={user === "undefined"
+                    ? "undefined"
+                    : user.portrait}
+                alt={`${user === "undefined"
+                    ? "undefined"
+                    : user.name}'s portrait`}
+                referrerPolicy="no-referrer"
+                className="rounded my-2"
+                height={100}
+                width={100} />
+            <br />
+            <ImageSelector setInput={setInput} />
+        </div>
+    </div>;
 
 };
 

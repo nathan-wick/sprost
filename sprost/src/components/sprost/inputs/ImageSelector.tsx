@@ -148,7 +148,7 @@ const ImageSelector: FC<{
 
     return <>
         <Button
-            className="w-100"
+            className="bg-gradient text-white shadow"
             variant="primary"
             onClick={() => setModal(true)}>
             <ImageIcon
@@ -205,14 +205,14 @@ const ImageSelector: FC<{
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    variant="outline-secondary"
-                    className="m-2"
+                    variant="secondary"
+                    className="m-2 bg-gradient text-white shadow"
                     onClick={() => setModal(false)}>
                     Cancel
                 </Button>
                 <Button
                     variant="primary"
-                    className="m-2"
+                    className="m-2 bg-gradient text-white shadow"
                     onClick={() => inputRef.current?.click()}
                     disabled={progress !== 100}>
                     Upload New
