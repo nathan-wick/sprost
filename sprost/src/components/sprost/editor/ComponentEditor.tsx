@@ -139,19 +139,20 @@ const ComponentEditor: FC<{
                         className="text-end">
                         {
                             advancedInputs.length > 0 && <Button
-                                variant="outline-primary"
-                                className="mx-1"
+                                variant="primary"
+                                className="mx-1 bg-gradient text-white shadow"
                                 onClick={() => setShowAdvancedInputs(!showAdvancedInputs)}>
                                 <ThreeDots
                                     className="mx-2"/>
                             </Button>
                         }
                         <ButtonGroup
-                            className="mx-1">
+                            className="mx-1 shadow">
                             {
                                 editViewComponents.indexOf(editComponent) !== 0 &&
                                     <Button
-                                        variant="outline-primary"
+                                        variant="primary"
+                                        className="bg-gradient text-white"
                                         onClick={() => {
 
                                             const newEditViewComponents =
@@ -171,7 +172,8 @@ const ComponentEditor: FC<{
                                 editViewComponents.indexOf(editComponent) !==
                                     (editViewComponents.length ??= 1) - 1 &&
                                     <Button
-                                        variant="outline-primary"
+                                        variant="primary"
+                                        className="bg-gradient text-white"
                                         onClick={() => {
 
                                             const newEditViewComponents =
@@ -189,8 +191,8 @@ const ComponentEditor: FC<{
                             }
                         </ButtonGroup>
                         <Button
-                            variant="outline-danger"
-                            className="mx-1"
+                            variant="danger"
+                            className="mx-1 bg-gradient text-white shadow"
                             onClick={() => {
 
                                 const newEditViewComponents = structuredClone(editViewComponents);

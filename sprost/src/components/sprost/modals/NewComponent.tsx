@@ -117,7 +117,7 @@ const NewComponent: FC<{
     return <>
         <Button
             variant="primary"
-            className="w-100 shadow"
+            className="w-100 bg-gradient text-white shadow"
             onClick={showModal}>
             <PlusCircle
                 className="mx-2" />
@@ -160,14 +160,14 @@ const NewComponent: FC<{
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    variant="outline-secondary"
-                    className="m-2"
+                    variant="secondary"
+                    className="m-2 bg-gradient text-white shadow"
                     onClick={hideModal}>
                     Cancel
                 </Button>
                 <Button
                     variant="primary"
-                    className="m-2"
+                    className="m-2 bg-gradient text-white shadow"
                     disabled={isLoading}
                     onClick={onSubmit}>
                     {

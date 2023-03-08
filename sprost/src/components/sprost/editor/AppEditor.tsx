@@ -177,13 +177,12 @@ const AppEditor: FC<{
                                             <Col
                                                 className="text-end">
                                                 <ButtonGroup
-                                                    className="mx-1">
+                                                    className="mx-1 shadow">
                                                     {
                                                         index !== 0 &&
                                                             <Button
                                                                 variant="primary"
-                                                                className="bg-gradient text-white
-                                                                    shadow"
+                                                                className="bg-gradient text-white"
                                                                 onClick={() => {
 
                                                                     const newApp =
@@ -208,8 +207,7 @@ const AppEditor: FC<{
                                                                 1) - 1 &&
                                                             <Button
                                                                 variant="primary"
-                                                                className="bg-gradient text-white
-                                                                    shadow"
+                                                                className="bg-gradient text-white"
                                                                 onClick={() => {
 
                                                                     const newApp =
