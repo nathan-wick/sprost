@@ -148,7 +148,7 @@ const ImageSelector: FC<{
 
     return <>
         <Button
-            className="bg-gradient text-white shadow"
+            className="w-100 bg-gradient text-white shadow"
             variant="primary"
             onClick={() => setModal(true)}>
             <ImageIcon

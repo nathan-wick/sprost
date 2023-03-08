@@ -65,16 +65,18 @@ const AppEditor: FC<{
                     </div>
                 </Col>
             </Row>
-            <h1
-                ref={viewsRef}
-                className="mt-4">
-                <WindowStack
-                    className="mx-2" />
-                Views
-            </h1>
             <Row
-                className="gx-0 m-4">
+                className="gx-0 mt-4">
                 <Col>
+                    <h1
+                        ref={viewsRef}>
+                        <WindowStack
+                            className="mx-2" />
+                        Views
+                    </h1>
+                </Col>
+                <Col
+                    className="text-end">
                     <NewView appRoute={app?.route ?? ""} />
                 </Col>
             </Row>
@@ -119,7 +121,7 @@ const AppEditor: FC<{
                                     sm={12}
                                     className="p-1">
                                     <Button
-                                        className="w-100"
+                                        className="w-100 bg-gradient text-white shadow"
                                         variant="primary"
                                         onClick={() => setView(appView)}>
                                         <Pencil
@@ -134,18 +136,20 @@ const AppEditor: FC<{
             </Row>
             {
                 app && app.views.length > 0 && <>
-                    <h1
-                        ref={navigationRef}
-                        className="mt-4">
-                        <Compass
-                            className="mx-2" />
-                        Navigation
-                    </h1>
                     <Row
-                        className="gx-0 m-4 shadow rounded">
+                        className="gx-0 mt-4">
                         <Col>
+                            <h1
+                                ref={navigationRef}>
+                                <Compass
+                                    className="mx-2" />
+                                Navigation
+                            </h1>
+                        </Col>
+                        <Col
+                            className="text-end">
                             <Button
-                                className="w-100"
+                                className="mx-2 bg-gradient text-white shadow"
                                 onClick={newNavigationLink}>
                                 <PlusCircle
                                     className="mx-2"/>
@@ -177,7 +181,9 @@ const AppEditor: FC<{
                                                     {
                                                         index !== 0 &&
                                                             <Button
-                                                                variant="outline-primary"
+                                                                variant="primary"
+                                                                className="bg-gradient text-white
+                                                                    shadow"
                                                                 onClick={() => {
 
                                                                     const newApp =
@@ -201,7 +207,9 @@ const AppEditor: FC<{
                                                             (app.navigation.length ??=
                                                                 1) - 1 &&
                                                             <Button
-                                                                variant="outline-primary"
+                                                                variant="primary"
+                                                                className="bg-gradient text-white
+                                                                    shadow"
                                                                 onClick={() => {
 
                                                                     const newApp =
@@ -222,8 +230,8 @@ const AppEditor: FC<{
                                                     }
                                                 </ButtonGroup>
                                                 <Button
-                                                    variant="outline-danger"
-                                                    className="mx-1"
+                                                    variant="danger"
+                                                    className="mx-1 bg-gradient text-white shadow"
                                                     onClick={() => {
 
                                                         const newApp = structuredClone(app);
