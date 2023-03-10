@@ -206,14 +206,14 @@ const NewRelease: FC<{
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    variant="outline-secondary"
-                    className="m-2"
+                    variant="secondary"
+                    className="m-2 bg-gradient text-white shadow"
                     onClick={hideModal}>
                     Cancel
                 </Button>
                 <Button
                     variant="primary"
-                    className="m-2"
+                    className="m-2 bg-gradient text-white shadow"
                     disabled={isLoading}
                     onClick={onSubmit}>
                     {

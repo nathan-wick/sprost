@@ -85,7 +85,7 @@ const EditorView: FC<{ appRoute: string }> = ({appRoute}) => {
             if (user !== "undefined" && app) {
 
                 window.open(
-                    `http://localhost:3000/${user.route}/${app.route}`,
+                    `https://sprost.com/${user.route}/${app.route}`,
                     "_blank"
                 );
 

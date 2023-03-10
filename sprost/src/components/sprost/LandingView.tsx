@@ -126,7 +126,8 @@ const LandingView = () => {
                                 Bring your app idea to life!
                             </span>
                         </p>
-                        <SignIn />
+                        <SignIn
+                            variant="Get Started"/>
                     </div>
                 </div>
                 <div

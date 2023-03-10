@@ -76,7 +76,8 @@ const Navigation: FC<{
                 <Nav>
                     {
                         user === "undefined"
-                            ? <SignIn />
+                            ? <SignIn
+                                variant="Sign In"/>
                             : <NavDropdown
                                 title={[
                                     user?.portrait
@@ -91,7 +92,7 @@ const Navigation: FC<{
                                         : <PersonCircle
                                             key="user-portrait-icon"
                                             className="mx-2" />,
-                                    "Account"
+                                    user.name
                                 ]}
                                 id="basic-nav-dropdown">
                                 <NavDropdown.Item

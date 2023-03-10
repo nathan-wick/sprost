@@ -1,9 +1,12 @@
 import {Auth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {Button, Modal} from "react-bootstrap";
-import React, {useContext, useState} from "react";
+import React, {FC, useContext, useState} from "react";
 import {AuthenticationContext} from "../../../contexts/Authentication";
+import {PersonFill} from "react-bootstrap-icons";
 
-const SignIn = () => {
+const SignIn: FC<{
+    variant: "Get Started" | "Sign In"
+}> = ({variant}) => {
 
     const [
             modal,
@@ -53,11 +56,18 @@ const SignIn = () => {
     return <>
         <Button
             variant="primary"
-            size="lg"
+            size={variant === "Get Started"
+                ? "lg"
+                : "sm"}
             disabled={modal}
             onClick={showModal}
             className="bg-gradient text-white shadow">
-            Get Started
+            {
+                variant === "Sign In" &&
+                    <PersonFill
+                        className="me-1" />
+            }
+            {variant}
         </Button>
 
         <Modal show={modal} onHide={hideModal}>

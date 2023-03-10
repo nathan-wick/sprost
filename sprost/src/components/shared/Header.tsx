@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {Header as HeaderType} from "../../types/components/Header";
 
 const Header: FC<{component: HeaderType}> = ({component}) => <div
-    className={`d-flex align-items-center p-4 rounded
+    className={`d-flex align-items-center p-4 rounded bg-gradient
         ${component.background === "color" && "bg-primary"}
         ${component.background === "image" && "parallax"}
         ${component.size === "small" && "minimum-height-small"}
