@@ -16,7 +16,7 @@ const Settings: FC<{
         Settings
     </h1>
     <div
-        className="m-4 p-3 shadow rounded">
+        className="m-4 p-2 shadow rounded">
         <Portrait />
         <Name />
         <Email />

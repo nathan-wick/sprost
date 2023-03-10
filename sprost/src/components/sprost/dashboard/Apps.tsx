@@ -61,22 +61,15 @@ const Apps: FC<{
                                 className="mx-2" />
                             sprost.com/{user.route}/{app.route}
                         </small>
-                        <Row
-                            className="mt-4 gx-0">
-                            <Col
-                                sm={12}
-                                className="p-1">
-                                <Button
-                                    className="w-100 bg-gradient text-white shadow"
-                                    variant="primary"
-                                    onClick={() => setCurrentView(<EditorView
-                                        appRoute={app.route} />)}>
-                                    <Pencil
-                                        className="mx-2" />
-                                    Edit
-                                </Button>
-                            </Col>
-                        </Row>
+                        <Button
+                            className="mt-4 w-100 bg-gradient text-white shadow"
+                            variant="primary"
+                            onClick={() => setCurrentView(<EditorView
+                                appRoute={app.route} />)}>
+                            <Pencil
+                                className="mx-2" />
+                            Edit
+                        </Button>
                     </div>
                 </Col>)
             }

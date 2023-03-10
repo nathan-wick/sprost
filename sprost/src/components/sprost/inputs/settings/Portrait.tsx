@@ -49,7 +49,7 @@ const Portrait = () => {
     );
 
     return <div
-        className="my-4">
+        className="mb-4">
         <p>
             <Image
                 className="mx-2" />

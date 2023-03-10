@@ -160,13 +160,13 @@ const Name = () => {
         [user]
     );
 
-    return <Form.Group
+    return <div
         className="my-4">
-        <Form.Label>
+        <p>
             <Bookmarks
                 className="mx-2" />
             Name
-        </Form.Label>
+        </p>
         <Form.Control
             type="text"
             placeholder="Enter name"
@@ -179,7 +179,7 @@ const Name = () => {
         {
             error === "undefined"
                 ? <p
-                    className="text-muted">
+                    className="text-success">
                     <Signpost
                         className="mx-2" />
                 sprost.com/{routeInput}
@@ -189,7 +189,7 @@ const Name = () => {
                     {error}
                 </p>
         }
-    </Form.Group>;
+    </div>;
 
 };
 

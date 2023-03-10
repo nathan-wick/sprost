@@ -76,13 +76,13 @@ const Email = () => {
         [user]
     );
 
-    return <Form.Group
+    return <div
         className="my-4">
-        <Form.Label>
+        <p>
             <Envelope
                 className="mx-2" />
             Email
-        </Form.Label>
+        </p>
         <Form.Control
             type="email"
             placeholder="Enter email"
@@ -99,7 +99,7 @@ const Email = () => {
                 {error}
             </p>
         }
-    </Form.Group>;
+    </div>;
 
 };
 

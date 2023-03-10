@@ -1,8 +1,8 @@
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {useContext, useEffect, useState} from "react";
 import {DatabaseContext} from "../../../../contexts/Database";
-import {Eye} from "react-bootstrap-icons";
 import {Form} from "react-bootstrap";
+import {PaintBucket} from "react-bootstrap-icons";
 import {User} from "../../../../types/User";
 import {UserContext} from "../../../../contexts/User";
 
@@ -75,13 +75,13 @@ const Theme = () => {
         [user]
     );
 
-    return <Form.Group
-        className="my-4">
-        <Form.Label>
-            <Eye
+    return <div
+        className="mt-4">
+        <p>
+            <PaintBucket
                 className="mx-2" />
             Theme
-        </Form.Label>
+        </p>
         <Form.Select
             onChange={changeTheme}
             onBlur={saveTheme}
@@ -96,7 +96,7 @@ const Theme = () => {
                 </option>)
             }
         </Form.Select>
-    </Form.Group>;
+    </div>;
 
 };
 
