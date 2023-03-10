@@ -3,7 +3,7 @@ import {BarChart, BoxArrowRight, Gear, Grid} from "react-bootstrap-icons";
 import {Container, Nav, NavDropdown, Navbar} from "react-bootstrap";
 import React, {FC, useContext} from "react";
 import {AuthenticationContext} from "../../../contexts/Authentication";
-import Logo from "../../../assets/images/defaults/logo.svg";
+import SprostLogo from "../../../assets/images/sprost.svg";
 import {UserContext} from "../../../contexts/User";
 
 const Navigation: FC<{
@@ -22,7 +22,7 @@ const Navigation: FC<{
         <Container>
             <Navbar.Brand>
                 <img
-                    src={Logo}
+                    src={SprostLogo}
                     height={20}
                     width={20}
                     className="mx-2 rounded"

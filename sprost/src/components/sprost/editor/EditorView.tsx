@@ -1,7 +1,7 @@
 import {Col, Row} from "react-bootstrap";
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useEffect, useRef, useState} from "react";
-import AppEditor from "./AppEditor";
+import App from "./App";
 import {App as AppType} from "../../../types/App";
 import {DatabaseContext} from "../../../contexts/Database";
 import {Link} from "../../../types/Link";
@@ -213,8 +213,7 @@ const EditorView: FC<{ appRoute: string }> = ({appRoute}) => {
                     displayPreview={displayPreview}
                     settingsRef={settingsRef}
                     componentsRef={componentsRef} />
-                <AppEditor
-                    user={user}
+                <App
                     app={app}
                     setApp={setApp}
                     displayPreview={displayPreview}
