@@ -25,7 +25,6 @@ const PageDescription: FC<{
             if (newView) {
 
                 newView.description = String(input);
-                newView.isSaved = false;
                 setView(newView);
 
             }

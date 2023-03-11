@@ -19,7 +19,6 @@ const PageIcon: FC<{
             if (newView) {
 
                 newView.icon = input;
-                newView.isSaved = false;
                 setView(newView);
 
             }

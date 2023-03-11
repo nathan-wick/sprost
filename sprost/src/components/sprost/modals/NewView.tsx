@@ -109,7 +109,6 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                     "cover": DefaultCover,
                     "description": `${app.name}'s new view, ${String(nameInput)}.`,
                     "icon": DefaultLogo,
-                    "isSaved": true,
                     "name": String(nameInput),
                     "route": String(nameRoute),
                     "type": "page"

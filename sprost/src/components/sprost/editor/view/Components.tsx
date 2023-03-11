@@ -12,8 +12,6 @@ const ViewComponents: FC<{
     componentsRef: React.MutableRefObject<HTMLHeadingElement | null>
 }> = ({view, setView, componentsRef}) => {
 
-    // eslint-disable-next-line no-warning-comments
-    // TODO Improve this by renaming vars and removing isSaved
     const [
         viewComponents,
         setViewComponents
@@ -26,7 +24,6 @@ const ViewComponents: FC<{
 
                 const newEditView: View = structuredClone(view);
                 newEditView.components = viewComponents;
-                newEditView.isSaved = false;
                 setView(newEditView);
 
             }

@@ -19,7 +19,6 @@ const PageCover: FC<{
             if (newView) {
 
                 newView.cover = input;
-                newView.isSaved = false;
                 setView(newView);
 
             }
