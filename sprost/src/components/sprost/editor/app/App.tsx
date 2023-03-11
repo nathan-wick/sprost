@@ -1,9 +1,9 @@
 import React, {FC} from "react";
-import {App as AppType} from "../../../types/App";
-import Appearance from "./app/Appearance";
-import Navigation from "./app/Navigation";
-import {View} from "../../../types/View";
-import Views from "./app/Views";
+import {App as AppType} from "../../../../types/App";
+import Appearance from "./Appearance";
+import Navigation from "./Navigation";
+import {View} from "../../../../types/View";
+import Views from "./Views";
 
 const App: FC<{
     app: AppType | undefined,

@@ -41,8 +41,7 @@ const PageCover: FC<{
     );
 
     return <>
-        <p
-            className="mt-4">
+        <p>
             <Image
                 className="mx-2"/>
             Cover

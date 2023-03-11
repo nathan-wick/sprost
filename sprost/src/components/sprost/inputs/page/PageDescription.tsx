@@ -33,8 +33,7 @@ const PageDescription: FC<{
         };
 
     return <>
-        <p
-            className="mt-4">
+        <p>
             <Chat
                 className="mx-2"/>
             Description

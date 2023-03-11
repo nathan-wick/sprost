@@ -1,14 +1,14 @@
 import {Col, Row} from "react-bootstrap";
 import {Firestore, doc, updateDoc} from "firebase/firestore";
 import React, {FC, useContext, useEffect, useRef, useState} from "react";
-import App from "./App";
+import App from "./app/App";
 import {App as AppType} from "../../../types/App";
 import {DatabaseContext} from "../../../contexts/Database";
 import {Link} from "../../../types/Link";
 import Navigation from "./Navigation";
 import Preview from "./Preview";
 import {UserContext} from "../../../contexts/User";
-import ViewEditor from "./ViewEditor";
+import View from "./view/View";
 import {View as ViewType} from "../../../types/View";
 
 const EditorView: FC<{ appRoute: string }> = ({appRoute}) => {
@@ -207,7 +207,7 @@ const EditorView: FC<{ appRoute: string }> = ({appRoute}) => {
                     view={view}
                     displayPreview={displayPreview}
                     previewRef={previewRef} />
-                <ViewEditor
+                <View
                     view={view}
                     setView={setView}
                     displayPreview={displayPreview}

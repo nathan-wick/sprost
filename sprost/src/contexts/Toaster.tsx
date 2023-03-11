@@ -24,9 +24,9 @@ export const ToasterContext = createContext<({
 
                     const newToast = <Toast
                         key={`toast-${toasts.length}`}
-                        className="m-4">
+                        className="m-4 shadow">
                         <Toast.Header
-                            className={`bg-${type} text-white`}
+                            className={`bg-${type} bg-gradient text-white`}
                             closeButton={false}>
                             <b
                                 className="me-auto">
