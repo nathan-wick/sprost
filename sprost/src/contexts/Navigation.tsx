@@ -29,7 +29,11 @@ export const NavigationContext = createContext<{
 
                 if (user && user !== "undefined") {
 
-                    setCurrentView(<Dashboard />);
+                    if (currentView.type.name === "LandingView") {
+
+                        setCurrentView(<Dashboard />);
+
+                    }
 
                 } else {
 

@@ -161,7 +161,8 @@ const EditorView: FC<{ appRoute: string }> = ({appRoute}) => {
 
             if (user !== "undefined") {
 
-                setApp(user.apps.find((userApp) => userApp.route === appRoute));
+                const savedApp = user.apps.find((userApp) => userApp.route === appRoute);
+                setApp(savedApp);
 
             }
 

@@ -15,7 +15,8 @@ const Dashboard: FC<{
     <Row
         className="gx-0 m-4">
         <Col>
-            <p>
+            <p
+                className="text-muted">
                 Dashboard Coming Soon
             </p>
         </Col>
