@@ -22,21 +22,27 @@ export const NavigationContext = createContext<{
             navigation = {
                 currentView,
                 setCurrentView
-            };
+            },
+            [
+                signedIn,
+                setSignedIn
+            ] = useState<boolean>(false);
 
         useEffect(
             () => {
 
                 if (user && user !== "undefined") {
 
-                    if (currentView.type.name === "LandingView") {
+                    if (!signedIn) {
 
+                        setSignedIn(true);
                         setCurrentView(<Dashboard />);
 
                     }
 
                 } else {
 
+                    setSignedIn(false);
                     setCurrentView(<Landing />);
 
                 }
