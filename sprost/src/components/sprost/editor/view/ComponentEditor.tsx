@@ -16,16 +16,16 @@ import moveElement from "../../../../utilities/moveElement";
 import setComponent from "../../../../utilities/setComponent";
 
 const ComponentEditor: FC<{
-    componentId: string,
-    editViewComponents: Component[],
-    setEditViewComponents: Dispatch<SetStateAction<Component[]>>,
-}> = ({componentId, editViewComponents, setEditViewComponents}) => {
+    component: Component,
+    viewComponents: Component[],
+    setViewComponents: Dispatch<SetStateAction<Component[]>>,
+}> = ({component, viewComponents, setViewComponents}) => {
 
     const [
             editComponent,
             setEditComponent
-        ] = useState<Component | undefined>(editViewComponents.find((component) => component.id ===
-            componentId)),
+        ] = useState<Component | undefined>(viewComponents.find((viewComponent) => component.id ===
+            viewComponent.id)),
         [
             showAdvancedInputs,
             setShowAdvancedInputs
@@ -55,21 +55,30 @@ const ComponentEditor: FC<{
                     Header
                 </>);
                 setInputs([
-                    <HeaderMessage key={`${componentId}-message`} editComponent={editComponent}
+                    <HeaderMessage
+                        key={editComponent.type.message}
+                        editComponent={editComponent}
                         setEditComponent={setEditComponent} />
                 ]);
                 setAdvancedInputs([
-                    <HeaderSize key={`${componentId}-size`} editComponent={editComponent}
+                    <HeaderSize
+                        key={editComponent.type.size}
+                        editComponent={editComponent}
                         setEditComponent={setEditComponent} />,
-                    <HeaderAlignment key={`${componentId}-alignment`} editComponent={editComponent}
+                    <HeaderAlignment
+                        key={editComponent.type.alignment}
+                        editComponent={editComponent}
                         setEditComponent={setEditComponent} />,
-                    <HeaderBackground key={`${componentId}-background`}
-                        editComponent={editComponent} setEditComponent={setEditComponent} />,
+                    <HeaderBackground
+                        key={editComponent.type.background}
+                        editComponent={editComponent}
+                        setEditComponent={setEditComponent} />,
                     <div
-                        key={`${componentId}-image`}>
+                        key={editComponent.type.image}>
                         {
                             editComponent.type.background === "image" &&
-                                <HeaderImage editComponent={editComponent}
+                                <HeaderImage
+                                    editComponent={editComponent}
                                     setEditComponent={setEditComponent} />
                         }
                     </div>
@@ -82,11 +91,15 @@ const ComponentEditor: FC<{
                     Title
                 </>);
                 setInputs([
-                    <TitleMessage key={`${componentId}-message`} editComponent={editComponent}
+                    <TitleMessage
+                        key={editComponent.type.message}
+                        editComponent={editComponent}
                         setEditComponent={setEditComponent} />
                 ]);
                 setAdvancedInputs([
-                    <TitleSize key={`${componentId}-size`} editComponent={editComponent}
+                    <TitleSize
+                        key={editComponent.type.size}
+                        editComponent={editComponent}
                         setEditComponent={setEditComponent} />
                 ]);
                 break;
@@ -100,21 +113,23 @@ const ComponentEditor: FC<{
                         Paragraph
                     </>);
                     setInputs([
-                        <ParagraphMessage key={`${componentId}-message`}
-                            editComponent={editComponent} setEditComponent={setEditComponent} />
+                        <ParagraphMessage
+                            key={editComponent.type.message}
+                            editComponent={editComponent}
+                            setEditComponent={setEditComponent} />
                     ]);
 
                 }
 
             }
             if (editComponent && editComponent !==
-                editViewComponents.find((component) => component.id === componentId)) {
+                viewComponents.find((viewComponent) => viewComponent.id === component.id)) {
 
-                const newEditViewComponents: Component[] = setComponent(
-                    editViewComponents,
+                const newViewComponents: Component[] = setComponent(
+                    viewComponents,
                     editComponent
                 );
-                setEditViewComponents(newEditViewComponents);
+                setViewComponents(newViewComponents);
 
             }
 
@@ -149,15 +164,15 @@ const ComponentEditor: FC<{
                         <ButtonGroup
                             className="mx-1 shadow">
                             {
-                                editViewComponents.indexOf(editComponent) !== 0 &&
+                                viewComponents.indexOf(editComponent) !== 0 &&
                                     <Button
                                         variant="primary"
                                         className="bg-gradient text-white"
                                         onClick={() => {
 
                                             const newEditViewComponents =
-                                                structuredClone(editViewComponents);
-                                            setEditViewComponents(moveElement(
+                                                structuredClone(viewComponents);
+                                            setViewComponents(moveElement(
                                                 newEditViewComponents,
                                                 newEditViewComponents.indexOf(editComponent),
                                                 "up"
@@ -169,16 +184,16 @@ const ComponentEditor: FC<{
                                     </Button>
                             }
                             {
-                                editViewComponents.indexOf(editComponent) !==
-                                    (editViewComponents.length ??= 1) - 1 &&
+                                viewComponents.indexOf(editComponent) !==
+                                    (viewComponents.length ??= 1) - 1 &&
                                     <Button
                                         variant="primary"
                                         className="bg-gradient text-white"
                                         onClick={() => {
 
                                             const newEditViewComponents =
-                                                structuredClone(editViewComponents);
-                                            setEditViewComponents(moveElement(
+                                                structuredClone(viewComponents);
+                                            setViewComponents(moveElement(
                                                 newEditViewComponents,
                                                 newEditViewComponents.indexOf(editComponent),
                                                 "down"
@@ -195,8 +210,8 @@ const ComponentEditor: FC<{
                             className="mx-1 bg-gradient text-white shadow"
                             onClick={() => {
 
-                                const newEditViewComponents = structuredClone(editViewComponents);
-                                setEditViewComponents(deleteElement(
+                                const newEditViewComponents = structuredClone(viewComponents);
+                                setViewComponents(deleteElement(
                                     newEditViewComponents,
                                     newEditViewComponents.indexOf(editComponent)
                                 ));

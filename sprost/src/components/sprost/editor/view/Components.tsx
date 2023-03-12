@@ -51,11 +51,11 @@ const ViewComponents: FC<{
                 </Col>
             </Row>
             {
-                viewComponents.map((component) => <ComponentEditor
-                    key={`${component.id}-editor`}
-                    componentId={component.id}
-                    editViewComponents={viewComponents}
-                    setEditViewComponents={setViewComponents}/>)
+                view.components.map((component) => <ComponentEditor
+                    key={component.id}
+                    component={component}
+                    viewComponents={viewComponents}
+                    setViewComponents={setViewComponents}/>)
             }
         </div>
     </>;
