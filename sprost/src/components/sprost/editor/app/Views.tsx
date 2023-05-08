@@ -1,5 +1,5 @@
 import {Button, Col, Row} from "react-bootstrap";
-import {Pencil, Signpost, Tag, WindowStack} from "react-bootstrap-icons";
+import {Pencil, Signpost, Tag, Window, WindowStack} from "react-bootstrap-icons";
 import React, {FC, useContext} from "react";
 import {App} from "../../../../types/App";
 import NewView from "../../modals/NewView";
@@ -21,7 +21,7 @@ const Views: FC<{
                 <h1
                     ref={viewsRef}>
                     <WindowStack
-                        className="mx-2" />
+                        className="mx-4" />
                     Views
                 </h1>
             </Col>
@@ -53,9 +53,9 @@ const Views: FC<{
                             {appView.name}
                         </h3>
                         <small>
-                            <Tag
+                            <Window
                                 className="mx-2" />
-                            Name: <b>{appView.name}</b>
+                            {appView.type.charAt(0).toUpperCase() + appView.type.slice(1)}
                         </small>
                         <br />
                         <small>
@@ -63,8 +63,7 @@ const Views: FC<{
                                 className="mx-2" />
                             Route: sprost.com/{user === "undefined"
                                 ? "undefined"
-                                : user.route}/{app?.route}/<b>
-                                {appView.route}</b>
+                                : user.route}/{app?.route}/{appView.route}
                         </small>
                         <Button
                             className="mt-4 w-100 bg-gradient text-white shadow"

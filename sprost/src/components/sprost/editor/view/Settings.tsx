@@ -15,7 +15,7 @@ const Settings: FC<{
         ref={settingsRef}
         className="mt-4">
         <Gear
-            className="mx-2" />
+            className="mx-4" />
         Settings
     </h1>
     <Row

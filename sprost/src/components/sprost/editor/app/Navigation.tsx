@@ -20,14 +20,14 @@ const Navigation: FC<{
             <h1
                 ref={navigationRef}>
                 <Compass
-                    className="mx-2" />
+                    className="mx-4" />
                 Navigation
             </h1>
         </Col>
         <Col
             className="text-end">
             <Button
-                className="mx-2 bg-gradient text-white shadow"
+                className="mx-4 bg-gradient text-white shadow"
                 onClick={newNavigationLink}>
                 <PlusCircle
                     className="mx-2"/>

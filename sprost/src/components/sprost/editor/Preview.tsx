@@ -16,7 +16,7 @@ const Preview: FC<{
                 ref={previewRef}
                 className="mt-4">
                 <Eye
-                    className="mx-2" />
+                    className="mx-4" />
                 Preview
             </h1>
             <div

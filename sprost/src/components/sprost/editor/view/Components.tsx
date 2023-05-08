@@ -37,7 +37,7 @@ const ViewComponents: FC<{
             ref={componentsRef}
             className="mt-4">
             <ColumnsGap
-                className="mx-2" />
+                className="mx-4" />
             Components
         </h1>
         <div

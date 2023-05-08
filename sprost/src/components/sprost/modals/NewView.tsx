@@ -1,6 +1,6 @@
 import {Button, Form, FormGroup, Modal} from "react-bootstrap";
+import {ColumnsGap, PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import {Firestore, doc, setDoc} from "firebase/firestore";
-import {PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import React, {FC, useContext, useState} from "react";
 import {DatabaseContext} from "../../../contexts/Database";
 import DefaultCover from "../../../assets/images/defaults/cover.jpeg";
@@ -36,6 +36,10 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
             nameError,
             setNameError
         ] = useState<string>("Please enter a view name"),
+        [
+            typeInput,
+            setTypeInput
+        ] = useState<string>("page"),
         [
             isLoading,
             setIsLoading
@@ -87,6 +91,11 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
             }
 
         },
+        onTypeChange = (event: { target: { value: string; }; }) => {
+
+            setTypeInput(event.target.value);
+
+        },
         reset = () => {
 
             setNameInput("undefined");
@@ -104,6 +113,18 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
             event.preventDefault();
             if (user !== "undefined" && app !== "undefined") {
 
+                let viewType: "page" | "article" = "page";
+                switch (typeInput) {
+
+                case "article":
+                    viewType = "article";
+                    break;
+                case "page":
+                default:
+                    viewType = "page";
+                    break;
+
+                }
                 const newView: View = {
                     "components": [],
                     "cover": DefaultCover,
@@ -111,7 +132,7 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                     "icon": DefaultLogo,
                     "name": String(nameInput),
                     "route": String(nameRoute),
-                    "type": "page"
+                    "type": viewType
                 },
                     userReference = doc(
                         database as Firestore,
@@ -137,12 +158,22 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
             }
             hideModal();
 
-        };
+        },
+        typeOptions = [
+            {
+                "text": "Page",
+                "value": "page"
+            },
+            {
+                "text": "Article",
+                "value": "article"
+            }
+        ];
 
     return <>
         <Button
             variant="primary"
-            className="mx-2 bg-gradient text-white shadow"
+            className="mx-4 bg-gradient text-white shadow"
             onClick={showModal}>
             <PlusCircle
                 className="mx-2" />
@@ -188,12 +219,30 @@ const NewView: FC<{appRoute: string}> = ({appRoute}) => {
                                 </p>
                         }
                     </FormGroup>
+                    <FormGroup>
+                        <Form.Label>
+                            <ColumnsGap
+                                className="mx-2" />
+                            View Type
+                        </Form.Label>
+                        <Form.Select
+                            onChange={onTypeChange}
+                            value={typeInput}>
+                            {
+                                typeOptions.map((typeOption) => <option
+                                    key={`component-type-option-${typeOption.value}`}
+                                    value={typeOption.value}>
+                                    {typeOption.text}
+                                </option>)
+                            }
+                        </Form.Select>
+                    </FormGroup>
                 </Form>
                 {
                     nameRoute !== "undefined" && user !== "undefined" && app !== "undefined" &&
                     <>
                         <p
-                            className="text-muted">
+                            className="text-muted mt-4">
                             <Signpost
                                 className="mx-2" />
                             sprost.com/{user.route}/{app.route}/<b>{nameRoute}</b>

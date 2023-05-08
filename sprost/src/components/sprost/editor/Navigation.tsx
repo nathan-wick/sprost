@@ -57,7 +57,7 @@ const Navigation: FC<{
                                     onClick={() => setView(undefined)}>
                                     <BoxArrowLeft
                                         className="mx-2" />
-                                    {app?.name}
+                                    Save and Exit
                                 </Nav.Link>
                                 <Nav.Link
                                     onClick={() => scrollTo("settings")}>
@@ -99,7 +99,7 @@ const Navigation: FC<{
                                     onClick={() => setCurrentView(<Dashboard />)}>
                                     <BoxArrowLeft
                                         className="mx-2" />
-                                    Dashboard
+                                    Save and Exit
                                 </Nav.Link>
                                 <Nav.Link
                                     onClick={() => scrollTo("appearance")}>

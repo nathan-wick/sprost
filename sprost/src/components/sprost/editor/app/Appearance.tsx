@@ -14,7 +14,7 @@ const Appearance: FC<{
         ref={appearanceRef}
         className="mt-4">
         <Brush
-            className="mx-2" />
+            className="mx-4" />
         Appearance
     </h1>
     <Row
