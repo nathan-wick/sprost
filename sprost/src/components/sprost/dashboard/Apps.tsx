@@ -20,7 +20,7 @@ const Apps: FC<{
                 <h1
                     ref={appsRef}>
                     <Grid
-                        className="mx-2" />
+                        className="mx-4" />
                     Apps
                 </h1>
             </Col>
@@ -34,7 +34,6 @@ const Apps: FC<{
             {
                 user !== "undefined" && user.apps.map((app, index) => <Col
                     key={index}
-                    lg={4}
                     md={6}
                     sm={12}>
                     <div

@@ -19,11 +19,16 @@ const DashboardView = () => {
         <Row
             className="gx-0 justify-content-md-center">
             <Col
-                lg={8}
+                lg={6}
                 md={10}
                 sm={12}>
                 <Dashboard
                     dashboardRef={dashboardRef} />
+            </Col>
+            <Col
+                lg={6}
+                md={10}
+                sm={12}>
                 <Apps
                     appsRef={appsRef} />
                 <Settings

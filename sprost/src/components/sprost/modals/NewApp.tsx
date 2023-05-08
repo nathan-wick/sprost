@@ -146,7 +146,7 @@ const NewApp = () => {
     return <>
         <Button
             variant="primary"
-            className="mx-2 bg-gradient text-white shadow"
+            className="mx-4 bg-gradient text-white shadow"
             onClick={showModal}>
             <PlusCircle
                 className="mx-2" />
