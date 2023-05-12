@@ -179,7 +179,7 @@ const Name = () => {
         {
             error === "undefined"
                 ? <p
-                    className="text-success">
+                    className="text-muted">
                     <Signpost
                         className="mx-2" />
                 sprost.com/{routeInput}

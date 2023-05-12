@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  	match /users/{userId} {
+      allow get, create, update: if request.auth != null
+      	&& request.auth.uid == userId;
+      // TODO: Stop users from changing their route to one that already exists
+      allow list, delete: if false;
+    }
+    match /public/{userRoute} {
+    	allow get: if true;
+      allow create, update, delete: if request.auth != null
+      	&& get(/databases/$(database)/documents/users/$(request.auth.uid)).data.route == userRoute;
+      allow list: if false;
+    }
+  }
+}

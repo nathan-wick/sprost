@@ -13,4 +13,5 @@ export declare interface App {
     },
     views: View[],
     navigation: Link[],
+    domains: string[]
 }

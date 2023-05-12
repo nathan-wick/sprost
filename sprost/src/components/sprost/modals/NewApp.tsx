@@ -105,6 +105,7 @@ const NewApp = () => {
 
                 const newApp: AppType = {
                     "cover": DefaultCover,
+                    "domains": [],
                     "logo": DefaultLogo,
                     "name": String(nameInput),
                     "navigation": [],

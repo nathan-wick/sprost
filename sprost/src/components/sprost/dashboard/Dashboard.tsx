@@ -61,7 +61,7 @@ const Dashboard: FC<{
                     </p>
                     <ResponsiveContainer
                         width="90%"
-                        height={300}>
+                        height={200}>
                         <AreaChart
                             data={testData}>
                             <defs>
@@ -78,7 +78,7 @@ const Dashboard: FC<{
                                     <stop
                                         offset="95%"
                                         stopColor={colors.primary}
-                                        stopOpacity={0.4}/>
+                                        stopOpacity={0}/>
                                 </linearGradient>
                             </defs>
                             <XAxis

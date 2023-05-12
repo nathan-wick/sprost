@@ -1,5 +1,5 @@
 import {Button, Col, Row} from "react-bootstrap";
-import {Pencil, Signpost, Tag, Window, WindowStack} from "react-bootstrap-icons";
+import {Pencil, Signpost, Window, WindowStack} from "react-bootstrap-icons";
 import React, {FC, useContext} from "react";
 import {App} from "../../../../types/App";
 import NewView from "../../modals/NewView";
@@ -61,7 +61,7 @@ const Views: FC<{
                         <small>
                             <Signpost
                                 className="mx-2" />
-                            Route: sprost.com/{user === "undefined"
+                            sprost.com/{user === "undefined"
                                 ? "undefined"
                                 : user.route}/{app?.route}/{appView.route}
                         </small>

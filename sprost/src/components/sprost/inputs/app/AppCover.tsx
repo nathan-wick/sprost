@@ -33,7 +33,8 @@ const AppCover: FC<{
         [input]
     );
 
-    return <>
+    return <div
+        className="m-4 p-2 shadow rounded">
         <p>
             <Image
                 className="mx-2"/>
@@ -50,7 +51,7 @@ const AppCover: FC<{
                 width="100%" />
         </div>
         <ImageSelector setInput={setInput} />
-    </>;
+    </div>;
 
 };
 

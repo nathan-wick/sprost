@@ -33,7 +33,8 @@ const AppLogo: FC<{
         [input]
     );
 
-    return <>
+    return <div
+        className="m-4 p-2 shadow rounded">
         <p>
             <Image
                 className="mx-2"/>
@@ -50,7 +51,7 @@ const AppLogo: FC<{
                 width={200} />
         </div>
         <ImageSelector setInput={setInput} />
-    </>;
+    </div>;
 
 };
 

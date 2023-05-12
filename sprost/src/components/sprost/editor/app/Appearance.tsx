@@ -4,6 +4,7 @@ import {App} from "../../../../types/App";
 import AppCover from "../../inputs/app/AppCover";
 import AppLogo from "../../inputs/app/AppLogo";
 import {Brush} from "react-bootstrap-icons";
+import NewAppDomain from "../../modals/NewAppDomain";
 
 const Appearance: FC<{
     app: App | undefined,
@@ -22,28 +23,31 @@ const Appearance: FC<{
         <Col
             md={6}
             sm={12}>
-            <div
-                className="m-4 p-2 shadow rounded">
-                {
-                    app &&
-                        <AppLogo
-                            editApp={app}
-                            setEditApp={setApp} />
-                }
-            </div>
+            {
+                app &&
+                    <AppLogo
+                        editApp={app}
+                        setEditApp={setApp} />
+            }
         </Col>
         <Col
             md={6}
             sm={12}>
-            <div
-                className="m-4 p-2 shadow rounded">
-                {
-                    app &&
-                        <AppCover
-                            editApp={app}
-                            setEditApp={setApp} />
-                }
-            </div>
+            {
+                app &&
+                    <AppCover
+                        editApp={app}
+                        setEditApp={setApp} />
+            }
+        </Col>
+        <Col
+            md={6}
+            sm={12}>
+            {
+                app &&
+                    <NewAppDomain
+                        app={app} />
+            }
         </Col>
     </Row>
 </>;
