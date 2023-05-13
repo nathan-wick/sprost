@@ -1,18 +1,104 @@
 import {Button, Col, Form, FormGroup, Modal, Row} from "react-bootstrap";
 import {CheckCircle, Clock, PlusCircle, Signpost, Tag} from "react-bootstrap-icons";
 import React, {FC, useContext, useState} from "react";
+import {getFunctions, httpsCallable} from "firebase/functions";
 import {App} from "../../../types/App";
 import {UserContext} from "../../../contexts/User";
 
 const NewAppDomain: FC<{app: App}> = ({app}) => {
 
     const user = useContext(UserContext),
+        functions = getFunctions(),
+        logMessage = httpsCallable(
+            functions,
+            "logMessage"
+        ),
         [
             modal,
             setModal
         ] = useState<boolean>(false),
+        [
+            nameInput,
+            setNameInput
+        ] = useState<string>(),
+        [
+            nameError,
+            setNameError
+        ] = useState<string | undefined>("Please enter a domain name"),
+        [
+            isLoading,
+            setIsLoading
+        ] = useState<boolean>(false),
+        manageNameError = (error: string) => {
+
+            if (error) {
+
+                setNameInput(undefined);
+                setNameError(error);
+
+            }
+
+        },
+        onNameChange = (event: { target: { value: string; }; }) => {
+
+            if (event.target.value) {
+
+                const newName = event.target.value.toLowerCase();
+
+                // eslint-disable-next-line max-len
+                if (newName.match(/^(?!-)[A-Za-z0-9-]+(?<domain>[-.]{1}[a-z0-9]+)*\.[A-Za-z]{2,6}$/gu)) {
+
+                    if (app.domains && app.domains.find((domain) => domain === newName)) {
+
+                        manageNameError(`${newName} is already connected to ${app.name}`);
+
+                    } else {
+
+                        setNameInput(newName);
+                        setNameError(undefined);
+
+                    }
+
+                } else {
+
+                    manageNameError("Please enter a valid domain name");
+
+                }
+
+            } else {
+
+                manageNameError("Please enter a domain name");
+
+            }
+
+        },
+        reset = () => {
+
+            setNameInput(undefined);
+            setNameError("Please enter an app name");
+            setIsLoading(false);
+            setModal(false);
+
+        },
         showModal = () => setModal(true),
-        hideModal = () => setModal(false);
+        hideModal = () => reset(),
+        onSubmit = () => {
+
+            setIsLoading(true);
+            logMessage({"message": nameInput}).
+                then(() => {
+
+                    console.log(nameInput);
+                    hideModal();
+
+                }).
+                catch((error) => {
+
+                    console.log(error);
+
+                });
+
+        };
 
     return <div
         className="m-4 p-2 shadow rounded">
@@ -79,8 +165,20 @@ const NewAppDomain: FC<{app: App}> = ({app}) => {
                         <Form.Control
                             type="text"
                             placeholder="example.com"
-                            maxLength={50} />
+                            maxLength={50}
+                            onChange={onNameChange} />
                     </FormGroup>
+                    {
+                        nameError
+                            ? <p
+                                className="text-danger">
+                                {nameError}
+                            </p>
+                            : <p
+                                className="text-success">
+                                {nameInput} is a valid domain name
+                            </p>
+                    }
                 </Form>
             </Modal.Body>
             <Modal.Footer>
@@ -92,8 +190,10 @@ const NewAppDomain: FC<{app: App}> = ({app}) => {
                 </Button>
                 <Button
                     variant="primary bg-gradient text-white shadow"
-                    className="m-2">
-                    Connect
+                    className="m-2"
+                    disabled={!nameInput || Boolean(nameError) || isLoading}
+                    onClick={onSubmit}>
+                    Connect {nameInput}
                 </Button>
             </Modal.Footer>
         </Modal>

@@ -1,5 +1,11 @@
 {
   "projects": {
     "default": "nathan-wick-sprost"
+  },
+  "targets": {},
+  "etags": {
+    "nathan-wick-sprost": {
+      "extensionInstances": {}
+    }
   }
 }

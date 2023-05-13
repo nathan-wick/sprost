@@ -1,16 +1,9 @@
-const functions = require('firebase-functions');
-const hosting = require('firebase-hosting');
+import {onCall} from "firebase-functions/v2/https";
+import {initializeApp} from "firebase-admin/app";
 
-exports.addDomain = functions.https.onRequest((req, res) => {
-  // Get the custom domain from the request.
-  const domain = req.query.domain;
+initializeApp();
 
-  // Add the custom domain to the Firebase Hosting configuration.
-  hosting.addDomain(domain, function(err, result) {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.status(200).send('Domain added successfully');
-    }
-  });
+exports.logMessage = onCall((request) => {
+  const {message} = request.data;
+  console.log(message);
 });
